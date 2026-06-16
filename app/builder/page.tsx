@@ -230,7 +230,7 @@ function PreviewMode() {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto bg-white p-8">
+    <div className="flex-1 overflow-y-auto bg-white p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
         {state.root && <PreviewNode node={state.root} />}
       </div>
@@ -265,6 +265,15 @@ const previewComponentMap: Record<string, React.ComponentType<any>> = {
 
 function PreviewNode({ node }: { node: any }) {
   const { text, className, ...rest } = node.props;
+
+  if (node.type === "img") {
+    return React.createElement("div", { className: "not-prose" },
+      node.props.src
+        ? React.createElement("img", { src: node.props.src, alt: node.props.alt, className: "max-w-full h-auto" })
+        : React.createElement("span", { className: "text-scale-9 text-xs" }, "No image selected")
+    );
+  }
+
   const children = [
     text,
     ...node.children.map((c: any) =>
@@ -287,13 +296,42 @@ function PreviewNode({ node }: { node: any }) {
   return React.createElement("div", { className, ...rest }, ...children);
 }
 
+function MobilePanel({
+  open,
+  onClose,
+  title,
+  children,
+}: {
+  open: boolean;
+  onClose: () => void;
+  title: string;
+  children: React.ReactNode;
+}) {
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-40 flex lg:hidden">
+      <div className="absolute inset-0 bg-black/60" onClick={onClose} />
+      <div className="relative w-72 max-w-[80vw] bg-scale-1 border-r border-scale-5 shadow-2xl flex flex-col animate-slide-in">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-scale-5">
+          <h3 className="text-sm font-semibold text-scale-12">{title}</h3>
+          <button onClick={onClose} className="text-scale-11 hover:text-scale-12 text-lg leading-none">✕</button>
+        </div>
+        <div className="flex-1 overflow-y-auto">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function BuilderLayout() {
   const [preview, setPreview] = useState(false);
   const [showTree, setShowTree] = useState(true);
+  const [mobilePanel, setMobilePanel] = useState<"none" | "palette" | "right">("none");
   const exportHook = useExport();
 
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)]">
+    <div className="flex flex-col h-[calc(100dvh-4rem)]">
       <Toolbar
         onExport={exportHook.handleExport}
         onTogglePreview={() => setPreview((p) => !p)}
@@ -303,18 +341,21 @@ function BuilderLayout() {
       {preview ? (
         <PreviewMode />
       ) : (
-        <div className="flex flex-1 overflow-hidden">
-          <div className="w-56 border-r border-scale-5 bg-scale-1 flex-shrink-0 overflow-y-auto">
+        <div className="flex flex-1 overflow-hidden relative">
+          {/* Desktop palette sidebar */}
+          <div className="hidden lg:block w-56 border-r border-scale-5 bg-scale-1 flex-shrink-0 overflow-y-auto">
             <Palette />
           </div>
 
           <Canvas />
 
-          <div className="w-60 border-l border-scale-5 bg-scale-1 flex-shrink-0 overflow-y-auto">
+          {/* Desktop inspector/tree sidebar */}
+          <div className="hidden md:block w-60 border-l border-scale-5 bg-scale-1 flex-shrink-0 overflow-y-auto">
             {showTree ? <TreeView /> : <Inspector />}
           </div>
 
-          <div className="absolute bottom-4 right-72 flex gap-1">
+          {/* Desktop Layers/Props toggle */}
+          <div className="hidden md:flex absolute bottom-4 right-4 gap-1">
             <button
               onClick={() => setShowTree(true)}
               className={`px-2 py-1 text-xs rounded-md transition-colors ${
@@ -331,6 +372,51 @@ function BuilderLayout() {
                 !showTree
                   ? "bg-scale-5 text-scale-12"
                   : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
+              }`}
+            >
+              Props
+            </button>
+          </div>
+
+          {/* Mobile overlays */}
+          <MobilePanel
+            open={mobilePanel === "palette"}
+            onClose={() => setMobilePanel("none")}
+            title="Components"
+          >
+            <Palette />
+          </MobilePanel>
+
+          <MobilePanel
+            open={mobilePanel === "right"}
+            onClose={() => setMobilePanel("none")}
+            title={showTree ? "Layers" : "Props"}
+          >
+            {showTree ? <TreeView /> : <Inspector />}
+          </MobilePanel>
+
+          {/* Mobile bottom bar */}
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 flex border-t border-scale-5 bg-scale-1 z-30">
+            <button
+              onClick={() => setMobilePanel(mobilePanel === "palette" ? "none" : "palette")}
+              className={`flex-1 py-3 text-xs font-medium transition-colors ${
+                mobilePanel === "palette" ? "bg-brand/10 text-brand" : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
+              }`}
+            >
+              Components
+            </button>
+            <button
+              onClick={() => setShowTree(true)}
+              className={`flex-1 py-3 text-xs font-medium transition-colors ${
+                mobilePanel === "right" && showTree ? "bg-brand/10 text-brand" : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
+              }`}
+            >
+              Layers
+            </button>
+            <button
+              onClick={() => setShowTree(false)}
+              className={`flex-1 py-3 text-xs font-medium transition-colors ${
+                mobilePanel === "right" && !showTree ? "bg-brand/10 text-brand" : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
               }`}
             >
               Props

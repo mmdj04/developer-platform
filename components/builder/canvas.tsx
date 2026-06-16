@@ -38,7 +38,7 @@ export function Canvas() {
 
   return (
     <div
-      className="flex-1 overflow-y-auto bg-scale-2"
+      className="flex-1 overflow-y-auto bg-scale-2 pb-14 lg:pb-0"
       onClick={handleCanvasClick}
     >
       {!state.root ? (

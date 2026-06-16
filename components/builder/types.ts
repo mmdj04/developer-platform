@@ -719,6 +719,15 @@ export const PALETTE: PaletteItem[] = [
     nestable: false,
   },
 
+  // ── UI / Image ──
+  {
+    type: "img",
+    label: "Image",
+    category: "ui",
+    defaultProps: { className: "w-full h-auto", src: "", alt: "Image" },
+    nestable: false,
+  },
+
   // ── UI / Input OTP ──
   {
     type: "InputOTP",

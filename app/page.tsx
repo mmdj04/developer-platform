@@ -1,8 +1,14 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { DashboardTabs } from "@/components/dashboard-tabs";
 import { CommunityCarousel } from "@/components/community-carousel";
 import type { ReactNode } from "react";
+
+export const metadata: Metadata = {
+  title: "Developer Platform",
+  description: "Plataforma full-stack com banco de dados PostgreSQL, autenticação, APIs e edge functions. Tudo que você precisa para construir produtos digitais.",
+};
 
 const productCards = [
   {

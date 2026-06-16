@@ -1,11 +1,12 @@
 "use client";
 
 import { useBuilder } from "./store";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { PALETTE } from "./types";
 
 export function Inspector() {
   const { state, updateProps, deleteComponent, duplicateComponent, findNode, select } = useBuilder();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const selectedNode = useMemo(
     () => (state.selectedId ? findNode(state.selectedId) : null),
@@ -26,6 +27,18 @@ export function Inspector() {
   const handleChange = (key: string, value: string) => {
     updateProps(selectedNode.id, { ...props, [key]: value });
   };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      updateProps(selectedNode.id, { ...props, src: reader.result as string, alt: file.name });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const isImageType = selectedNode.type === "img" || selectedNode.type === "AvatarImage";
 
   const propConfig: Record<string, { label: string; type: "text" | "textarea" | "class" }> = {
     text: { label: "Content", type: "textarea" },
@@ -49,6 +62,19 @@ export function Inspector() {
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {isImageType && (
+          <div>
+            <label className="block text-xs font-medium text-scale-11 mb-1">Upload Image</label>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="w-full text-xs px-2 py-1.5 rounded-md bg-scale-3 border border-scale-5 text-scale-12 file:mr-2 file:px-2 file:py-0.5 file:rounded file:border-0 file:text-xs file:bg-brand file:text-black file:font-medium hover:file:bg-brand-hover"
+            />
+          </div>
+        )}
+
         {editableKeys.map((key) => {
           const config = propConfig[key];
           return (
@@ -75,7 +101,7 @@ export function Inspector() {
           );
         })}
 
-        {editableKeys.length === 0 && (
+        {editableKeys.length === 0 && !isImageType && (
           <p className="text-xs text-scale-10">No editable properties</p>
         )}
       </div>

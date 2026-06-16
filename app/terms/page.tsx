@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Termos de Serviço | Developer Platform",
+  description: "Termos e condições de uso da Developer Platform. Leia sobre nossos termos de serviço, direitos e obrigações.",
+};
+
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-scale-1">

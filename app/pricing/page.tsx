@@ -1,10 +1,16 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { ComputePricing } from "@/components/compute-pricing";
 import { DiskPricing } from "@/components/disk-pricing";
 import { AddonPricing } from "@/components/addon-pricing";
 import { FaqPricing } from "@/components/faq-pricing";
 import { Check } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Preços | Developer Platform",
+  description: "Planos e preços da Developer Platform. Escolha o plano ideal para seu projeto, desde o plano gratuito até planos empresariais com suporte dedicado.",
+};
 
 interface PlanFeature {
   text: string;

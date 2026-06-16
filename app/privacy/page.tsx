@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacidade | Developer Platform",
+  description: "Política de privacidade da Developer Platform. Saiba como coletamos, usamos e protegemos seus dados.",
+};
+
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-scale-1">

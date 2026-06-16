@@ -220,6 +220,14 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
     return React.createElement(node.type, commonProps, ...children);
   }
 
+  if (node.type === "img") {
+    return React.createElement("div", commonProps,
+      node.props.src
+        ? React.createElement("img", { src: node.props.src, alt: node.props.alt, className: "max-w-full h-auto", style: { maxWidth: "100%" } })
+        : React.createElement("span", { className: "text-scale-9 text-xs" }, "No image selected")
+    );
+  }
+
   if (node.type === "Separator") {
     return React.createElement("div", commonProps,
       React.createElement(Separator, { key: "sep" })
