@@ -106,8 +106,8 @@ export function CommunityCarousel() {
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_35%,_var(--color-scale-1)_75%)]" />
       </div>
 
-      <div className="md:hidden relative px-6 lg:px-16 xl:px-20">
-        <div className="flex gap-4 overflow-x-auto scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-4">
+      <div className="md:hidden relative">
+        <div className="flex gap-4 overflow-x-auto scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-4 px-6 lg:px-16 xl:px-20">
           {orderedTweets.map((t, i) => (
             <div key={`${t.handle}-${i}`} className={`flex-shrink-0 ${widthMobileMap[t.type]}`}>
               <TweetCard tweet={t} />
