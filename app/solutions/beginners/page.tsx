@@ -1,16 +1,50 @@
 import Link from "next/link";
 
 const frameworks = [
-  { name: "React", icon: "⚛️" },
-  { name: "Next.js", icon: "▲" },
-  { name: "RedwoodJS", icon: "🌲" },
-  { name: "Flutter", icon: "🦋" },
-  { name: "Kotlin", icon: "🅺" },
-  { name: "Svelte", icon: "🧡" },
-  { name: "SolidJS", icon: "💠" },
-  { name: "Vue", icon: "💚" },
-  { name: "Nuxt", icon: "🍃" },
-  { name: "Refine", icon: "⚡" },
+  { name: "React", icon: "⚛️", href: "https://supabase.com/docs/guides/getting-started/quickstarts/reactjs" },
+  { name: "Next.js", icon: "▲", href: "https://supabase.com/docs/guides/getting-started/quickstarts/nextjs" },
+  { name: "RedwoodJS", icon: "🌲", href: "https://supabase.com/docs/guides/getting-started/quickstarts/redwoodjs" },
+  { name: "Flutter", icon: "🦋", href: "https://supabase.com/docs/guides/getting-started/quickstarts/flutter" },
+  { name: "Kotlin", icon: "🅺", href: "https://supabase.com/docs/guides/getting-started/quickstarts/kotlin" },
+  { name: "Svelte", icon: "🧡", href: "https://supabase.com/docs/guides/getting-started/quickstarts/svelte" },
+  { name: "SolidJS", icon: "💠", href: "https://supabase.com/docs/guides/getting-started/quickstarts/solidjs" },
+  { name: "Vue", icon: "💚", href: "https://supabase.com/docs/guides/getting-started/quickstarts/vue" },
+  { name: "Nuxt", icon: "🍃", href: "https://supabase.com/docs/guides/getting-started/quickstarts/nuxtjs" },
+  { name: "Refine", icon: "⚡", href: "https://supabase.com/docs/guides/getting-started/quickstarts/refine" },
+];
+
+const aiPrompts = [
+  {
+    title: "Bootstrap Next.js app with Supabase Auth",
+    href: "https://supabase.com/docs/guides/getting-started/ai-prompts/nextjs",
+    code: `1. Install @supabase/supabase-js and @supabase/ssr packages.
+2. Set up environment variables.
+3. Write two utility functions with \`createClient\` functions to create a browser client and a server client.
+4. Hook up middleware to refresh auth tokens`,
+  },
+  {
+    title: "Writing Supabase Edge Functions",
+    href: "https://supabase.com/docs/guides/getting-started/ai-prompts/edge-functions",
+    code: `1. Try to use Web APIs and Deno's core APIs instead of external dependencies (eg: use fetch instead of Axios, use WebSockets API instead of node-ws)
+2. If you are reusing utility methods between Edge Functions, add them to 'supabase/functions/_shared' and import using a relative path. Do NOT have cross dependencies between Edge Functions.
+3. Do NOT use bare specifiers when importing dependecnies. If you need to use an external dependency, make sure it's prefixed with either 'npm:' or 'jsr:'. For example, '@supabase/supabase-js' should be written as 'npm:@supabase/supabase-js'.
+4. For external imports, always define a version. For example, 'npm:@express' should be written as 'npm:express@4.18.2'.
+5. For external dependencies, importing via 'npm:' and 'jsr:' is preferred. Minimize the use of imports from @'deno.land/x', 'esm.sh' and @'unpkg.com'. If you have a package from one of those CDNs, you can replace the CDN hostname with 'npm:' specifier.`,
+  },
+  {
+    title: "Declarative Database Schema",
+    href: "https://supabase.com/docs/guides/getting-started/ai-prompts/declarative-database-schema",
+    code: `Mandatory Instructions for Supabase Declarative Schema Management
+## 1. **Exclusive Use of Declarative Schema**
+-**All database schema modifications must be defined within '.sql' files located in the 'supabase/schemas/' directory.`,
+  },
+  {
+    title: "Create RLS policies",
+    href: "https://supabase.com/docs/guides/getting-started/ai-prompts/database-rls-policies",
+    code: `You're a Supabase Postgres expert in writing row level security policies. Your purpose is to generate a policy with the constraints given by the user. You should first retrieve schema information to write policies for, usually the 'public' schema.
+The output should use the following instructions:
+- The generated SQL must be valid SQL.`,
+  },
 ];
 
 const tools = [
@@ -170,14 +204,14 @@ function TestimonialCard({
   );
 }
 
-function FrameworkCard({ name, icon }: { name: string; icon: string }) {
+function FrameworkCard({ name, icon, href }: { name: string; icon: string; href: string }) {
   return (
-    <div className="flex cursor-pointer items-center gap-3 rounded-xl border border-scale-6 bg-scale-2 px-5 py-4 transition-colors hover:border-scale-7 hover:bg-scale-3">
+    <a href={href} target="_blank" rel="noopener noreferrer" className="flex cursor-pointer items-center gap-3 rounded-xl border border-scale-6 bg-scale-2 px-5 py-4 transition-colors hover:border-scale-7 hover:bg-scale-3">
       <span className="flex size-10 items-center justify-center rounded-lg bg-scale-4 text-lg">
         {icon}
       </span>
       <span className="text-sm font-medium text-scale-12">{name}</span>
-    </div>
+    </a>
   );
 }
 
@@ -400,8 +434,54 @@ export default function BeginnersPage() {
             </h2>
             <div className="mt-10 grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
               {frameworks.map((fw) => (
-                <FrameworkCard key={fw.name} name={fw.name} icon={fw.icon} />
+                <FrameworkCard key={fw.name} name={fw.name} icon={fw.icon} href={fw.href} />
               ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-scale-6 px-6 py-20">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="text-center text-2xl font-semibold tracking-tight text-scale-12">
+              Or, start with Supabase AI Prompts
+            </h2>
+            <div className="mt-10 grid gap-4 md:grid-cols-2">
+              {aiPrompts.map((prompt) => (
+                <div key={prompt.title} className="group flex flex-col rounded-xl border border-scale-6 bg-scale-2">
+                  <div className="flex items-center justify-between border-b border-scale-6 px-5 py-3.5">
+                    <h3 className="truncate text-sm font-medium text-scale-12">
+                      {prompt.title}
+                    </h3>
+                    <a
+                      href={prompt.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="relative shrink-0 ml-2"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-scale-10 opacity-80 transition-opacity group-hover:opacity-100">
+                        <path d="M7 7h10v10" />
+                        <path d="M7 17 17 7" />
+                      </svg>
+                    </a>
+                  </div>
+                  <div className="p-5">
+                    <pre className="line-clamp-4 whitespace-pre-wrap font-mono text-xs leading-relaxed text-scale-11">{prompt.code}</pre>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6">
+              <a
+                href="https://supabase.com/docs/guides/getting-started/ai-prompts"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-1 text-sm text-scale-11 hover:text-scale-12 transition-colors"
+              >
+                <span>View all prompts</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-all group-hover:ml-0.5">
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </a>
             </div>
           </div>
         </section>
