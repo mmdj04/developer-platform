@@ -217,11 +217,11 @@ export function SignUpForm() {
         </p>
         <p className="text-xs leading-relaxed text-scale-10">
           By continuing, you agree to our{" "}
-          <Link href="#" className="underline hover:text-scale-11 transition-colors">
+          <Link href="/terms" className="underline hover:text-scale-11 transition-colors">
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link href="#" className="underline hover:text-scale-11 transition-colors">
+          <Link href="/privacy" className="underline hover:text-scale-11 transition-colors">
             Privacy Policy
           </Link>
           , and to receive periodic emails with updates.
