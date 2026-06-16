@@ -113,6 +113,29 @@ const customers = [
   { name: "Submagic" },
 ];
 
+const story = (name: string, description: string) => ({ type: "featured" as const, name, description });
+const logo = (name: string) => ({ type: "logo" as const, name });
+
+interface CustomerColumn {
+  width: string;
+  items: Array<{ type: "logo"; name: string } | { type: "featured"; name: string; description: string }>;
+}
+
+const customerColumns: CustomerColumn[] = [
+  { width: "w-[250px]", items: [logo("Quivr"), logo("Tinloof")] },
+  { width: "w-[250px]", items: [logo("1Password"), logo("Next Door Lending")] },
+  { width: "w-[450px]", items: [story("Maergo", "How Supabase Helped Achieve Scalability, Speed, and Cost Saving")] },
+  { width: "w-[250px]", items: [logo("Shotgun"), logo("Mozilla")] },
+  { width: "w-[450px]", items: [story("Chatbase", "Chatbase goes upmarket on Supabase")] },
+  { width: "w-[250px]", items: [logo("Mobbin"), logo("HappyTeams")] },
+  { width: "w-[250px]", items: [logo("PwC"), logo("LangChain")] },
+  { width: "w-[250px]", items: [logo("Resend"), logo("Loops")] },
+  { width: "w-[450px]", items: [story("Udio", "How Udio scales AI music generation with Supabase")] },
+  { width: "w-[250px]", items: [logo("Humata"), logo("Gopuff")] },
+  { width: "w-[450px]", items: [story("Pika", "Pika builds AI video platform on Supabase")] },
+  { width: "w-[250px]", items: [logo("Betashares"), logo("Submagic")] },
+];
+
 const frameworks = [
   {
     name: "React",
@@ -276,13 +299,25 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="group/tw-marquee w-full items-stretch h-[100px] min-w-[300px] nowrap gap-4 hidden md:flex overflow-hidden">
+        <div className="group/tw-marquee w-full items-stretch h-[300px] min-w-[300px] nowrap gap-4 hidden md:flex">
           <div className="flex motion-safe:animate-[marquee_80000ms_linear_both_infinite] group-hover/tw-marquee:[animation-play-state:paused] will-change-transform gap-4">
-            {[...customers, ...customers].map((c, i) => (
-              <div key={`${c.name}-${i}`} className="flex-shrink-0 w-[200px] h-full flex items-center justify-center rounded-lg md:rounded-xl p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
-                <div className="w-full h-full rounded-[7px] md:rounded-[11px] bg-scale-3 flex items-center justify-center px-6">
-                  <span className="text-scale-11 text-sm font-medium whitespace-nowrap">{c.name}</span>
-                </div>
+            {customerColumns.map((col, i) => (
+              <div key={i} className={`flex flex-col h-full gap-4 ${col.width}`}>
+                {col.items.map((item) => (
+                  item.type === "featured" ? (
+                    <div className="w-full h-full rounded-lg md:rounded-xl p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4 hover:shadow-md transition-all">
+                      <div className="relative z-10 w-full h-full rounded-[7px] md:rounded-[11px] bg-scale-3 overflow-hidden text-scale-11 p-4 md:p-6 flex flex-col justify-between">
+                        <p className="text-sm">{item.description}</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="w-full h-full rounded-lg md:rounded-xl p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
+                      <div className="w-full h-full rounded-[7px] md:rounded-[11px] bg-scale-3 flex items-center justify-center">
+                        <span className="text-scale-11 text-sm font-medium">{item.name}</span>
+                      </div>
+                    </div>
+                  )
+                ))}
               </div>
             ))}
           </div>
