@@ -4,19 +4,21 @@ import { createClient } from "@/lib/supabase/server";
 import { LogoutButton } from "./logout-button";
 
 export async function AuthButton() {
-  let user: { email?: string } | null = null;
+  let user: boolean = false;
+  let email: string | undefined;
 
   try {
     const supabase = await createClient();
     const { data } = await supabase.auth.getClaims();
-    user = data?.claims;
+    user = !!data?.claims;
+    email = (data?.claims as { email?: string } | undefined)?.email;
   } catch {
     // Supabase not configured yet — show login/signup links
   }
 
   return user ? (
     <div className="flex items-center gap-4">
-      Hey, {user.email}!
+      Hey, {email}!
       <LogoutButton />
     </div>
   ) : (
