@@ -2,10 +2,10 @@
 
 import { useBuilder } from "./store";
 import { useState } from "react";
-import type { ComponentNode } from "./types";
+import type { ComponentNode, PaletteItem } from "./types";
 
 function TreeNode({ node, depth }: { node: ComponentNode; depth: number }) {
-  const { state, select, deleteComponent, duplicateComponent } = useBuilder();
+  const { state, select, deleteComponent, duplicateComponent, addComponent, moveComponent } = useBuilder();
   const isSelected = state.selectedId === node.id;
   const hasChildren = node.children.length > 0;
   const [collapsed, setCollapsed] = useState(false);
@@ -15,11 +15,34 @@ function TreeNode({ node, depth }: { node: ComponentNode; depth: number }) {
     e.dataTransfer.effectAllowed = "move";
   };
 
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.dataTransfer.dropEffect = "move";
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const data = e.dataTransfer.getData("text/plain");
+    if (!data) return;
+    try {
+      const parsed = JSON.parse(data);
+      if (parsed.moveId && parsed.moveId !== node.id) {
+        moveComponent(parsed.moveId, node.id);
+      } else if (parsed.type) {
+        addComponent(node.id, parsed as PaletteItem);
+      }
+    } catch {}
+  };
+
   return (
     <div>
       <div
         draggable
         onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
         onClick={(e) => {
           e.stopPropagation();
           select(node.id);

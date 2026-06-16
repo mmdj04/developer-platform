@@ -5,7 +5,7 @@ import type { PaletteItem } from "./types";
 import { RenderNode } from "./renderer";
 
 export function Canvas() {
-  const { state, select, addComponent } = useBuilder();
+  const { state, select, addComponent, moveComponent } = useBuilder();
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -23,8 +23,12 @@ export function Canvas() {
     const data = e.dataTransfer.getData("text/plain");
     if (!data) return;
     try {
-      const item: PaletteItem = JSON.parse(data);
-      addComponent("root", item);
+      const parsed = JSON.parse(data);
+      if (parsed.moveId) {
+        moveComponent(parsed.moveId, "root");
+      } else {
+        addComponent("root", parsed as PaletteItem);
+      }
     } catch {}
   };
 

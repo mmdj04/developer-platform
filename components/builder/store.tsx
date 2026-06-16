@@ -1,11 +1,20 @@
 "use client";
 
 import { createContext, useContext, useReducer, useCallback, type ReactNode } from "react";
-import type { ComponentNode, BuilderState, BuilderAction, PaletteItem } from "./types";
+import type { ComponentNode, BuilderState, BuilderAction, PaletteItem, DefaultChild } from "./types";
 
 let nextId = 1;
 function genId() {
   return `c_${nextId++}`;
+}
+
+function toNode(child: DefaultChild): ComponentNode {
+  return {
+    id: genId(),
+    type: child.type,
+    props: { ...child.props },
+    children: child.children.map(toNode),
+  };
 }
 
 function createNode(item: PaletteItem, overrides?: Partial<ComponentNode>): ComponentNode {
@@ -16,12 +25,7 @@ function createNode(item: PaletteItem, overrides?: Partial<ComponentNode>): Comp
     children: [],
   };
   if (item.defaultChildren) {
-    node.children = item.defaultChildren.map((child) => ({
-      id: genId(),
-      type: child.type,
-      props: { ...child.props },
-      children: child.children.map((gchild) => ({ ...gchild, id: genId() })),
-    }));
+    node.children = item.defaultChildren.map(toNode);
   }
   return node;
 }
@@ -36,39 +40,34 @@ function findNode(root: ComponentNode | null, id: string): ComponentNode | null 
   return null;
 }
 
-function removeNode(root: ComponentNode | null, id: string): ComponentNode | null {
-  if (!root) return null;
-  if (root.id === id) return null;
-  return {
-    ...root,
-    children: root.children.filter((c) => c.id !== id).map((c) => removeNode(c, id)!),
-  };
-}
-
-function replaceNode(root: ComponentNode | null, id: string, newNode: ComponentNode): ComponentNode | null {
-  if (!root) return null;
-  if (root.id === id) return newNode;
-  return {
-    ...root,
-    children: root.children.map((c) => replaceNode(c, id, newNode)!),
-  };
-}
-
-function addChild(root: ComponentNode | null, parentId: string, child: ComponentNode): ComponentNode | null {
-  if (!root) return null;
-  if (root.id === parentId) {
-    return { ...root, children: [...root.children, child] };
-  }
-  return { ...root, children: root.children.map((c) => addChild(c, parentId, child)!) };
-}
-
-function deepClone(root: ComponentNode | null): ComponentNode | null {
-  if (!root) return null;
-  return { ...root, children: root.children.map(deepClone) as ComponentNode[] };
+function deepClone(root: ComponentNode): ComponentNode {
+  return { ...root, children: root.children.map(deepClone) };
 }
 
 function serialize(root: ComponentNode | null): string {
   return JSON.stringify(root);
+}
+
+function mapTree(root: ComponentNode | null, fn: (node: ComponentNode) => ComponentNode | null): ComponentNode | null {
+  if (!root) return null;
+  const mapped = fn(root);
+  if (!mapped) return null;
+  if (mapped.children) {
+    mapped.children = mapped.children
+      .map((c) => mapTree(c, fn))
+      .filter(Boolean) as ComponentNode[];
+  }
+  return mapped;
+}
+
+function findParent(root: ComponentNode | null, id: string): ComponentNode | null {
+  if (!root) return null;
+  for (const child of root.children) {
+    if (child.id === id) return root;
+    const found = findParent(child, id);
+    if (found) return found;
+  }
+  return null;
 }
 
 function reducer(state: BuilderState, action: BuilderAction): BuilderState {
@@ -81,24 +80,35 @@ function reducer(state: BuilderState, action: BuilderAction): BuilderState {
 
   switch (action.type) {
     case "ADD_COMPONENT": {
-      const parent = action.parentId === "root" ? null : findNode(state.root, action.parentId);
-      if (!parent && action.parentId !== "root") return state;
       const node = createNode(action.item);
-      const newRoot = parent
-        ? addChild(state.root, action.parentId, node)
-        : node;
+      if (!state.root) {
+        return { ...state, root: node, history: pushHistory(node), historyIndex: state.history.length };
+      }
+      const parent = action.parentId === "root" ? state.root : findNode(state.root, action.parentId);
+      if (!parent) return state;
+      const newRoot = mapTree(state.root, (n) =>
+        n.id === parent.id ? { ...n, children: [...n.children, node] } : n
+      );
       return { ...state, root: newRoot, history: pushHistory(newRoot), historyIndex: state.history.length };
     }
+
     case "UPDATE_PROPS": {
       const node = findNode(state.root, action.id);
       if (!node) return state;
-      const newNode = { ...node, props: action.props };
-      const newRoot = replaceNode(state.root, action.id, newNode);
+      const newRoot = mapTree(state.root, (n) =>
+        n.id === action.id ? { ...n, props: action.props } : n
+      );
       return { ...state, root: newRoot, history: pushHistory(newRoot), historyIndex: state.history.length };
     }
+
     case "DELETE_COMPONENT": {
-      if (action.id === "root" || !state.root) return state;
-      const newRoot = removeNode(state.root, action.id);
+      if (!state.root || action.id === state.root.id) {
+        return { ...state, root: null, selectedId: null, history: pushHistory(null), historyIndex: state.history.length };
+      }
+      const newRoot = mapTree(state.root, (n) => ({
+        ...n,
+        children: n.children.filter((c) => c.id !== action.id),
+      }));
       return {
         ...state,
         root: newRoot,
@@ -107,19 +117,50 @@ function reducer(state: BuilderState, action: BuilderAction): BuilderState {
         historyIndex: state.history.length,
       };
     }
+
     case "DUPLICATE_COMPONENT": {
       const node = findNode(state.root, action.id);
       if (!node) return state;
-      const clone = deepClone(node)!;
+      const clone = deepClone(node);
       clone.id = genId();
-      // Find parent to attach
-      const newRoot = addChild(state.root, "root", clone); // simplified
+      const parent = findParent(state.root, action.id) || state.root;
+      if (!parent) return state;
+      const newRoot = mapTree(state.root, (n) =>
+        n.id === parent.id
+          ? {
+              ...n,
+              children: n.children.flatMap((c) =>
+                c.id === action.id ? [c, clone] : [c]
+              ),
+            }
+          : n
+      );
       return { ...state, root: newRoot, history: pushHistory(newRoot), historyIndex: state.history.length };
     }
+
     case "SELECT":
       return { ...state, selectedId: action.id };
-    case "MOVE":
-      return state;
+
+    case "MOVE": {
+      if (!state.root || action.id === state.root.id) return state;
+      const source = findNode(state.root, action.id);
+      const target = action.parentId === "root" ? state.root : findNode(state.root, action.parentId);
+      if (!source || !target || target.id === action.id) return state;
+      const sourceParent = findParent(state.root, action.id);
+      if (!sourceParent) return state;
+      let newRoot = mapTree(state.root, (n) =>
+        n.id === sourceParent.id
+          ? { ...n, children: n.children.filter((c) => c.id !== action.id) }
+          : n
+      );
+      newRoot = mapTree(newRoot!, (n) =>
+        n.id === target.id
+          ? { ...n, children: [...n.children, source] }
+          : n
+      );
+      return { ...state, root: newRoot, history: pushHistory(newRoot), historyIndex: state.history.length };
+    }
+
     case "UNDO": {
       if (state.historyIndex <= 0) return state;
       const newIdx = state.historyIndex - 1;
@@ -127,6 +168,7 @@ function reducer(state: BuilderState, action: BuilderAction): BuilderState {
       if (!entry) return state;
       return { ...state, root: JSON.parse(entry), historyIndex: newIdx };
     }
+
     case "REDO": {
       if (state.historyIndex >= state.history.length - 1) return state;
       const newIdx = state.historyIndex + 1;
@@ -134,12 +176,13 @@ function reducer(state: BuilderState, action: BuilderAction): BuilderState {
       if (!entry) return state;
       return { ...state, root: JSON.parse(entry), historyIndex: newIdx };
     }
+
     case "LOAD":
       return { ...state, root: action.root, history: [serialize(action.root)], historyIndex: 0 };
-    case "CLEAR": {
-      const empty = null;
-      return { ...state, root: empty, selectedId: null, history: [serialize(empty)], historyIndex: 0 };
-    }
+
+    case "CLEAR":
+      return { ...state, root: null, selectedId: null, history: [serialize(null)], historyIndex: 0 };
+
     default:
       return state;
   }
@@ -159,6 +202,7 @@ interface BuilderContextType {
   updateProps: (id: string, props: Record<string, string>) => void;
   deleteComponent: (id: string) => void;
   duplicateComponent: (id: string) => void;
+  moveComponent: (id: string, parentId: string) => void;
   select: (id: string | null) => void;
   undo: () => void;
   redo: () => void;
@@ -188,6 +232,10 @@ export function BuilderProvider({ children }: { children: ReactNode }) {
     dispatch({ type: "DUPLICATE_COMPONENT", id });
   }, []);
 
+  const moveComponent = useCallback((id: string, parentId: string) => {
+    dispatch({ type: "MOVE", id, parentId });
+  }, []);
+
   const select = useCallback((id: string | null) => {
     dispatch({ type: "SELECT", id });
   }, []);
@@ -211,6 +259,7 @@ export function BuilderProvider({ children }: { children: ReactNode }) {
         updateProps,
         deleteComponent,
         duplicateComponent,
+        moveComponent,
         select,
         undo,
         redo,

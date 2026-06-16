@@ -16,10 +16,123 @@ import {
   CardHeader,
   CardContent,
 } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Spinner } from "@/components/ui/spinner";
+import { Kbd } from "@/components/ui/kbd";
+import { Toggle } from "@/components/ui/toggle";
+import { Slider } from "@/components/ui/slider";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "@/components/ui/tabs";
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "@/components/ui/collapsible";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableFooter,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableCaption,
+} from "@/components/ui/table";
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@/components/ui/radio-group";
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@/components/ui/toggle-group";
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+} from "@/components/ui/breadcrumb";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+} from "@/components/ui/pagination";
+import {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+} from "@/components/ui/avatar";
+import {
+  Empty,
+  EmptyHeader,
+  EmptyTitle,
+  EmptyDescription,
+  EmptyContent,
+  EmptyMedia,
+} from "@/components/ui/empty";
+import {
+  ButtonGroup,
+  ButtonGroupSeparator,
+  ButtonGroupText,
+} from "@/components/ui/button-group";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupText,
+  InputGroupInput,
+  InputGroupTextarea,
+} from "@/components/ui/input-group";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+  InputOTPSeparator,
+} from "@/components/ui/input-otp";
+import {
+  ResizablePanelGroup,
+  ResizablePanel,
+  ResizableHandle,
+} from "@/components/ui/resizable";
+import {
+  NativeSelect,
+} from "@/components/ui/native-select";
+import {
+  Field,
+  FieldLabel,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLegend,
+  FieldSeparator,
+  FieldSet,
+  FieldContent,
+  FieldTitle,
+} from "@/components/ui/field";
 import { useBuilder } from "./store";
 
 const htmlTags = new Set([
-  "div", "section", "h1", "h2", "h3", "p", "span",
+  "div", "section", "h1", "h2", "h3", "p", "span", "grid", "flex",
 ]);
 
 const noChildTags = new Set(["h1", "h2", "h3", "p", "span"]);
@@ -37,6 +150,7 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    e.dataTransfer.dropEffect = "copy";
     e.currentTarget.classList.add("drag-over");
   };
 
@@ -52,7 +166,9 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
     if (!data) return;
     try {
       const item = JSON.parse(data);
-      addComponent(node.id, item);
+      if (!item.moveId) {
+        addComponent(node.id, item);
+      }
     } catch {}
   };
 
@@ -125,29 +241,38 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
   }
 
   const componentMap: Record<string, React.ComponentType<any>> = {
-    Button, Badge: Badge as React.ComponentType<any>,
-    Separator: Separator as React.ComponentType<any>,
-    Alert: Alert as React.ComponentType<any>,
-    Input: Input as React.ComponentType<any>,
-    Label: Label as React.ComponentType<any>,
-    Textarea: Textarea as React.ComponentType<any>,
-    Checkbox: Checkbox as React.ComponentType<any>,
-    Switch: Switch as React.ComponentType<any>,
-    Card: Card as React.ComponentType<any>,
-    CardHeader: CardHeader as React.ComponentType<any>,
-    CardContent: CardContent as React.ComponentType<any>,
+    Button, Badge,
+    Alert, Input, Label, Textarea,
+    Progress, Skeleton, Spinner, Kbd, Toggle, Slider, AspectRatio,
+    Accordion, AccordionItem, AccordionTrigger, AccordionContent,
+    Tabs, TabsList, TabsTrigger, TabsContent,
+    Collapsible, CollapsibleTrigger, CollapsibleContent,
+    Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption,
+    RadioGroup, RadioGroupItem,
+    ToggleGroup, ToggleGroupItem,
+    Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbEllipsis,
+    Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis,
+    Avatar, AvatarImage, AvatarFallback,
+    Empty, EmptyHeader, EmptyTitle, EmptyDescription, EmptyContent, EmptyMedia,
+    ButtonGroup, ButtonGroupSeparator, ButtonGroupText,
+    InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGroupInput, InputGroupTextarea,
+    InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator,
+    ResizablePanelGroup, ResizablePanel, ResizableHandle,
+    ScrollArea, NativeSelect,
+    Card, CardHeader, CardContent,
+    Field, FieldLabel, FieldDescription, FieldError, FieldGroup, FieldLegend, FieldSeparator, FieldSet, FieldContent, FieldTitle,
   };
   const Comp = componentMap[node.type];
 
   if (Comp) {
     const extraProps: Record<string, any> = {};
     for (const [k, v] of Object.entries(node.props)) {
-      if (k !== "text" && k !== "className") extraProps[k] = v;
+      if (k !== "text" && k !== "className" && k !== "placeholder") extraProps[k] = v;
     }
     return React.createElement("div", commonProps,
       React.createElement(Comp, { className: node.props.className, ...extraProps },
-        node.props.text || children.length > 0
-          ? [node.props.text, ...children].filter(Boolean)
+        node.props.text || node.props.placeholder || children.length > 0
+          ? [node.props.text || node.props.placeholder, ...children].filter(Boolean)
           : null
       )
     );
