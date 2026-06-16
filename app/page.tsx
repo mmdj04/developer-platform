@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SupabaseLogo } from "@/components/supabase-logo";
+import { DashboardTabs } from "@/components/dashboard-tabs";
 
 const productCards = [
   {
@@ -262,6 +263,16 @@ export default function Home() {
               </a>
             ))}
           </div>
+        </div>
+      </div>
+
+      <div className="sm:py-18 container relative mx-auto px-6 py-16 md:py-24 lg:px-16 lg:py-24 xl:px-20 text-center flex flex-col items-center">
+        <h3 className="text-2xl md:text-4xl font-semibold tracking-tight text-scale-12">
+          <span>Seja produtivo e gerencie seu aplicativo</span><br className="hidden sm:block" />
+          <span className="text-scale-11">sem sair do dashboard.</span>
+        </h3>
+        <div className="mt-8 lg:mt-12 w-full">
+          <DashboardTabs />
         </div>
       </div>
 
