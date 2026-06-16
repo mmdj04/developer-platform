@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import type { ComponentNode } from "./types";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -139,6 +139,13 @@ const noChildTags = new Set(["h1", "h2", "h3", "p", "span", "img"]);
 
 const useDefaultKey = "_useDefault";
 
+const stylePropKeys = new Set([
+  "backgroundColor", "color", "borderColor",
+  "width", "height", "margin", "padding",
+  "top", "left", "right", "bottom",
+  "position", "gap", "opacity",
+]);
+
 const componentMap: Record<string, React.ComponentType<any>> = {
   Button, Badge,
   Alert, Input, Label, Textarea,
@@ -221,7 +228,7 @@ function extractStyleProps(props: Record<string, string>) {
   const remainingProps: Record<string, string> = {};
   let useDefault = false;
   for (const [k, v] of Object.entries(props)) {
-    if (k === "backgroundColor" || k === "color" || k === "borderColor") {
+    if (stylePropKeys.has(k)) {
       styleProps[k] = v;
     } else if (k === useDefaultKey) {
       useDefault = v === "true";
@@ -230,9 +237,9 @@ function extractStyleProps(props: Record<string, string>) {
     }
   }
   const inlineStyle: Record<string, string> = {};
-  if (styleProps.backgroundColor) inlineStyle.backgroundColor = styleProps.backgroundColor;
-  if (styleProps.color) inlineStyle.color = styleProps.color;
-  if (styleProps.borderColor) inlineStyle.borderColor = styleProps.borderColor;
+  for (const [k, v] of Object.entries(styleProps)) {
+    if (v) inlineStyle[k] = v;
+  }
   return { styleProps, remainingProps, inlineStyle, useDefault };
 }
 
@@ -244,7 +251,9 @@ interface RenderNodeProps {
 }
 
 export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProps) {
-  const { state, addComponent } = useBuilder();
+  const { state, addComponent, dispatch } = useBuilder();
+  const nodeIdRef = useRef(node.id);
+  nodeIdRef.current = node.id;
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -278,6 +287,8 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
 
   const className = `${remainingProps.className || ""} ${selectionBorder} relative group cursor-pointer transition-all hover:outline-brand/50`.trim();
 
+  const hasAbsolute = node.props.position === "absolute";
+
   const children: React.ReactNode[] = [];
 
   if ("text" in node.props) {
@@ -302,9 +313,73 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
     );
   });
 
+  const handleResizeStart = (e: React.MouseEvent, axis: "width" | "height" | "both") => {
+    e.preventDefault();
+    e.stopPropagation();
+    const el = document.querySelector(`[data-node-id="${node.id}"]`) as HTMLElement | null;
+    const startW = el?.offsetWidth || 100;
+    const startH = el?.offsetHeight || 40;
+
+    const handleMouseMove = (me: MouseEvent) => {
+      const dx = me.clientX - e.clientX;
+      const dy = me.clientY - e.clientY;
+      const props: Record<string, string> = {};
+      if (axis === "width" || axis === "both") {
+        props.width = `${Math.max(20, Math.round(startW + dx))}px`;
+      }
+      if (axis === "height" || axis === "both") {
+        props.height = `${Math.max(20, Math.round(startH + dy))}px`;
+      }
+      if (Object.keys(props).length > 0) dispatch({ type: "UPDATE_PROPS", id: nodeIdRef.current, props });
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
+  const handleMoveStart = (e: React.MouseEvent) => {
+    if (!hasAbsolute) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const el = document.querySelector(`[data-node-id="${node.id}"]`) as HTMLElement | null;
+    const rect = el?.getBoundingClientRect();
+    const startT = rect?.top || 0;
+    const startL = rect?.left || 0;
+
+    const handleMouseMove = (me: MouseEvent) => {
+      const dx = me.clientX - e.clientX;
+      const dy = me.clientY - e.clientY;
+      dispatch({
+        type: "UPDATE_PROPS",
+        id: nodeIdRef.current,
+        props: {
+          left: `${Math.round(startL + dx)}px`,
+          top: `${Math.round(startT + dy)}px`,
+        },
+      });
+    };
+
+    const handleMouseUp = () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
+  const mergedStyle: Record<string, any> = {};
+  if (Object.keys(inlineStyle).length > 0) Object.assign(mergedStyle, inlineStyle);
+  if (hasAbsolute) mergedStyle.position = "absolute";
+
   const commonProps: Record<string, any> = {
     className,
-    style: Object.keys(inlineStyle).length > 0 ? inlineStyle : undefined,
+    style: Object.keys(mergedStyle).length > 0 ? mergedStyle : undefined,
     onClick: (e: React.MouseEvent) => {
       e.stopPropagation();
       onSelect(node.id);
@@ -318,13 +393,46 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
     commonProps.onDrop = handleDrop;
   }
 
-  const core = renderCoreNode(node, Object.keys(inlineStyle).length > 0 ? inlineStyle : undefined, remainingProps, children, useDefault);
-
-  if (htmlTags.has(node.type)) {
-    return React.cloneElement(core, commonProps);
+  if (isSelected && hasAbsolute) {
+    commonProps.onMouseDown = handleMoveStart;
+    commonProps.style = { ...commonProps.style, cursor: "grab" };
   }
 
-  return React.createElement("div", commonProps, core);
+  const core = renderCoreNode(node, Object.keys(inlineStyle).length > 0 ? inlineStyle : undefined, remainingProps, children, useDefault);
+
+  let element: React.ReactElement;
+  if (htmlTags.has(node.type)) {
+    element = React.cloneElement(core, commonProps);
+  } else {
+    element = React.createElement("div", commonProps, core);
+  }
+
+  if (isSelected) {
+    const rh = [
+      React.createElement("div", {
+        key: "rh-r",
+        onMouseDown: (e: React.MouseEvent) => handleResizeStart(e, "width"),
+        style: { position: "absolute", right: -3, top: 0, bottom: 0, width: 6, cursor: "ew-resize", zIndex: 20 } as React.CSSProperties,
+      }),
+      React.createElement("div", {
+        key: "rh-b",
+        onMouseDown: (e: React.MouseEvent) => handleResizeStart(e, "height"),
+        style: { position: "absolute", left: 0, right: 0, bottom: -3, height: 6, cursor: "ns-resize", zIndex: 20 } as React.CSSProperties,
+      }),
+      React.createElement("div", {
+        key: "rh-c",
+        onMouseDown: (e: React.MouseEvent) => handleResizeStart(e, "both"),
+        style: { position: "absolute", right: -4, bottom: -4, width: 12, height: 12, cursor: "nwse-resize", zIndex: 20, backgroundColor: "rgb(var(--brand))", borderRadius: 2 } as React.CSSProperties,
+      }),
+    ];
+    const tag = element.type;
+    if (typeof tag === "string" && (tag === "div" || htmlTags.has(tag))) {
+      return React.cloneElement(element, {}, ...(React.Children.toArray((element.props as any).children)), ...rh);
+    }
+    return React.createElement("div", { style: { position: "relative", display: "inline-block" } }, element, ...rh);
+  }
+
+  return element;
 }
 
 export function PreviewNode({ node }: { node: ComponentNode }) {

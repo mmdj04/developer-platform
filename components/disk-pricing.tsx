@@ -11,7 +11,8 @@ export function DiskPricing() {
           </p>
         </div>
 
-        <table className="text-scale-12 w-full table-auto overflow-hidden rounded-b hidden lg:table text-sm">
+        <div className="overflow-x-auto">
+        <table className="text-scale-12 w-full table-auto text-sm">
           <thead>
             <tr>
               <th className="p-3 text-left font-medium" />
@@ -57,6 +58,7 @@ export function DiskPricing() {
             </tr>
           </tbody>
         </table>
+        </div>
 
         <div className="mt-8 flex justify-center">
           <a
