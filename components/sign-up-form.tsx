@@ -124,7 +124,7 @@ export function SignUpForm() {
       <div className="flex flex-col gap-3">
         <Button
           variant="outline"
-          className="relative flex w-full items-center justify-center gap-2 border-scale-6 bg-scale-2 text-scale-12 hover:bg-scale-3"
+          className="relative flex w-full items-center justify-center gap-2 border-scale-6 bg-scale-2 text-scale-12 hover:bg-scale-3 hover:border-scale-8"
           disabled={isGithubLoading}
           onClick={handleGithubSignUp}
         >
@@ -199,7 +199,7 @@ export function SignUpForm() {
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-10 w-full bg-brand text-black hover:bg-brand-hover font-medium"
+          className="h-10 w-full bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand"
         >
           {isLoading ? "Criando conta..." : "Cadastrar"}
         </Button>

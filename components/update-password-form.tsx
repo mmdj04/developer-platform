@@ -74,7 +74,7 @@ export function UpdatePasswordForm() {
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-10 w-full bg-brand text-black hover:bg-brand-hover font-medium"
+          className="h-10 w-full bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand"
         >
           {isLoading ? "Salvando..." : "Salvar nova senha"}
         </Button>

@@ -103,7 +103,7 @@ export function CommunityCarousel() {
             <TweetCard key={`${t.handle}-${i}`} tweet={t} />
           ))}
         </div>
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_35%,_var(--color-scale-1)_75%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_50%,_var(--color-scale-1)_85%)]" />
       </div>
 
       <div className="md:hidden relative">
@@ -114,8 +114,8 @@ export function CommunityCarousel() {
             </div>
           ))}
         </div>
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-64 bg-linear-to-r from-scale-1 to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-64 bg-linear-to-l from-scale-1 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-48 bg-linear-to-r from-scale-1 to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-48 bg-linear-to-l from-scale-1 to-transparent" />
       </div>
     </div>
   );

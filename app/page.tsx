@@ -235,10 +235,10 @@ export default function Home() {
           Developer Platform
         </h1>
         <div className="flex gap-3">
-          <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover font-medium">
+          <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand">
             <Link href="/auth/login">Entrar</Link>
           </Button>
-          <Button asChild size="lg" variant="outline" className="border-scale-6 bg-scale-2 text-scale-12 hover:bg-scale-3">
+          <Button asChild size="lg" variant="outline" className="border-scale-6 bg-scale-2 text-scale-12 hover:bg-scale-3 hover:border-scale-8">
             <Link href="/auth/sign-up">Cadastrar</Link>
           </Button>
         </div>
@@ -421,10 +421,10 @@ export default function Home() {
           <span className="block sm:inline"> escala para milhões</span>
         </h2>
         <div className="flex items-center justify-center gap-2 mt-8">
-          <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover font-medium">
+          <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand">
             <Link href="https://supabase.com/dashboard">Iniciar projeto</Link>
           </Button>
-          <Button asChild size="lg" variant="outline" className="border-scale-6 bg-scale-2 text-scale-12 hover:bg-scale-3">
+          <Button asChild size="lg" variant="outline" className="border-scale-6 bg-scale-2 text-scale-12 hover:bg-scale-3 hover:border-scale-8">
             <Link href="/contact/sales">Solicitar demonstração</Link>
           </Button>
         </div>
