@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 
 const authRoutes = [
   "/auth/login",
@@ -13,21 +13,21 @@ const authRoutes = [
   "/auth/sign-up-success",
 ];
 
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/database", label: "Database" },
-  { href: "/auth", label: "Auth" },
-  { href: "/edge-functions", label: "Edge Functions" },
-  { href: "/storage", label: "Storage" },
-  { href: "/realtime", label: "Realtime" },
-  { href: "/modules/vector", label: "Vector" },
+const mainLinks = [
+  { href: "/", label: "Home", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
+  { href: "/pricing", label: "Pricing", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
 ];
 
-const footerLinks = [
+const resourceLinks = [
   { href: "/terms", label: "Terms of Service" },
   { href: "/privacy", label: "Privacy Policy" },
-  { href: "/contact/sales", label: "Contact Sales" },
+  { href: "/protected", label: "Dashboard" },
+];
+
+const socialLinks = [
+  { href: "https://discord.supabase.com", label: "Discord", icon: "M7.5 5.75c0-.41.34-.75.75-.75h7.5c.41 0 .75.34.75.75v2.5c0 .41-.34.75-.75.75h-7.5a.75.75 0 01-.75-.75v-2.5zM4.75 9.5c-.41 0-.75.34-.75.75v3.5c0 .41.34.75.75.75h14.5c.41 0 .75-.34.75-.75v-3.5c0-.41-.34-.75-.75-.75H4.75z" },
+  { href: "https://github.com/supabase/supabase", label: "GitHub", icon: "M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" },
+  { href: "https://x.com/supabase", label: "X (Twitter)", icon: "M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" },
 ];
 
 export function SiteHeader() {
@@ -69,40 +69,96 @@ export function SiteHeader() {
             </svg>
           </button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-72 bg-scale-1 border-r border-scale-5">
-          <SheetHeader className="pb-4 border-b border-scale-5">
-            <SheetTitle className="text-scale-12 text-sm font-semibold">
-              Navegação
-            </SheetTitle>
-          </SheetHeader>
-          <nav className="flex flex-col gap-1 mt-4">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
+        <SheetContent side="left" className="w-80 bg-scale-1 border-r border-scale-5 p-0">
+          <div className="flex flex-col h-full">
+            <div className="px-5 py-4 border-b border-scale-5">
+              <span className="text-sm font-semibold text-scale-12">Menu</span>
+            </div>
+
+            <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+              {mainLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`flex items-center gap-3 text-sm px-3 py-2.5 rounded-lg transition-colors ${
+                      isActive
+                        ? "bg-scale-4 text-scale-12 font-medium"
+                        : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
+                    }`}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="shrink-0"
+                    >
+                      <path d={link.icon} />
+                    </svg>
+                    {link.label}
+                  </Link>
+                );
+              })}
+
+              <div className="pt-4 pb-2">
+                <span className="text-[11px] font-mono uppercase tracking-widest text-scale-9 px-3">
+                  Recursos
+                </span>
+              </div>
+              {resourceLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-sm px-3 py-2 rounded-md transition-colors ${
-                    isActive
+                  className={`block text-sm px-3 py-2.5 rounded-lg transition-colors ${
+                    pathname === link.href
                       ? "bg-scale-4 text-scale-12 font-medium"
                       : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
                   }`}
                 >
                   {link.label}
                 </Link>
-              );
-            })}
-          </nav>
-          <div className="mt-auto pt-4 border-t border-scale-5">
-            {footerLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block text-sm px-3 py-2 rounded-md text-scale-10 hover:text-scale-12 hover:bg-scale-4 transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+              ))}
+            </nav>
+
+            <div className="border-t border-scale-5 px-3 py-4 space-y-1">
+              <span className="text-[11px] font-mono uppercase tracking-widest text-scale-9 px-3">
+                Social
+              </span>
+              <div className="flex flex-wrap gap-1 pt-1">
+                {socialLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm px-3 py-2 rounded-lg text-scale-11 hover:text-scale-12 hover:bg-scale-4 transition-colors"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="shrink-0"
+                    >
+                      <path d={link.icon} />
+                    </svg>
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </SheetContent>
       </Sheet>
