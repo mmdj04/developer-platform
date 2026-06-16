@@ -137,6 +137,101 @@ const htmlTags = new Set([
 
 const noChildTags = new Set(["h1", "h2", "h3", "p", "span", "img"]);
 
+const componentMap: Record<string, React.ComponentType<any>> = {
+  Button, Badge,
+  Alert, Input, Label, Textarea,
+  Progress, Skeleton, Spinner, Kbd, Toggle, Slider, AspectRatio,
+  Accordion, AccordionItem, AccordionTrigger, AccordionContent,
+  Tabs, TabsList, TabsTrigger, TabsContent,
+  Collapsible, CollapsibleTrigger, CollapsibleContent,
+  Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption,
+  RadioGroup, RadioGroupItem,
+  ToggleGroup, ToggleGroupItem,
+  Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbEllipsis,
+  Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis,
+  Avatar, AvatarImage, AvatarFallback,
+  Empty, EmptyHeader, EmptyTitle, EmptyDescription, EmptyContent, EmptyMedia,
+  ButtonGroup, ButtonGroupSeparator, ButtonGroupText,
+  InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGroupInput, InputGroupTextarea,
+  InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator,
+  ResizablePanelGroup, ResizablePanel, ResizableHandle,
+  ScrollArea, NativeSelect,
+  Card, CardHeader, CardContent,
+  Field, FieldLabel, FieldDescription, FieldError, FieldGroup, FieldLegend, FieldSeparator, FieldSet, FieldContent, FieldTitle,
+};
+
+function renderCoreNode(
+  node: ComponentNode,
+  inlineStyle: Record<string, string> | undefined,
+  remainingProps: Record<string, string>,
+  children: React.ReactNode[]
+): React.ReactElement {
+  if (htmlTags.has(node.type)) {
+    return React.createElement(node.type, { className: remainingProps.className, style: inlineStyle }, ...children);
+  }
+
+  if (node.type === "img") {
+    return React.createElement("div",
+      node.props.src
+        ? React.createElement("img", { src: node.props.src, alt: node.props.alt, className: "max-w-full h-auto", style: { maxWidth: "100%" } })
+        : React.createElement("span", { className: "text-scale-9 text-xs" }, "No image selected")
+    ) as React.ReactElement;
+  }
+
+  if (node.type === "Separator") {
+    return React.createElement(Separator, { key: "sep" });
+  }
+
+  if (node.type === "Checkbox") {
+    return React.createElement("div", { className: "flex items-center gap-2" },
+      React.createElement(Checkbox, { key: "cb", id: node.id }),
+      React.createElement(Label, { key: "lb", htmlFor: node.id }, node.props.text || "Checkbox")
+    );
+  }
+
+  if (node.type === "Switch") {
+    return React.createElement("div", { className: "flex items-center gap-2" },
+      React.createElement(Switch, { key: "sw", id: node.id }),
+      React.createElement(Label, { key: "lb", htmlFor: node.id }, node.props.text || "Toggle")
+    );
+  }
+
+  const Comp = componentMap[node.type];
+  if (Comp) {
+    const extraProps: Record<string, any> = {};
+    for (const [k, v] of Object.entries(remainingProps)) {
+      if (k !== "text" && k !== "className" && k !== "placeholder") extraProps[k] = v;
+    }
+    if (inlineStyle && Object.keys(inlineStyle).length > 0) {
+      extraProps.style = inlineStyle;
+    }
+    return React.createElement(Comp, { className: remainingProps.className, ...extraProps },
+      remainingProps.text || remainingProps.placeholder || children.length > 0
+        ? [remainingProps.text || remainingProps.placeholder, ...children].filter(Boolean)
+        : null
+    );
+  }
+
+  return React.createElement("div", { style: inlineStyle }, ...children);
+}
+
+function extractStyleProps(props: Record<string, string>) {
+  const styleProps: Record<string, string> = {};
+  const remainingProps: Record<string, string> = {};
+  for (const [k, v] of Object.entries(props)) {
+    if (k === "backgroundColor" || k === "color" || k === "borderColor") {
+      styleProps[k] = v;
+    } else {
+      remainingProps[k] = v;
+    }
+  }
+  const inlineStyle: Record<string, string> = {};
+  if (styleProps.backgroundColor) inlineStyle.backgroundColor = styleProps.backgroundColor;
+  if (styleProps.color) inlineStyle.color = styleProps.color;
+  if (styleProps.borderColor) inlineStyle.borderColor = styleProps.borderColor;
+  return { styleProps, remainingProps, inlineStyle };
+}
+
 interface RenderNodeProps {
   node: ComponentNode;
   isSelected: boolean;
@@ -172,19 +267,7 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
     } catch {}
   };
 
-  const styleProps: Record<string, string> = {};
-  const remainingProps: Record<string, string> = {};
-  for (const [k, v] of Object.entries(node.props)) {
-    if (k === "backgroundColor" || k === "color" || k === "borderColor") {
-      styleProps[k] = v;
-    } else {
-      remainingProps[k] = v;
-    }
-  }
-  const inlineStyle: Record<string, string> = {};
-  if (styleProps.backgroundColor) inlineStyle.backgroundColor = styleProps.backgroundColor;
-  if (styleProps.color) inlineStyle.color = styleProps.color;
-  if (styleProps.borderColor) inlineStyle.borderColor = styleProps.borderColor;
+  const { inlineStyle, remainingProps } = extractStyleProps(node.props);
 
   const isNestable = htmlTags.has(node.type) && !noChildTags.has(node.type);
   const selectionBorder = isSelected ? "outline-2 outline-brand outline" : "outline-1 outline-dashed outline-scale-6";
@@ -231,78 +314,38 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
     commonProps.onDrop = handleDrop;
   }
 
+  const core = renderCoreNode(node, Object.keys(inlineStyle).length > 0 ? inlineStyle : undefined, remainingProps, children);
+
   if (htmlTags.has(node.type)) {
-    return React.createElement(node.type, commonProps, ...children);
+    return React.cloneElement(core, commonProps);
   }
 
-  if (node.type === "img") {
-    return React.createElement("div", commonProps,
-      node.props.src
-        ? React.createElement("img", { src: node.props.src, alt: node.props.alt, className: "max-w-full h-auto", style: { maxWidth: "100%" } })
-        : React.createElement("span", { className: "text-scale-9 text-xs" }, "No image selected")
+  return React.createElement("div", commonProps, core);
+}
+
+export function PreviewNode({ node }: { node: ComponentNode }) {
+  const { inlineStyle, remainingProps } = extractStyleProps(node.props);
+
+  const children: React.ReactNode[] = [];
+
+  if ("text" in node.props) {
+    children.push(node.props.text);
+  } else if ("placeholder" in node.props) {
+    children.push(
+      React.createElement("span", { key: "text", className: "text-scale-9" }, node.props.placeholder)
     );
   }
 
-  if (node.type === "Separator") {
-    return React.createElement("div", commonProps,
-      React.createElement(Separator, { key: "sep" })
+  node.children.forEach((child) => {
+    children.push(
+      React.createElement(PreviewNode, { key: child.id, node: child })
     );
-  }
+  });
 
-  if (node.type === "Checkbox") {
-    return React.createElement("div", { ...commonProps, className: `${className} flex items-center gap-2` },
-      React.createElement(Checkbox, { key: "cb", id: node.id }),
-      React.createElement(Label, { key: "lb", htmlFor: node.id }, node.props.text || "Checkbox")
-    );
-  }
-
-  if (node.type === "Switch") {
-    return React.createElement("div", { ...commonProps, className: `${className} flex items-center gap-2` },
-      React.createElement(Switch, { key: "sw", id: node.id }),
-      React.createElement(Label, { key: "lb", htmlFor: node.id }, node.props.text || "Toggle")
-    );
-  }
-
-  const componentMap: Record<string, React.ComponentType<any>> = {
-    Button, Badge,
-    Alert, Input, Label, Textarea,
-    Progress, Skeleton, Spinner, Kbd, Toggle, Slider, AspectRatio,
-    Accordion, AccordionItem, AccordionTrigger, AccordionContent,
-    Tabs, TabsList, TabsTrigger, TabsContent,
-    Collapsible, CollapsibleTrigger, CollapsibleContent,
-    Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption,
-    RadioGroup, RadioGroupItem,
-    ToggleGroup, ToggleGroupItem,
-    Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator, BreadcrumbEllipsis,
-    Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis,
-    Avatar, AvatarImage, AvatarFallback,
-    Empty, EmptyHeader, EmptyTitle, EmptyDescription, EmptyContent, EmptyMedia,
-    ButtonGroup, ButtonGroupSeparator, ButtonGroupText,
-    InputGroup, InputGroupAddon, InputGroupButton, InputGroupText, InputGroupInput, InputGroupTextarea,
-    InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator,
-    ResizablePanelGroup, ResizablePanel, ResizableHandle,
-    ScrollArea, NativeSelect,
-    Card, CardHeader, CardContent,
-    Field, FieldLabel, FieldDescription, FieldError, FieldGroup, FieldLegend, FieldSeparator, FieldSet, FieldContent, FieldTitle,
-  };
-  const Comp = componentMap[node.type];
-
-  if (Comp) {
-    const extraProps: Record<string, any> = {};
-    for (const [k, v] of Object.entries(remainingProps)) {
-      if (k !== "text" && k !== "className" && k !== "placeholder") extraProps[k] = v;
-    }
-    if (Object.keys(inlineStyle).length > 0) {
-      extraProps.style = inlineStyle;
-    }
-    return React.createElement("div", commonProps,
-      React.createElement(Comp, { className: remainingProps.className, ...extraProps },
-        remainingProps.text || remainingProps.placeholder || children.length > 0
-          ? [remainingProps.text || remainingProps.placeholder, ...children].filter(Boolean)
-          : null
-      )
-    );
-  }
-
-  return React.createElement("div", commonProps, ...children);
+  return renderCoreNode(
+    node,
+    Object.keys(inlineStyle).length > 0 ? inlineStyle : undefined,
+    remainingProps,
+    children.filter(Boolean)
+  );
 }
