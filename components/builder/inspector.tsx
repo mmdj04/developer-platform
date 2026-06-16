@@ -1,12 +1,25 @@
 "use client";
 
 import { useBuilder } from "./store";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { PALETTE } from "./types";
 
+const ADDABLE_PROPS = [
+  { key: "text", label: "Content", type: "textarea" as const },
+  { key: "className", label: "Class Name", type: "text" as const },
+  { key: "backgroundColor", label: "Background Color", type: "color" as const },
+  { key: "color", label: "Text Color", type: "color" as const },
+  { key: "borderColor", label: "Border Color", type: "color" as const },
+  { key: "placeholder", label: "Placeholder", type: "text" as const },
+  { key: "href", label: "Link URL", type: "text" as const },
+  { key: "src", label: "Image URL", type: "text" as const },
+  { key: "alt", label: "Alt Text", type: "text" as const },
+];
+
 export function Inspector() {
-  const { state, updateProps, deleteComponent, duplicateComponent, findNode, select } = useBuilder();
+  const { state, updateProps, deleteComponent, duplicateComponent, findNode, select, addProp } = useBuilder();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showAddProp, setShowAddProp] = useState(false);
 
   const selectedNode = useMemo(
     () => (state.selectedId ? findNode(state.selectedId) : null),
@@ -28,6 +41,16 @@ export function Inspector() {
     updateProps(selectedNode.id, { ...props, [key]: value });
   };
 
+  const handleDeleteProp = (key: string) => {
+    const { [key]: _, ...rest } = props;
+    updateProps(selectedNode.id, rest);
+  };
+
+  const handleAddProp = (key: string) => {
+    addProp(selectedNode.id, key, "");
+    setShowAddProp(false);
+  };
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -40,10 +63,10 @@ export function Inspector() {
 
   const isImageType = selectedNode.type === "img" || selectedNode.type === "AvatarImage";
 
-  const propConfig: Record<string, { label: string; type: "text" | "textarea" | "class" | "color" }> = {
+  const propConfig: Record<string, { label: string; type: "text" | "textarea" | "color" }> = {
     text: { label: "Content", type: "textarea" },
     placeholder: { label: "Placeholder", type: "text" },
-    className: { label: "Class Name", type: "class" },
+    className: { label: "Class Name", type: "text" },
     href: { label: "Link URL", type: "text" },
     src: { label: "Image URL", type: "text" },
     alt: { label: "Alt Text", type: "text" },
@@ -51,6 +74,9 @@ export function Inspector() {
     color: { label: "Text Color", type: "color" },
     borderColor: { label: "Border Color", type: "color" },
   };
+
+  const existingKeys = new Set(Object.keys(props));
+  const availableProps = ADDABLE_PROPS.filter((p) => !existingKeys.has(p.key));
 
   const editableKeys = Object.keys(props).filter((k) => propConfig[k]);
 
@@ -82,9 +108,18 @@ export function Inspector() {
           const config = propConfig[key];
           return (
             <div key={key}>
-              <label className="block text-xs font-medium text-scale-11 mb-1">
-                {config?.label || key}
-              </label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="block text-xs font-medium text-scale-11">
+                  {config?.label || key}
+                </label>
+                <button
+                  onClick={() => handleDeleteProp(key)}
+                  className="text-[10px] text-scale-9 hover:text-red-400 transition-colors"
+                  title="Remove property"
+                >
+                  ✕
+                </button>
+              </div>
               {config?.type === "color" ? (
                 <div className="flex items-center gap-2">
                   <input
@@ -121,16 +156,37 @@ export function Inspector() {
         })}
 
         {editableKeys.length === 0 && !isImageType && (
-          <p className="text-xs text-scale-10">No editable properties</p>
+          <p className="text-xs text-scale-10">No properties yet</p>
         )}
 
-        {editableKeys.length === 0 && !isImageType && (
-          <p className="text-xs text-scale-10 pt-1">
-            Tip: add <span className="font-mono text-scale-11">backgroundColor</span>,{" "}
-            <span className="font-mono text-scale-11">color</span>, or{" "}
-            <span className="font-mono text-scale-11">borderColor</span> props for styling
-          </p>
-        )}
+        {/* Add Property */}
+        <div className="relative">
+          <button
+            onClick={() => setShowAddProp(!showAddProp)}
+            className="w-full text-xs px-3 py-1.5 rounded-md border border-dashed border-scale-6 text-scale-10 hover:text-scale-12 hover:border-scale-8 transition-colors"
+          >
+            + Add Property
+          </button>
+          {showAddProp && availableProps.length > 0 && (
+            <div className="absolute left-0 right-0 z-10 mt-1 bg-scale-1 border border-scale-5 rounded-md shadow-xl max-h-48 overflow-y-auto">
+              {availableProps.map((p) => (
+                <button
+                  key={p.key}
+                  onClick={() => handleAddProp(p.key)}
+                  className="w-full text-left px-3 py-2 text-xs text-scale-11 hover:text-scale-12 hover:bg-scale-4 transition-colors"
+                >
+                  <span className="font-medium text-scale-12">{p.label}</span>
+                  <span className="ml-2 text-scale-9">({p.key})</span>
+                </button>
+              ))}
+            </div>
+          )}
+          {showAddProp && availableProps.length === 0 && (
+            <div className="absolute left-0 right-0 z-10 mt-1 bg-scale-1 border border-scale-5 rounded-md shadow-xl p-3 text-xs text-scale-9 text-center">
+              All common properties already added
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="border-t border-scale-5 p-3 flex gap-2">

@@ -4,11 +4,15 @@ import { useBuilder } from "./store";
 import { useState } from "react";
 import type { ComponentNode, PaletteItem } from "./types";
 
-function TreeNode({ node, depth }: { node: ComponentNode; depth: number }) {
-  const { state, select, deleteComponent, duplicateComponent, addComponent, moveComponent } = useBuilder();
+function TreeNode({ node, depth, siblings }: { node: ComponentNode; depth: number; siblings: ComponentNode[] }) {
+  const { state, select, deleteComponent, duplicateComponent, addComponent, moveComponent, moveUp, moveDown } = useBuilder();
   const isSelected = state.selectedId === node.id;
   const hasChildren = node.children.length > 0;
   const [collapsed, setCollapsed] = useState(false);
+
+  const idx = siblings.findIndex((s) => s.id === node.id);
+  const isFirst = idx === 0;
+  const isLast = idx === siblings.length - 1;
 
   const handleDragStart = (e: React.DragEvent) => {
     e.dataTransfer.setData("text/plain", JSON.stringify({ moveId: node.id }));
@@ -70,12 +74,30 @@ function TreeNode({ node, depth }: { node: ComponentNode; depth: number }) {
         <span className="truncate flex-1">{node.type}</span>
         {isSelected && (
           <span className="opacity-0 group-hover:opacity-100 flex gap-0.5 transition-opacity">
+            {!isFirst && (
+              <button
+                onClick={(e) => { e.stopPropagation(); moveUp(node.id); }}
+                className="px-0.5 hover:text-scale-12 text-[10px] leading-none"
+                title="Move up"
+              >
+                ▲
+              </button>
+            )}
+            {!isLast && (
+              <button
+                onClick={(e) => { e.stopPropagation(); moveDown(node.id); }}
+                className="px-0.5 hover:text-scale-12 text-[10px] leading-none"
+                title="Move down"
+              >
+                ▼
+              </button>
+            )}
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 duplicateComponent(node.id);
               }}
-              className="px-1 hover:text-scale-12"
+              className="px-0.5 hover:text-scale-12"
               title="Duplicate"
             >
               ⎘
@@ -86,7 +108,7 @@ function TreeNode({ node, depth }: { node: ComponentNode; depth: number }) {
                 deleteComponent(node.id);
                 select(null);
               }}
-              className="px-1 hover:text-red-400"
+              className="px-0.5 hover:text-red-400"
               title="Delete"
             >
               ✕
@@ -97,7 +119,7 @@ function TreeNode({ node, depth }: { node: ComponentNode; depth: number }) {
       {hasChildren && !collapsed && (
         <div>
           {node.children.map((child) => (
-            <TreeNode key={child.id} node={child} depth={depth + 1} />
+            <TreeNode key={child.id} node={child} depth={depth + 1} siblings={node.children} />
           ))}
         </div>
       )}
@@ -119,7 +141,7 @@ export function TreeView() {
             Canvas is empty
           </p>
         ) : (
-          <TreeNode node={state.root} depth={0} />
+          <TreeNode node={state.root} depth={0} siblings={[state.root]} />
         )}
       </div>
     </div>

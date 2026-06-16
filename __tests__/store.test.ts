@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import type { ComponentNode, PaletteItem } from "@/components/builder/types";
+import type { ComponentNode } from "@/components/builder/types";
 
 // Test the core tree manipulation logic by testing against the public API
 // Since the store uses React context, we test the types and reducer logic directly
@@ -33,7 +33,7 @@ describe("Builder Types", () => {
       ],
     };
     expect(root.children).toHaveLength(1);
-    expect(root.children[0].type).toBe("Button");
+    expect(root.children[0]!.type).toBe("Button");
   });
 });
 
@@ -49,7 +49,7 @@ describe("Component Tree shapes", () => {
       ],
     };
     expect(card.children).toHaveLength(2);
-    expect(card.children[0].type).toBe("CardHeader");
-    expect(card.children[1].type).toBe("CardContent");
+    expect(card.children[0]!.type).toBe("CardHeader");
+    expect(card.children[1]!.type).toBe("CardContent");
   });
 });

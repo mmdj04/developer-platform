@@ -34,6 +34,9 @@ export type BuilderAction =
   | { type: "DUPLICATE_COMPONENT"; id: string }
   | { type: "SELECT"; id: string | null }
   | { type: "MOVE"; id: string; parentId: string }
+  | { type: "MOVE_UP"; id: string }
+  | { type: "MOVE_DOWN"; id: string }
+  | { type: "ADD_PROP"; id: string; key: string; value: string }
   | { type: "UNDO" }
   | { type: "REDO" }
   | { type: "LOAD"; root: ComponentNode | null }

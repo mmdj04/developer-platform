@@ -70,6 +70,24 @@ function findParent(root: ComponentNode | null, id: string): ComponentNode | nul
   return null;
 }
 
+function moveSibling(root: ComponentNode, id: string, direction: -1 | 1): ComponentNode {
+  const parent = findParent(root, id);
+  if (!parent) return root;
+  const idx = parent.children.findIndex((c) => c.id === id);
+  if (idx === -1) return root;
+  const newIdx = idx + direction;
+  if (newIdx < 0 || newIdx >= parent.children.length) return root;
+  const siblings = [...parent.children];
+  const a = siblings[newIdx];
+  const b = siblings[idx];
+  if (!a || !b) return root;
+  siblings[idx] = a;
+  siblings[newIdx] = b;
+  return mapTree(root, (n) =>
+    n.id === parent.id ? { ...n, children: siblings } : n
+  )!;
+}
+
 function reducer(state: BuilderState, action: BuilderAction): BuilderState {
   const pushHistory = (newRoot: ComponentNode | null) => {
     const newHistory = state.history.slice(0, state.historyIndex + 1);
@@ -161,6 +179,30 @@ function reducer(state: BuilderState, action: BuilderAction): BuilderState {
       return { ...state, root: newRoot, history: pushHistory(newRoot), historyIndex: state.history.length };
     }
 
+    case "MOVE_UP": {
+      if (!state.root || action.id === state.root.id) return state;
+      const newRoot = moveSibling(state.root, action.id, -1);
+      if (newRoot === state.root) return state;
+      return { ...state, root: newRoot, history: pushHistory(newRoot), historyIndex: state.history.length };
+    }
+
+    case "MOVE_DOWN": {
+      if (!state.root || action.id === state.root.id) return state;
+      const newRoot = moveSibling(state.root, action.id, 1);
+      if (newRoot === state.root) return state;
+      return { ...state, root: newRoot, history: pushHistory(newRoot), historyIndex: state.history.length };
+    }
+
+    case "ADD_PROP": {
+      const node = findNode(state.root, action.id);
+      if (!node) return state;
+      const newProps = { ...node.props, [action.key]: action.value };
+      const newRoot = mapTree(state.root, (n) =>
+        n.id === action.id ? { ...n, props: newProps } : n
+      );
+      return { ...state, root: newRoot, history: pushHistory(newRoot), historyIndex: state.history.length };
+    }
+
     case "UNDO": {
       if (state.historyIndex <= 0) return state;
       const newIdx = state.historyIndex - 1;
@@ -203,6 +245,9 @@ interface BuilderContextType {
   deleteComponent: (id: string) => void;
   duplicateComponent: (id: string) => void;
   moveComponent: (id: string, parentId: string) => void;
+  moveUp: (id: string) => void;
+  moveDown: (id: string) => void;
+  addProp: (id: string, key: string, value: string) => void;
   select: (id: string | null) => void;
   undo: () => void;
   redo: () => void;
@@ -236,6 +281,18 @@ export function BuilderProvider({ children }: { children: ReactNode }) {
     dispatch({ type: "MOVE", id, parentId });
   }, []);
 
+  const moveUp = useCallback((id: string) => {
+    dispatch({ type: "MOVE_UP", id });
+  }, []);
+
+  const moveDown = useCallback((id: string) => {
+    dispatch({ type: "MOVE_DOWN", id });
+  }, []);
+
+  const addProp = useCallback((id: string, key: string, value: string) => {
+    dispatch({ type: "ADD_PROP", id, key, value });
+  }, []);
+
   const select = useCallback((id: string | null) => {
     dispatch({ type: "SELECT", id });
   }, []);
@@ -260,6 +317,9 @@ export function BuilderProvider({ children }: { children: ReactNode }) {
         deleteComponent,
         duplicateComponent,
         moveComponent,
+        moveUp,
+        moveDown,
+        addProp,
         select,
         undo,
         redo,

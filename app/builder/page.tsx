@@ -331,7 +331,7 @@ function MobilePanel({
 
 function BuilderLayout() {
   const [preview, setPreview] = useState(false);
-  const [showTree, setShowTree] = useState(true);
+  const [showTree, setShowTree] = useState(false);
   const [mobilePanel, setMobilePanel] = useState<"none" | "palette" | "right">("none");
   const [canvasBg, setCanvasBg] = useState("");
   const exportHook = useExport();
