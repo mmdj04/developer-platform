@@ -308,18 +308,18 @@ export default function Home() {
         <div className="md:hidden w-full px-6 overflow-x-auto scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="flex gap-3 pb-4">
             {customerColumns.map((col, i) => (
-              <div key={i} className={`flex-shrink-0 flex flex-col gap-3 ${col.width === "w-[450px]" ? "w-[300px]" : "w-[160px]"}`}>
+              <div key={i} className={`flex-shrink-0 flex flex-col gap-3 ${col.width}`}>
                 {col.items.map((item) => (
                   item.type === "featured" ? (
-                    <div className="w-full h-full min-h-[100px] rounded-lg p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
+                    <div className="w-full h-full min-h-[140px] rounded-lg p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
                       <div className="relative z-10 w-full h-full rounded-[7px] bg-scale-3 overflow-hidden text-scale-11 p-4 flex flex-col justify-between">
-                        <p className="text-xs">{item.description}</p>
+                        <p className="text-sm">{item.description}</p>
                       </div>
                     </div>
                   ) : (
-                    <div className="w-full h-full min-h-[42px] rounded-lg p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
+                    <div className="w-full h-full min-h-[65px] rounded-lg p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
                       <div className="w-full h-full rounded-[7px] bg-scale-3 flex items-center justify-center px-4">
-                        <span className="text-scale-11 text-xs font-medium whitespace-nowrap">{item.name}</span>
+                        <span className="text-scale-11 text-sm font-medium whitespace-nowrap">{item.name}</span>
                       </div>
                     </div>
                   )
