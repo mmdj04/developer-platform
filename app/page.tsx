@@ -249,6 +249,10 @@ export default function Home() {
         ))}
       </div>
 
+      <div className="text-center text-sm text-scale-11 pb-8">
+        <p>Use um ou todos. Os melhores produtos. Integrados como plataforma.</p>
+      </div>
+
       <div className="container relative mx-auto px-6 lg:px-16 xl:px-20 pb-16 md:pb-24">
         <div className="flex flex-col xl:flex-row gap-8 items-center justify-between">
           <div className="text-center xl:text-left text-2xl md:text-4xl text-scale-11 whitespace-nowrap leading-tight">
@@ -378,10 +382,6 @@ export default function Home() {
             <Link href="/contact/sales">Solicitar demonstração</Link>
           </Button>
         </div>
-      </div>
-
-      <div className="pb-16 md:pb-24 text-center text-sm text-scale-11">
-        <p>Use um ou todos. Os melhores produtos. Integrados como plataforma.</p>
       </div>
     </div>
   );
