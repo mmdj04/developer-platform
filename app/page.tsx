@@ -287,32 +287,36 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="group/tw-marquee w-full items-stretch h-[300px] min-w-[300px] nowrap gap-4 hidden md:flex">
-          <div className="flex motion-safe:animate-[marquee_80000ms_linear_both_infinite] group-hover/tw-marquee:[animation-play-state:paused] will-change-transform gap-4">
-            {customerColumns.map((col, i) => (
-              <div key={i} className={`flex flex-col h-full gap-4 ${col.width}`}>
-                {col.items.map((item) => (
-                  item.type === "featured" ? (
-                    <div className="w-full h-full rounded-lg md:rounded-xl p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4 hover:shadow-md transition-all">
-                      <div className="relative z-10 w-full h-full rounded-[7px] md:rounded-[11px] bg-scale-3 overflow-hidden text-scale-11 p-4 md:p-6 flex flex-col justify-between">
-                        <p className="text-sm">{item.description}</p>
+        <div className="hidden md:block relative">
+          <div className="group/tw-marquee w-full items-stretch h-[300px] min-w-[300px] nowrap gap-4 flex overflow-hidden">
+            <div className="flex motion-safe:animate-[marquee_80000ms_linear_both_infinite] group-hover/tw-marquee:[animation-play-state:paused] will-change-transform gap-4">
+              {customerColumns.map((col, i) => (
+                <div key={i} className={`flex flex-col h-full gap-4 ${col.width}`}>
+                  {col.items.map((item) => (
+                    item.type === "featured" ? (
+                      <div className="w-full h-full rounded-lg md:rounded-xl p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4 hover:shadow-md transition-all">
+                        <div className="relative z-10 w-full h-full rounded-[7px] md:rounded-[11px] bg-scale-3 overflow-hidden text-scale-11 p-4 md:p-6 flex flex-col justify-between">
+                          <p className="text-sm">{item.description}</p>
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="w-full h-full rounded-lg md:rounded-xl p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
-                      <div className="w-full h-full rounded-[7px] md:rounded-[11px] bg-scale-3 flex items-center justify-center">
-                        <span className="text-scale-11 text-sm font-medium">{item.name}</span>
+                    ) : (
+                      <div className="w-full h-full rounded-lg md:rounded-xl p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
+                        <div className="w-full h-full rounded-[7px] md:rounded-[11px] bg-scale-3 flex items-center justify-center">
+                          <span className="text-scale-11 text-sm font-medium">{item.name}</span>
+                        </div>
                       </div>
-                    </div>
-                  )
-                ))}
-              </div>
-            ))}
+                    )
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-linear-to-r from-scale-1 from-10% via-scale-1/60 via-30% to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-linear-to-l from-scale-1 from-10% via-scale-1/60 via-30% to-transparent" />
         </div>
 
-        <div className="md:hidden w-full px-6 overflow-x-auto scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <div className="flex gap-3 pb-4">
+        <div className="md:hidden relative w-full px-6">
+          <div className="flex gap-3 pb-4 overflow-x-auto scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {customerColumns.map((col, i) => (
               <div key={i} className={`flex-shrink-0 flex flex-col gap-3 ${col.width}`}>
                 {col.items.map((item) => (
@@ -333,6 +337,8 @@ export default function Home() {
               </div>
             ))}
           </div>
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-linear-to-r from-scale-1 from-10% via-scale-1/60 via-30% to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-linear-to-l from-scale-1 from-10% via-scale-1/60 via-30% to-transparent" />
         </div>
       </div>
 
