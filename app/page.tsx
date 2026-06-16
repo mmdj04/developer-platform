@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SupabaseLogo } from "@/components/supabase-logo";
 import { DashboardTabs } from "@/components/dashboard-tabs";
+import { CommunityCarousel } from "@/components/community-carousel";
 
 const productCards = [
   {
@@ -379,6 +380,7 @@ export default function Home() {
             <span className="ml-2">GitHub</span>
           </a>
         </div>
+        <CommunityCarousel />
       </div>
 
       <div className="sm:py-18 container relative mx-auto px-6 py-16 md:py-24 lg:px-16 lg:py-24 xl:px-20 w-full text-center flex flex-col items-center">
