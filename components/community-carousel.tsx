@@ -105,9 +105,9 @@ function TweetCard({ handle, text, href }: { handle: string; text: string; href:
 
 export function CommunityCarousel() {
   return (
-    <div className="relative w-full mt-8 max-w-7xl mx-auto">
+    <div className="relative w-screen mt-8" style={{ marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)" }}>
       <div className="hidden md:block relative overflow-hidden max-h-[500px]">
-        <div className="columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4 px-4">
+        <div className="columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4 px-6 lg:px-16 xl:px-20">
           {[...tweets, ...tweets, ...tweets].map((t, i) => (
             <TweetCard key={`${t.handle}-${i}`} {...t} />
           ))}
@@ -118,7 +118,7 @@ export function CommunityCarousel() {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-scale-2 to-transparent" />
       </div>
 
-      <div className="md:hidden relative">
+      <div className="md:hidden relative px-6 lg:px-16 xl:px-20">
         <div className="flex gap-4 overflow-x-auto scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden pb-4">
           {[...tweets, ...tweets].map((t, i) => (
             <div key={`${t.handle}-${i}`} className="w-[300px] flex-shrink-0">
