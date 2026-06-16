@@ -50,14 +50,14 @@ export function SignUpForm() {
 
   const requirements = useMemo(
     () => [
-      { met: /[A-Z]/.test(password), label: "Uppercase letter" },
-      { met: /[a-z]/.test(password), label: "Lowercase letter" },
-      { met: /[0-9]/.test(password), label: "Number" },
+      { met: /[A-Z]/.test(password), label: "Letra maiúscula" },
+      { met: /[a-z]/.test(password), label: "Letra minúscula" },
+      { met: /[0-9]/.test(password), label: "Número" },
       {
         met: /[!?<>@#$%^&*()_+\-=[\]{};':"\\|,.<>\/~`]/.test(password),
-        label: "Special character (e.g. !?<>@#$%)",
+        label: "Caractere especial (ex.: !?<>@#$%)",
       },
-      { met: password.length >= 8, label: "8 characters or more" },
+      { met: password.length >= 8, label: "8 caracteres ou mais" },
     ],
     [password],
   );
@@ -79,7 +79,7 @@ export function SignUpForm() {
       if (error) throw error;
       router.push("/auth/sign-up-success");
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred");
+      setError(error instanceof Error ? error.message : "Ocorreu um erro");
     } finally {
       setIsLoading(false);
     }
@@ -99,7 +99,7 @@ export function SignUpForm() {
       });
       if (error) throw error;
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred");
+      setError(error instanceof Error ? error.message : "Ocorreu um erro");
       setIsGithubLoading(false);
     }
   };
@@ -114,10 +114,10 @@ export function SignUpForm() {
 
       <div className="flex flex-col gap-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
-          Get started
+          Comece agora
         </h1>
         <p className="text-sm text-scale-11">
-          Create a new account
+          Crie uma nova conta
         </p>
       </div>
 
@@ -136,7 +136,7 @@ export function SignUpForm() {
           >
             <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
           </svg>
-          {isGithubLoading ? "Continuing..." : "Continue with GitHub"}
+          {isGithubLoading ? "Continuando..." : "Continuar com GitHub"}
         </Button>
 
         <div className="flex items-center gap-3 text-xs text-scale-10 uppercase">
@@ -154,7 +154,7 @@ export function SignUpForm() {
           <Input
             id="email"
             type="email"
-            placeholder="you@example.com"
+            placeholder="voce@exemplo.com"
             required
             autoComplete="email"
             value={email}
@@ -165,12 +165,12 @@ export function SignUpForm() {
 
         <div className="flex flex-col gap-2">
           <Label htmlFor="password" className="text-sm font-medium text-scale-12">
-            Password
+            Senha
           </Label>
           <Input
             id="password"
             type="password"
-            placeholder="Enter a strong password"
+            placeholder="Digite uma senha forte"
             required
             autoComplete="new-password"
             value={password}
@@ -201,30 +201,30 @@ export function SignUpForm() {
           disabled={isLoading}
           className="h-10 w-full bg-brand text-black hover:bg-brand-hover font-medium"
         >
-          {isLoading ? "Creating an account..." : "Sign up"}
+          {isLoading ? "Criando conta..." : "Cadastrar"}
         </Button>
       </form>
 
       <div className="flex flex-col gap-4 text-center text-sm text-scale-11">
         <p>
-          Have an account?{" "}
+          Já tem uma conta?{" "}
           <Link
             href="/auth/login"
             className="text-scale-12 hover:text-scale-12/80 underline underline-offset-4 transition-colors"
           >
-            Sign in
+            Entrar
           </Link>
         </p>
         <p className="text-xs leading-relaxed text-scale-10">
-          By continuing, you agree to our{" "}
+          Ao continuar, você concorda com nossos{" "}
           <Link href="/terms" className="underline hover:text-scale-11 transition-colors">
             Terms of Service
           </Link>{" "}
-          and{" "}
+          e{" "}
           <Link href="/privacy" className="underline hover:text-scale-11 transition-colors">
             Privacy Policy
           </Link>
-          , and to receive periodic emails with updates.
+          , e receber e-mails periódicos com atualizações.
         </p>
       </div>
     </div>

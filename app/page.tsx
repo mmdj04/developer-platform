@@ -4,12 +4,12 @@ import { SupabaseLogo } from "@/components/supabase-logo";
 
 const productCards = [
   {
-    title: "Postgres Database",
+    title: "Banco de Dados Postgres",
     href: "/database",
     description:
-      "Every project is <strong>a full Postgres database</strong>, the world's most trusted relational database.",
+      "Cada projeto é <strong>um banco de dados Postgres completo</strong>, o banco de dados relacional mais confiável do mundo.",
     cols: "col-span-6 md:col-span-12 xl:col-span-6",
-    checks: ["100% portable", "Built-in Auth with RLS", "Easy to extend"],
+    checks: ["100% portátil", "Auth integrado com RLS", "Fácil de estender"],
     svg: (
       <svg width="18" height="18" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M5.18625 8.66531H19.5035V15.331H5.18625V8.66531Z M4 17.0007C4 16.0804 4.7461 15.3343 5.66645 15.3343H18.9984C19.9187 15.3343 20.6648 16.0804 20.6648 17.0007V20.3335C20.6648 21.2539 19.9187 22 18.9984 22H5.66646C4.7461 22 4 21.2539 4 20.3335V17.0007Z M4 3.66646C4 2.7461 4.7461 2 5.66645 2H18.9984C19.9187 2 20.6648 2.7461 20.6648 3.66645V6.99926C20.6648 7.91962 19.9187 8.66572 18.9984 8.66572H5.66646C4.7461 8.66572 4 7.91962 4 6.99926V3.66646Z" stroke="currentColor" stroke-miterlimit="10" strokeLinejoin="round" strokeLinecap="round" strokeWidth="1.5" />
@@ -17,10 +17,10 @@ const productCards = [
     ),
   },
   {
-    title: "Authentication",
+    title: "Autenticação",
     href: "/auth",
     description:
-      "<strong>Add user sign ups and logins</strong>,<br class=\"hidden lg:inline-block\"> securing your data with Row Level Security.",
+      "<strong>Adicione cadastros e logins de usuários</strong>,<br class=\"hidden lg:inline-block\"> protegendo seus dados com Row Level Security.",
     cols: "col-span-6 xl:col-span-3",
     checks: [],
     svg: (
@@ -33,7 +33,7 @@ const productCards = [
     title: "Edge Functions",
     href: "/edge-functions",
     description:
-      "Easily write custom code<br class=\"hidden sm:inline-block\"> <strong>without deploying or scaling servers.</strong>",
+      "Escreva código personalizado<br class=\"hidden sm:inline-block\"> <strong>sem implantar ou escalar servidores.</strong>",
     cols: "col-span-6 xl:col-span-3",
     checks: [],
     svg: (
@@ -46,7 +46,7 @@ const productCards = [
     title: "Storage",
     href: "/storage",
     description:
-      "<strong>Store, organize, and serve</strong><br class=\"hidden sm:inline-block xl:hidden 2xl:inline-block\"> large files, from videos to images.",
+      "<strong>Armazene, organize e sirva</strong><br class=\"hidden sm:inline-block xl:hidden 2xl:inline-block\"> arquivos grandes, de vídeos a imagens.",
     cols: "col-span-6 xl:col-span-3",
     checks: [],
     svg: (
@@ -59,7 +59,7 @@ const productCards = [
     title: "Realtime",
     href: "/realtime",
     description:
-      "<strong>Build multiplayer experiences</strong><br class=\"hidden sm:inline-block\"> with real-time data synchronization.",
+      "<strong>Crie experiências multiplayer</strong><br class=\"hidden sm:inline-block\"> com sincronização de dados em tempo real.",
     cols: "col-span-6 xl:col-span-3",
     checks: [],
     svg: (
@@ -72,7 +72,7 @@ const productCards = [
     title: "Vector",
     href: "/modules/vector",
     description:
-      "Integrate your favorite ML-models to <br class=\"hidden sm:inline-block md:hidden\"><strong>store, index and search vector embeddings</strong>.",
+      "Integre seus modelos de ML favoritos para<br class=\"hidden sm:inline-block md:hidden\"><strong>armazenar, indexar e pesquisar embeddings vetoriais</strong>.",
     cols: "col-span-6 xl:col-span-3",
     checks: [],
     svg: (
@@ -82,9 +82,9 @@ const productCards = [
     ),
   },
   {
-    title: "Data APIs",
+    title: "APIs de Dados",
     href: "https://supabase.com/docs/guides/api",
-    description: "Instant ready-to-use <strong>Restful APIs</strong>.",
+    description: "APIs RESTful prontas <strong>para uso imediato</strong>.",
     cols: "col-span-6 xl:col-span-3",
     checks: [],
     svg: (
@@ -158,10 +158,10 @@ export default function Home() {
         </h1>
         <div className="flex gap-3">
           <Button asChild size="lg" variant="outline" className="border-scale-6 bg-scale-2 text-scale-12 hover:bg-scale-3">
-            <Link href="/auth/login">Sign in</Link>
+            <Link href="/auth/login">Entrar</Link>
           </Button>
           <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover font-medium">
-            <Link href="/auth/sign-up">Sign up</Link>
+            <Link href="/auth/sign-up">Cadastrar</Link>
           </Button>
         </div>
       </div>
