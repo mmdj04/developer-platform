@@ -29,7 +29,7 @@ export function LoginForm() {
         password,
       });
       if (error) throw error;
-      router.push("/protected");
+      router.push("/");
       router.refresh();
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "Ocorreu um erro");

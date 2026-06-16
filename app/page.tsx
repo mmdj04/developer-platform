@@ -256,10 +256,10 @@ export default function Home() {
 
       <div className="container relative mx-auto px-6 lg:px-16 xl:px-20 pb-16 md:pb-24">
         <div className="flex flex-col xl:flex-row gap-8 items-center justify-between">
-          <div className="text-center xl:text-left text-2xl md:text-4xl text-scale-11 whitespace-nowrap leading-tight">
+          <div className="text-center xl:text-left text-2xl md:text-4xl text-scale-11 leading-tight">
             Use Supabase com <span className="text-scale-12">qualquer framework</span>
           </div>
-          <div className="grid grid-cols-5 md:grid-cols-10">
+          <div className="grid grid-cols-5 md:grid-cols-10 gap-1">
             {frameworks.map((f) => (
               <a key={f.name} href={f.href} className="transition-opacity group">
                 <div className="m-1 bg-scale-3 h-16 w-16 flex items-center justify-center rounded-md group-hover:border transition-all text-scale-10 border-scale-5 hover:shadow-sm hover:text-scale-12">
