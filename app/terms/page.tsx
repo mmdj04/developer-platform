@@ -8,7 +8,7 @@ export default function TermsPage() {
           href="/"
           className="text-sm text-scale-11 hover:text-scale-12 transition-colors"
         >
-          &larr; Back
+          Developer Platform
         </Link>
       </header>
       <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-16">
