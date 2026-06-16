@@ -171,6 +171,10 @@ export default function Home() {
           <ProductCard key={card.title} {...card} />
         ))}
       </div>
+
+      <div className="pb-16 md:pb-24 text-center text-sm text-scale-11">
+        <p>Use um ou todos. Os melhores produtos. Integrados como plataforma.</p>
+      </div>
     </div>
   );
 }
