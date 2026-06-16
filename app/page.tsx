@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { SupabaseLogo } from "@/components/supabase-logo";
 import { DashboardTabs } from "@/components/dashboard-tabs";
 import { CommunityCarousel } from "@/components/community-carousel";
+import type { ReactNode } from "react";
 
 const productCards = [
   {
@@ -98,26 +99,25 @@ const productCards = [
 ];
 
 const story = (name: string, description: string) => ({ type: "featured" as const, name, description });
-const logo = (name: string) => ({ type: "logo" as const, name });
 
 interface CustomerColumn {
   width: string;
-  items: Array<{ type: "logo"; name: string } | { type: "featured"; name: string; description: string }>;
+  items: Array<{ type: "logo"; name: string; icon: ReactNode } | { type: "featured"; name: string; description: string }>;
 }
 
+const logo = (name: string, icon: ReactNode) => ({ type: "logo" as const, name, icon });
+
 const customerColumns: CustomerColumn[] = [
-  { width: "w-[250px]", items: [logo("Quivr"), logo("Tinloof")] },
-  { width: "w-[250px]", items: [logo("1Password"), logo("Next Door Lending")] },
+  { width: "w-[250px]", items: [logo("Vercel", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="m12 1.608 12 20.784H0Z"/></svg>), logo("Stripe", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z"/></svg>)] },
+  { width: "w-[250px]", items: [logo("Linear", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M2.886 4.18A11.982 11.982 0 0 1 11.99 0C18.624 0 24 5.376 24 12.009c0 3.64-1.62 6.903-4.18 9.105L2.887 4.18ZM1.817 5.626l16.556 16.556c-.524.33-1.075.62-1.65.866L.951 7.277c.247-.575.537-1.126.866-1.65ZM.322 9.163l14.515 14.515c-.71.172-1.443.282-2.195.322L0 11.358a12 12 0 0 1 .322-2.195Zm-.17 4.862 9.823 9.824a12.02 12.02 0 0 1-9.824-9.824Z"/></svg>), logo("Notion", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z"/></svg>)] },
   { width: "w-[450px]", items: [story("Maergo", "How Supabase Helped Achieve Scalability, Speed, and Cost Saving")] },
-  { width: "w-[250px]", items: [logo("Shotgun"), logo("Mozilla")] },
+  { width: "w-[250px]", items: [logo("Prisma", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M21.8068 18.2848L13.5528.7565c-.207-.4382-.639-.7273-1.1286-.7541-.5023-.0293-.9523.213-1.2062.6253L2.266 15.1271c-.2773.4518-.2718 1.0091.0158 1.4555l4.3759 6.7786c.2608.4046.7127.6388 1.1823.6388.1332 0 .267-.0188.3987-.0577l12.7019-3.7568c.3891-.1151.7072-.3904.8737-.7553s.1633-.7828-.0075-1.1454zm-1.8481.7519L9.1814 22.2242c-.3292.0975-.6448-.1873-.5756-.5194l3.8501-18.4386c.072-.3448.5486-.3996.699-.0803l7.1288 15.138c.1344.2856-.019.6224-.325.7128z"/></svg>), logo("Netlify", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M6.49 19.04h-.23L5.13 17.9v-.23l1.73-1.71h1.2l.15.15v1.2L6.5 19.04ZM5.13 6.31V6.1l1.13-1.13h.23L8.2 6.68v1.2l-.15.15h-1.2L5.13 6.31Zm9.96 9.09h-1.65l-.14-.13v-3.83c0-.68-.27-1.2-1.1-1.23-.42 0-.9 0-1.43.02l-.07.08v4.96l-.14.14H8.9l-.13-.14V8.73l.13-.14h3.7a2.6 2.6 0 0 1 2.61 2.6v4.08l-.13.14Zm-8.37-2.44H.14L0 12.82v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14Zm17.14 0h-6.58l-.14-.14v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14ZM11.05 6.55V1.64l.14-.14h1.65l.14.14v4.9l-.14.14h-1.65l-.14-.13Zm0 15.81v-4.9l.14-.14h1.65l.14.13v4.91l-.14.14h-1.65l-.14-.14Z"/></svg>)] },
   { width: "w-[450px]", items: [story("Chatbase", "Chatbase goes upmarket on Supabase")] },
-  { width: "w-[250px]", items: [logo("Mobbin"), logo("HappyTeams")] },
-  { width: "w-[250px]", items: [logo("PwC"), logo("LangChain")] },
-  { width: "w-[250px]", items: [logo("Resend"), logo("Loops")] },
-  { width: "w-[450px]", items: [story("Udio", "How Udio scales AI music generation with Supabase")] },
-  { width: "w-[250px]", items: [logo("Humata"), logo("Gopuff")] },
-  { width: "w-[450px]", items: [story("Pika", "Pika builds AI video platform on Supabase")] },
-  { width: "w-[250px]", items: [logo("Betashares"), logo("Submagic")] },
+  { width: "w-[250px]", items: [logo("Clerk", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="m21.47 20.829-2.881-2.881a.572.572 0 0 0-.7-.084 6.854 6.854 0 0 1-7.081 0 .576.576 0 0 0-.7.084l-2.881 2.881a.576.576 0 0 0-.103.69.57.57 0 0 0 .166.186 12 12 0 0 0 14.113 0 .58.58 0 0 0 .239-.423.576.576 0 0 0-.172-.453Zm.002-17.668-2.88 2.88a.569.569 0 0 1-.701.084A6.857 6.857 0 0 0 8.724 8.08a6.862 6.862 0 0 0-1.222 3.692 6.86 6.86 0 0 0 .978 3.764.573.573 0 0 1-.083.699l-2.881 2.88a.567.567 0 0 1-.864-.063A11.993 11.993 0 0 1 6.771 2.7a11.99 11.99 0 0 1 14.637-.405.566.566 0 0 1 .232.418.57.57 0 0 1-.168.448Zm-7.118 12.261a3.427 3.427 0 1 0 0-6.854 3.427 3.427 0 0 0 0 6.854Z"/></svg>), logo("PlanetScale", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M0 12C0 5.373 5.373 0 12 0c4.873 0 9.067 2.904 10.947 7.077l-15.87 15.87a11.981 11.981 0 0 1-1.935-1.099L14.99 12H12l-8.485 8.485A11.962 11.962 0 0 1 0 12Zm12.004 12L24 12.004C23.998 18.628 18.628 23.998 12.004 24Z"/></svg>)] },
+  { width: "w-[250px]", items: [logo("Sentry", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M13.91 2.505c-.873-1.448-2.972-1.448-3.844 0L6.904 7.92a15.478 15.478 0 0 1 8.53 12.811h-2.221A13.301 13.301 0 0 0 5.784 9.814l-2.926 5.06a7.65 7.65 0 0 1 4.435 5.848H2.194a.365.365 0 0 1-.298-.534l1.413-2.402a5.16 5.16 0 0 0-1.614-.913L.296 19.275a2.182 2.182 0 0 0 .812 2.999 2.24 2.24 0 0 0 1.086.288h6.983a9.322 9.322 0 0 0-3.845-8.318l1.11-1.922a11.47 11.47 0 0 1 4.95 10.24h5.915a17.242 17.242 0 0 0-7.885-15.28l2.244-3.845a.37.37 0 0 1 .504-.13c.255.14 9.75 16.708 9.928 16.9a.365.365 0 0 1-.327.543h-2.287c.029.612.029 1.223 0 1.831h2.297a2.206 2.206 0 0 0 1.922-3.31z"/></svg>), logo("Framer", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z"/></svg>)] },
+  { width: "w-[250px]", items: [logo("Replit", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M2 1.5A1.5 1.5 0 0 1 3.5 0h7A1.5 1.5 0 0 1 12 1.5V8H3.5A1.5 1.5 0 0 1 2 6.5ZM12 8h8.5A1.5 1.5 0 0 1 22 9.5v5a1.5 1.5 0 0 1-1.5 1.5H12ZM2 17.5A1.5 1.5 0 0 1 3.5 16H12v6.5a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 2 22.5Z"/></svg>), logo("Railway", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M.113 10.27A13.026 13.026 0 000 11.48h18.23c-.064-.125-.15-.237-.235-.347-3.117-4.027-4.793-3.677-7.19-3.78-.8-.034-1.34-.048-4.524-.048-1.704 0-3.555.005-5.358.01-.234.63-.459 1.24-.567 1.737h9.342v1.216H.113v.002zm18.26 2.426H.009c.02.326.05.645.094.961h16.955c.754 0 1.179-.429 1.315-.96zm-17.318 4.28s2.81 6.902 10.93 7.024c4.855 0 9.027-2.883 10.92-7.024H1.056zM11.988 0C7.5 0 3.593 2.466 1.531 6.108l4.75-.005v-.002c3.71 0 3.849.016 4.573.047l.448.016c1.563.052 3.485.22 4.996 1.364.82.621 2.007 1.99 2.712 2.965.654.902.842 1.94.396 2.934-.408.914-1.289 1.458-2.353 1.458H.391s.099.42.249.886h22.748A12.026 12.026 0 0024 12.005C24 5.377 18.621 0 11.988 0z"/></svg>)] },
+  { width: "w-[250px]", items: [logo("Upstash", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M13.8027 0C11.193 0 8.583.9952 6.5918 2.9863c-3.9823 3.9823-3.9823 10.4396 0 14.4219 1.9911 1.9911 5.2198 1.9911 7.211 0 1.991-1.9911 1.991-5.2198 0-7.211L12 12c.9956.9956.9956 2.6098 0 3.6055-.9956.9955-2.6099.9955-3.6055 0-2.9866-2.9868-2.9866-7.8297 0-10.8164 2.9868-2.9868 7.8297-2.9868 10.8164 0l1.8028-1.8028C19.0225.9952 16.4125 0 13.8027 0zM12 12c-.9956-.9956-.9956-2.6098 0-3.6055.9956-.9955 2.6098-.9955 3.6055 0 2.9867 2.9868 2.9867 7.8297 0 10.8164-2.9867 2.9868-7.8297 2.9868-10.8164 0l-1.8028 1.8028c3.9823 3.9822 10.4396 3.9822 14.4219 0 3.9823-3.9824 3.9823-10.4396 0-14.4219-.9956-.9956-2.3006-1.4922-3.6055-1.4922-1.3048 0-2.6099.4966-3.6054 1.4922-1.9912 1.9912-1.9912 5.2198 0 7.211z"/></svg>), logo("Fly.io", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M11.987 0c-2.45-.01-5.002.925-6.541 2.897-1.17 1.502-1.664 3.474-1.49 5.356.29 2.112 1.476 3.96 2.676 5.672a41.5 41.5 0 0 0 4.216 4.831c-1.063.832-1.943 2.286-1.357 3.644.821 2.32 4.665 2.05 5.122-.372.39-1.288-.694-2.533-1.428-3.309 2.388-2.431 4.706-5.036 6.17-8.145.595-1.32.902-2.802.614-4.24-.28-2.341-1.823-4.473-3.967-5.46C14.76.266 13.364.016 11.987 0m-.236 1.577v15.534C9.881 13.483 7.724 9.266 8.73 5.069c.35-1.539 1.253-3.309 3.02-3.492m1.996.04c1.534.357 3.031 1.096 3.906 2.48 1.3 1.93 1.318 4.55.1 6.521-1.268 2.395-3.06 4.463-4.916 6.415 1.472-2.974 3.074-6.106 3.182-9.5-.043-2.08-.438-4.612-2.272-5.916M11.97 20.103c.848.342 1.597 1.983.153 2.173-.664.15-1.367-.599-.995-1.222.213-.355.488-.73.842-.95"/></svg>)] },
+  { width: "w-[250px]", items: [logo("CodeSandbox", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M0 24H24V0H0V2.45455H21.5455V21.5455H2.45455V0H0Z"/></svg>), logo("Render", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M18.263.007c-3.121-.147-5.744 2.109-6.192 5.082-.018.138-.045.272-.067.405-.696 3.703-3.936 6.507-7.827 6.507-1.388 0-2.691-.356-3.825-.979a.2024.2024 0 0 0-.302.178V24H12v-8.999c0-1.656 1.338-3 2.987-3h2.988c3.382 0 6.103-2.817 5.97-6.244-.12-3.084-2.61-5.603-5.682-5.75"/></svg>)] },
 ];
 
 const frameworks = [
@@ -238,7 +238,7 @@ export default function Home() {
           <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand">
             <Link href="/auth/login">Entrar</Link>
           </Button>
-          <Button asChild size="lg" variant="outline" className="border-scale-6 bg-scale-2 text-scale-12 hover:bg-scale-3 hover:border-scale-8">
+          <Button asChild size="lg" variant="outline" className="bg-scale-3 hover:bg-scale-5 border-scale-5 text-scale-12 hover:border-scale-8">
             <Link href="/auth/sign-up">Cadastrar</Link>
           </Button>
         </div>
@@ -302,8 +302,9 @@ export default function Home() {
                         </div>
                       ) : (
                         <div className="w-full h-full rounded-lg md:rounded-xl p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
-                          <div className="w-full h-full rounded-[7px] md:rounded-[11px] bg-scale-3 flex items-center justify-center">
-                            <span className="text-scale-11 text-sm font-medium">{item.name}</span>
+                          <div className="w-full h-full rounded-[7px] md:rounded-[11px] bg-scale-3 flex items-center justify-center gap-3 px-4">
+                            <span className="text-scale-11 shrink-0">{item.icon}</span>
+                            <span className="text-scale-12 text-base font-semibold truncate">{item.name}</span>
                           </div>
                         </div>
                       )
@@ -329,8 +330,9 @@ export default function Home() {
                       </div>
                     ) : (
                       <div className="w-full h-full min-h-[65px] rounded-lg p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
-                        <div className="w-full h-full rounded-[7px] bg-scale-3 flex items-center justify-center px-4">
-                          <span className="text-scale-11 text-sm font-medium whitespace-nowrap">{item.name}</span>
+                        <div className="w-full h-full rounded-[7px] bg-scale-3 flex items-center justify-center gap-3 px-4">
+                          <span className="text-scale-11 shrink-0">{item.icon}</span>
+                          <span className="text-scale-12 text-base font-semibold whitespace-nowrap truncate">{item.name}</span>
                         </div>
                       </div>
                     )
@@ -424,7 +426,7 @@ export default function Home() {
           <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand">
             <Link href="https://supabase.com/dashboard">Iniciar projeto</Link>
           </Button>
-          <Button asChild size="lg" variant="outline" className="border-scale-6 bg-scale-2 text-scale-12 hover:bg-scale-3 hover:border-scale-8">
+          <Button asChild size="lg" variant="outline" className="bg-scale-3 hover:bg-scale-5 border-scale-5 text-scale-12 hover:border-scale-8">
             <Link href="/contact/sales">Solicitar demonstração</Link>
           </Button>
         </div>

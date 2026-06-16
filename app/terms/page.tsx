@@ -1,16 +1,6 @@
-import Link from "next/link";
-
 export default function TermsPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-scale-1">
-      <header className="flex h-16 items-center border-b border-scale-6 px-6">
-        <Link
-          href="/"
-          className="text-sm text-scale-11 hover:text-scale-12 transition-colors"
-        >
-          Developer Platform
-        </Link>
-      </header>
+    <div className="min-h-screen bg-scale-1">
       <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-16">
         <div className="flex flex-col gap-2 mb-10">
           <h1 className="text-3xl font-semibold tracking-tight text-scale-12">

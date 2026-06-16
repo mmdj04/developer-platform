@@ -77,7 +77,7 @@ export function LoginForm() {
       <div className="flex flex-col gap-3">
         <Button
           variant="outline"
-          className="relative flex w-full items-center justify-center gap-2 border-scale-6 bg-scale-2 text-scale-12 hover:bg-scale-3 hover:border-scale-8"
+          className="relative flex w-full items-center justify-center gap-2 bg-scale-3 hover:bg-scale-5 border-scale-5 text-scale-12 hover:border-scale-8"
           disabled={isGithubLoading}
           onClick={handleGithubLogin}
         >
