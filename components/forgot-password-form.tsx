@@ -27,7 +27,7 @@ export function ForgotPasswordForm() {
       if (error) throw error;
       setSuccess(true);
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred");
+      setError(error instanceof Error ? error.message : "Ocorreu um erro");
     } finally {
       setIsLoading(false);
     }
@@ -43,15 +43,15 @@ export function ForgotPasswordForm() {
         </div>
         <div className="flex flex-col gap-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
-            Check Your Email
+            Verifique seu Email
           </h1>
           <p className="text-sm text-scale-11">
-            Password reset instructions sent
+            Instruções de redefinição enviadas
           </p>
         </div>
         <p className="text-center text-sm text-scale-11">
-          If you registered using your email and password, you will receive a
-          password reset email.
+          Se você se cadastrou usando email e senha, receberá um
+          email para redefinir sua senha.
         </p>
       </div>
     );
@@ -67,11 +67,11 @@ export function ForgotPasswordForm() {
 
       <div className="flex flex-col gap-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
-          Reset Your Password
+          Redefinir sua Senha
         </h1>
         <p className="text-sm text-scale-11">
-          Type in your email and we&apos;ll send you a link to reset your
-          password
+          Digite seu email e enviaremos um link para redefinir
+          sua senha
         </p>
       </div>
 
@@ -83,7 +83,7 @@ export function ForgotPasswordForm() {
           <Input
             id="email"
             type="email"
-            placeholder="you@example.com"
+            placeholder="voce@exemplo.com"
             required
             autoComplete="email"
             value={email}
@@ -103,17 +103,17 @@ export function ForgotPasswordForm() {
           disabled={isLoading}
           className="h-10 w-full bg-brand text-black hover:bg-brand-hover font-medium"
         >
-          {isLoading ? "Sending..." : "Send reset email"}
+          {isLoading ? "Enviando..." : "Enviar email de redefinição"}
         </Button>
       </form>
 
       <p className="text-center text-sm text-scale-11">
-        Already have an account?{" "}
+        Já tem uma conta?{" "}
         <Link
           href="/auth/login"
           className="text-scale-12 hover:text-scale-12/80 underline underline-offset-4 transition-colors"
         >
-          Sign in
+          Entrar
         </Link>
       </p>
     </div>

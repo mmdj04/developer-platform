@@ -11,13 +11,13 @@ export default function Page() {
         </div>
         <div className="flex flex-col gap-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
-            Thank you for signing up!
+            Obrigado por se cadastrar!
           </h1>
-          <p className="text-sm text-scale-11">Check your email to confirm</p>
+          <p className="text-sm text-scale-11">Verifique seu email para confirmar</p>
         </div>
         <p className="text-center text-sm text-scale-11">
-          You&apos;ve successfully signed up. Please check your email to confirm
-          your account before signing in.
+          Cadastro realizado com sucesso. Verifique seu email para confirmar
+          sua conta antes de entrar.
         </p>
       </div>
     </div>

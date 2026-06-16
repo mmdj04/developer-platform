@@ -11,8 +11,8 @@ async function ErrorContent({
   return (
     <p className="text-sm text-scale-11">
       {params?.error
-        ? `Error: ${params.error}`
-        : "An unspecified error occurred."}
+        ? `Erro: ${params.error}`
+        : "Ocorreu um erro desconhecido."}
     </p>
   );
 }
@@ -32,7 +32,7 @@ export default function Page({
         </div>
         <div className="flex flex-col gap-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
-            Sorry, something went wrong.
+            Desculpe, algo deu errado.
           </h1>
         </div>
         <div className="text-center">

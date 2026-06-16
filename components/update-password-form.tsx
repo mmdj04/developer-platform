@@ -25,7 +25,7 @@ export function UpdatePasswordForm() {
       if (error) throw error;
       router.push("/protected");
     } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "An error occurred");
+      setError(error instanceof Error ? error.message : "Ocorreu um erro");
     } finally {
       setIsLoading(false);
     }
@@ -41,22 +41,22 @@ export function UpdatePasswordForm() {
 
       <div className="flex flex-col gap-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
-          Reset Your Password
+          Redefinir sua Senha
         </h1>
         <p className="text-sm text-scale-11">
-          Please enter your new password below.
+          Insira sua nova senha abaixo.
         </p>
       </div>
 
       <form onSubmit={handleUpdatePassword} className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
           <Label htmlFor="password" className="text-sm font-medium text-scale-12">
-            New password
+            Nova senha
           </Label>
           <Input
             id="password"
             type="password"
-            placeholder="Enter a strong password"
+            placeholder="Digite uma senha forte"
             required
             autoComplete="new-password"
             value={password}
@@ -76,7 +76,7 @@ export function UpdatePasswordForm() {
           disabled={isLoading}
           className="h-10 w-full bg-brand text-black hover:bg-brand-hover font-medium"
         >
-          {isLoading ? "Saving..." : "Save new password"}
+          {isLoading ? "Salvando..." : "Salvar nova senha"}
         </Button>
       </form>
     </div>
