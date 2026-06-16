@@ -105,7 +105,7 @@ function TweetCard({ handle, text, href }: { handle: string; text: string; href:
 
 export function CommunityCarousel() {
   return (
-    <div className="relative w-full mt-8">
+    <div className="relative w-full mt-8 max-w-7xl mx-auto">
       <div className="hidden md:block relative overflow-hidden max-h-[500px]">
         <div className="columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4 px-4">
           {[...tweets, ...tweets, ...tweets].map((t, i) => (
