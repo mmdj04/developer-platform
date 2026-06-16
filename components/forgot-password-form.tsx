@@ -1,24 +1,14 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SupabaseLogo } from "@/components/supabase-logo";
 import Link from "next/link";
 import { useState } from "react";
 
-export function ForgotPasswordForm({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+export function ForgotPasswordForm() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -31,7 +21,6 @@ export function ForgotPasswordForm({
     setError(null);
 
     try {
-      // The url which will be included in the email. This URL needs to be configured in your redirect URLs in the Supabase dashboard at https://supabase.com/dashboard/project/_/auth/url-configuration
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/auth/update-password`,
       });
@@ -44,62 +33,89 @@ export function ForgotPasswordForm({
     }
   };
 
+  if (success) {
+    return (
+      <div className="flex w-full max-w-sm flex-col gap-6">
+        <div className="flex justify-center">
+          <span className="text-foreground">
+            <SupabaseLogo />
+          </span>
+        </div>
+        <div className="flex flex-col gap-2 text-center">
+          <h1 className="text-2xl font-semibold tracking-tight">
+            Check Your Email
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            Password reset instructions sent
+          </p>
+        </div>
+        <p className="text-center text-sm text-muted-foreground">
+          If you registered using your email and password, you will receive a
+          password reset email.
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div className={cn("flex flex-col gap-6", className)} {...props}>
-      {success ? (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-2xl">Check Your Email</CardTitle>
-            <CardDescription>Password reset instructions sent</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground">
-              If you registered using your email and password, you will receive
-              a password reset email.
-            </p>
-          </CardContent>
-        </Card>
-      ) : (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-2xl">Reset Your Password</CardTitle>
-            <CardDescription>
-              Type in your email and we&apos;ll send you a link to reset your
-              password
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleForgotPassword}>
-              <div className="flex flex-col gap-6">
-                <div className="grid gap-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="m@example.com"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-                {error && <p className="text-sm text-red-500">{error}</p>}
-                <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Sending..." : "Send reset email"}
-                </Button>
-              </div>
-              <div className="mt-4 text-center text-sm">
-                Already have an account?{" "}
-                <Link
-                  href="/auth/login"
-                  className="underline underline-offset-4"
-                >
-                  Login
-                </Link>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-      )}
+    <div className="flex w-full max-w-sm flex-col gap-6">
+      <div className="flex justify-center">
+        <span className="text-foreground">
+          <SupabaseLogo />
+        </span>
+      </div>
+
+      <div className="flex flex-col gap-2 text-center">
+        <h1 className="text-2xl font-semibold tracking-tight">
+          Reset Your Password
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          Type in your email and we&apos;ll send you a link to reset your
+          password
+        </p>
+      </div>
+
+      <form onSubmit={handleForgotPassword} className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <Label htmlFor="email" className="text-sm font-medium">
+            Email
+          </Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="you@example.com"
+            required
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="h-10"
+          />
+        </div>
+
+        {error && (
+          <div className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
+            {error}
+          </div>
+        )}
+
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="h-10 w-full bg-[#3ECF8E] text-black hover:bg-[#3ECF8E]/90 font-medium"
+        >
+          {isLoading ? "Sending..." : "Send reset email"}
+        </Button>
+      </form>
+
+      <p className="text-center text-sm text-muted-foreground">
+        Already have an account?{" "}
+        <Link
+          href="/auth/login"
+          className="text-foreground hover:text-foreground/80 underline underline-offset-4 transition-colors"
+        >
+          Sign in
+        </Link>
+      </p>
     </div>
   );
 }
