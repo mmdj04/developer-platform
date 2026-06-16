@@ -311,8 +311,8 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-linear-to-r from-transparent via-scale-1/40 to-scale-1" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-linear-to-l from-transparent via-scale-1/40 to-scale-1" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-linear-to-r from-scale-1 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-linear-to-l from-scale-1 to-transparent" />
         </div>
 
         <div className="md:hidden relative w-full px-6">
@@ -337,8 +337,8 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-linear-to-r from-transparent via-scale-1/40 to-scale-1" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-linear-to-l from-transparent via-scale-1/40 to-scale-1" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-20 bg-linear-to-r from-scale-1 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-20 bg-linear-to-l from-scale-1 to-transparent" />
         </div>
       </div>
 
