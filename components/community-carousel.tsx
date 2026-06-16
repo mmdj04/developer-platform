@@ -106,16 +106,15 @@ function TweetCard({ handle, text, href }: { handle: string; text: string; href:
 export function CommunityCarousel() {
   return (
     <div className="relative w-screen mt-8" style={{ marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)" }}>
-      <div className="hidden md:block relative overflow-hidden max-h-[500px]">
-        <div className="columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4 px-6 lg:px-16 xl:px-20">
-          {[...tweets, ...tweets, ...tweets].map((t, i) => (
+      <div className="hidden md:block relative overflow-hidden" style={{ maxHeight: "650px" }}>
+        <div className="columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4 px-6 lg:px-16 xl:px-20 pb-32">
+          {[...tweets, ...tweets, ...tweets, ...tweets].map((t, i) => (
             <TweetCard key={`${t.handle}-${i}`} {...t} />
           ))}
         </div>
         <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-linear-to-r from-scale-2 to-transparent" />
         <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-linear-to-l from-scale-2 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-scale-2 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-scale-2 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-linear-to-t from-scale-2 to-transparent" />
       </div>
 
       <div className="md:hidden relative px-6 lg:px-16 xl:px-20">
