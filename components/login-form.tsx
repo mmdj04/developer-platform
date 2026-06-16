@@ -60,14 +60,16 @@ export function LoginForm() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-6">
       <div className="flex justify-center">
-        <span className="text-foreground">
+        <span className="text-scale-11">
           <SupabaseLogo />
         </span>
       </div>
 
       <div className="flex flex-col gap-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
-        <p className="text-sm text-muted-foreground">
+        <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
+          Welcome back
+        </h1>
+        <p className="text-sm text-scale-11">
           Sign in to your account
         </p>
       </div>
@@ -75,7 +77,7 @@ export function LoginForm() {
       <div className="flex flex-col gap-3">
         <Button
           variant="outline"
-          className="relative flex w-full items-center justify-center gap-2"
+          className="relative flex w-full items-center justify-center gap-2 border-scale-6 bg-scale-2 text-scale-12 hover:bg-scale-3"
           disabled={isGithubLoading}
           onClick={handleGithubLogin}
         >
@@ -90,16 +92,16 @@ export function LoginForm() {
           {isGithubLoading ? "Continuing..." : "Continue with GitHub"}
         </Button>
 
-        <div className="flex items-center gap-3 text-xs text-muted-foreground uppercase">
-          <div className="flex-1 border-t" />
+        <div className="flex items-center gap-3 text-xs text-scale-10 uppercase">
+          <div className="flex-1 border-t border-scale-6" />
           <span>or</span>
-          <div className="flex-1 border-t" />
+          <div className="flex-1 border-t border-scale-6" />
         </div>
       </div>
 
       <form onSubmit={handleLogin} className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <Label htmlFor="email" className="text-sm font-medium">
+          <Label htmlFor="email" className="text-sm font-medium text-scale-12">
             Email
           </Label>
           <Input
@@ -110,18 +112,18 @@ export function LoginForm() {
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="h-10"
+            className="h-10 border-scale-6 bg-scale-2 text-scale-12 placeholder:text-scale-10 focus-visible:ring-brand"
           />
         </div>
 
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
-            <Label htmlFor="password" className="text-sm font-medium">
+            <Label htmlFor="password" className="text-sm font-medium text-scale-12">
               Password
             </Label>
             <Link
               href="/auth/forgot-password"
-              className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+              className="text-xs text-scale-11 hover:text-scale-12 transition-colors"
             >
               Forgot password?
             </Link>
@@ -134,12 +136,12 @@ export function LoginForm() {
             autoComplete="current-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="h-10"
+            className="h-10 border-scale-6 bg-scale-2 text-scale-12 placeholder:text-scale-10 focus-visible:ring-brand"
           />
         </div>
 
         {error && (
-          <div className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          <div className="rounded-md bg-destructive/15 px-3 py-2 text-sm text-destructive">
             {error}
           </div>
         )}
@@ -147,29 +149,29 @@ export function LoginForm() {
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-10 w-full bg-[#3ECF8E] text-black hover:bg-[#3ECF8E]/90 font-medium"
+          className="h-10 w-full bg-brand text-black hover:bg-brand-hover font-medium"
         >
           {isLoading ? "Signing in..." : "Sign in"}
         </Button>
       </form>
 
-      <div className="flex flex-col gap-4 text-center text-sm text-muted-foreground">
+      <div className="flex flex-col gap-4 text-center text-sm text-scale-11">
         <p>
           Don&apos;t have an account?{" "}
           <Link
             href="/auth/sign-up"
-            className="text-foreground hover:text-foreground/80 underline underline-offset-4 transition-colors"
+            className="text-scale-12 hover:text-scale-12/80 underline underline-offset-4 transition-colors"
           >
             Sign up
           </Link>
         </p>
-        <p className="text-xs leading-relaxed">
+        <p className="text-xs leading-relaxed text-scale-10">
           By continuing, you agree to our{" "}
-          <Link href="#" className="underline hover:text-foreground transition-colors">
+          <Link href="#" className="underline hover:text-scale-11 transition-colors">
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link href="#" className="underline hover:text-foreground transition-colors">
+          <Link href="#" className="underline hover:text-scale-11 transition-colors">
             Privacy Policy
           </Link>
           , and to receive periodic emails with updates.

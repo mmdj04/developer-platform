@@ -39,38 +39,38 @@
 }
 
 .dark {
-  --background: 0 0% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 0 0% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --popover: 0 0% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 0 0% 98%;
-  --primary-foreground: 0 0% 9%;
-  --secondary: 0 0% 14.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 0 0% 14.9%;
-  --muted-foreground: 0 0% 63.9%;
-  --accent: 0 0% 14.9%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 14.9%;
-  --input: 0 0% 14.9%;
-  --ring: 0 0% 83.1%;
+  --background: #161616;
+  --foreground: #EDEDED;
+  --card: #1C1C1C;
+  --card-foreground: #EDEDED;
+  --popover: #1C1C1C;
+  --popover-foreground: #EDEDED;
+  --primary: #EDEDED;
+  --primary-foreground: #161616;
+  --secondary: #232323;
+  --secondary-foreground: #EDEDED;
+  --muted: #1C1C1C;
+  --muted-foreground: #7E7E7E;
+  --accent: #2E2E2E;
+  --accent-foreground: #EDEDED;
+  --destructive: #8B3A3A;
+  --destructive-foreground: #EDEDED;
+  --border: #343434;
+  --input: #232323;
+  --ring: #3ECF8E;
   --chart-1: 220 70% 50%;
   --chart-2: 160 60% 45%;
   --chart-3: 30 80% 55%;
   --chart-4: 280 65% 60%;
   --chart-5: 340 75% 55%;
-  --sidebar: hsl(240 5.9% 10%);
-  --sidebar-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-primary: hsl(224.3 76.3% 48%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(240 3.7% 15.9%);
-  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
-  --sidebar-border: hsl(240 3.7% 15.9%);
-  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  --sidebar: #1C1C1C;
+  --sidebar-foreground: #EDEDED;
+  --sidebar-primary: #3ECF8E;
+  --sidebar-primary-foreground: #161616;
+  --sidebar-accent: #2E2E2E;
+  --sidebar-accent-foreground: #EDEDED;
+  --sidebar-border: #343434;
+  --sidebar-ring: #3ECF8E;
 }
 
 @theme inline {
@@ -106,6 +106,20 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-brand: #3ECF8E;
+  --color-brand-hover: #57D999;
+  --color-scale-1: #161616;
+  --color-scale-2: #1C1C1C;
+  --color-scale-3: #232323;
+  --color-scale-4: #282828;
+  --color-scale-5: #2E2E2E;
+  --color-scale-6: #343434;
+  --color-scale-7: #3E3E3E;
+  --color-scale-8: #505050;
+  --color-scale-9: #707070;
+  --color-scale-10: #7E7E7E;
+  --color-scale-11: #A1A1A1;
+  --color-scale-12: #EDEDED;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);

@@ -20,7 +20,7 @@ function PasswordRequirement({
     <div className="flex items-center gap-2 text-sm">
       <div
         className={`flex size-4 shrink-0 items-center justify-center rounded-full transition-colors ${
-          met ? "bg-[#3ECF8E] text-black" : "bg-muted text-muted-foreground"
+          met ? "bg-brand text-black" : "bg-scale-5 text-scale-10"
         }`}
       >
         <svg
@@ -33,7 +33,7 @@ function PasswordRequirement({
           <path d="M4 8l3 3 5-6" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
-      <span className={met ? "text-foreground" : "text-muted-foreground"}>
+      <span className={met ? "text-scale-12" : "text-scale-11"}>
         {label}
       </span>
     </div>
@@ -107,14 +107,16 @@ export function SignUpForm() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-6">
       <div className="flex justify-center">
-        <span className="text-foreground">
+        <span className="text-scale-11">
           <SupabaseLogo />
         </span>
       </div>
 
       <div className="flex flex-col gap-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Get started</h1>
-        <p className="text-sm text-muted-foreground">
+        <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
+          Get started
+        </h1>
+        <p className="text-sm text-scale-11">
           Create a new account
         </p>
       </div>
@@ -122,7 +124,7 @@ export function SignUpForm() {
       <div className="flex flex-col gap-3">
         <Button
           variant="outline"
-          className="relative flex w-full items-center justify-center gap-2"
+          className="relative flex w-full items-center justify-center gap-2 border-scale-6 bg-scale-2 text-scale-12 hover:bg-scale-3"
           disabled={isGithubLoading}
           onClick={handleGithubSignUp}
         >
@@ -137,16 +139,16 @@ export function SignUpForm() {
           {isGithubLoading ? "Continuing..." : "Continue with GitHub"}
         </Button>
 
-        <div className="flex items-center gap-3 text-xs text-muted-foreground uppercase">
-          <div className="flex-1 border-t" />
+        <div className="flex items-center gap-3 text-xs text-scale-10 uppercase">
+          <div className="flex-1 border-t border-scale-6" />
           <span>or</span>
-          <div className="flex-1 border-t" />
+          <div className="flex-1 border-t border-scale-6" />
         </div>
       </div>
 
       <form onSubmit={handleSignUp} className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <Label htmlFor="email" className="text-sm font-medium">
+          <Label htmlFor="email" className="text-sm font-medium text-scale-12">
             Email
           </Label>
           <Input
@@ -157,12 +159,12 @@ export function SignUpForm() {
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="h-10"
+            className="h-10 border-scale-6 bg-scale-2 text-scale-12 placeholder:text-scale-10 focus-visible:ring-brand"
           />
         </div>
 
         <div className="flex flex-col gap-2">
-          <Label htmlFor="password" className="text-sm font-medium">
+          <Label htmlFor="password" className="text-sm font-medium text-scale-12">
             Password
           </Label>
           <Input
@@ -173,7 +175,7 @@ export function SignUpForm() {
             autoComplete="new-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="h-10"
+            className="h-10 border-scale-6 bg-scale-2 text-scale-12 placeholder:text-scale-10 focus-visible:ring-brand"
           />
           {password.length > 0 && (
             <div className="flex flex-col gap-1.5 pt-1">
@@ -189,7 +191,7 @@ export function SignUpForm() {
         </div>
 
         {error && (
-          <div className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          <div className="rounded-md bg-destructive/15 px-3 py-2 text-sm text-destructive">
             {error}
           </div>
         )}
@@ -197,29 +199,29 @@ export function SignUpForm() {
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-10 w-full bg-[#3ECF8E] text-black hover:bg-[#3ECF8E]/90 font-medium"
+          className="h-10 w-full bg-brand text-black hover:bg-brand-hover font-medium"
         >
           {isLoading ? "Creating an account..." : "Sign up"}
         </Button>
       </form>
 
-      <div className="flex flex-col gap-4 text-center text-sm text-muted-foreground">
+      <div className="flex flex-col gap-4 text-center text-sm text-scale-11">
         <p>
           Have an account?{" "}
           <Link
             href="/auth/login"
-            className="text-foreground hover:text-foreground/80 underline underline-offset-4 transition-colors"
+            className="text-scale-12 hover:text-scale-12/80 underline underline-offset-4 transition-colors"
           >
             Sign in
           </Link>
         </p>
-        <p className="text-xs leading-relaxed">
+        <p className="text-xs leading-relaxed text-scale-10">
           By continuing, you agree to our{" "}
-          <Link href="#" className="underline hover:text-foreground transition-colors">
+          <Link href="#" className="underline hover:text-scale-11 transition-colors">
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link href="#" className="underline hover:text-foreground transition-colors">
+          <Link href="#" className="underline hover:text-scale-11 transition-colors">
             Privacy Policy
           </Link>
           , and to receive periodic emails with updates.

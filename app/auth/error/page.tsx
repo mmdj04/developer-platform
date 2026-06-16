@@ -9,7 +9,7 @@ async function ErrorContent({
   const params = await searchParams;
 
   return (
-    <p className="text-sm text-muted-foreground">
+    <p className="text-sm text-scale-11">
       {params?.error
         ? `Error: ${params.error}`
         : "An unspecified error occurred."}
@@ -26,12 +26,12 @@ export default function Page({
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
         <div className="flex justify-center">
-          <span className="text-foreground">
+          <span className="text-scale-11">
             <SupabaseLogo />
           </span>
         </div>
         <div className="flex flex-col gap-2 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight">
+          <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
             Sorry, something went wrong.
           </h1>
         </div>

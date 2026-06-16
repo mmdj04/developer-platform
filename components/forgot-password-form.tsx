@@ -37,19 +37,19 @@ export function ForgotPasswordForm() {
     return (
       <div className="flex w-full max-w-sm flex-col gap-6">
         <div className="flex justify-center">
-          <span className="text-foreground">
+          <span className="text-scale-11">
             <SupabaseLogo />
           </span>
         </div>
         <div className="flex flex-col gap-2 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight">
+          <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
             Check Your Email
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm text-scale-11">
             Password reset instructions sent
           </p>
         </div>
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="text-center text-sm text-scale-11">
           If you registered using your email and password, you will receive a
           password reset email.
         </p>
@@ -60,16 +60,16 @@ export function ForgotPasswordForm() {
   return (
     <div className="flex w-full max-w-sm flex-col gap-6">
       <div className="flex justify-center">
-        <span className="text-foreground">
+        <span className="text-scale-11">
           <SupabaseLogo />
         </span>
       </div>
 
       <div className="flex flex-col gap-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">
+        <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
           Reset Your Password
         </h1>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-scale-11">
           Type in your email and we&apos;ll send you a link to reset your
           password
         </p>
@@ -77,7 +77,7 @@ export function ForgotPasswordForm() {
 
       <form onSubmit={handleForgotPassword} className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <Label htmlFor="email" className="text-sm font-medium">
+          <Label htmlFor="email" className="text-sm font-medium text-scale-12">
             Email
           </Label>
           <Input
@@ -88,12 +88,12 @@ export function ForgotPasswordForm() {
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="h-10"
+            className="h-10 border-scale-6 bg-scale-2 text-scale-12 placeholder:text-scale-10 focus-visible:ring-brand"
           />
         </div>
 
         {error && (
-          <div className="rounded-md bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          <div className="rounded-md bg-destructive/15 px-3 py-2 text-sm text-destructive">
             {error}
           </div>
         )}
@@ -101,17 +101,17 @@ export function ForgotPasswordForm() {
         <Button
           type="submit"
           disabled={isLoading}
-          className="h-10 w-full bg-[#3ECF8E] text-black hover:bg-[#3ECF8E]/90 font-medium"
+          className="h-10 w-full bg-brand text-black hover:bg-brand-hover font-medium"
         >
           {isLoading ? "Sending..." : "Send reset email"}
         </Button>
       </form>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-center text-sm text-scale-11">
         Already have an account?{" "}
         <Link
           href="/auth/login"
-          className="text-foreground hover:text-foreground/80 underline underline-offset-4 transition-colors"
+          className="text-scale-12 hover:text-scale-12/80 underline underline-offset-4 transition-colors"
         >
           Sign in
         </Link>
