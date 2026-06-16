@@ -100,9 +100,19 @@ function reducer(state: BuilderState, action: BuilderAction): BuilderState {
     case "ADD_COMPONENT": {
       const node = createNode(action.item);
       if (!state.root) {
-        return { ...state, root: node, history: pushHistory(node), historyIndex: state.history.length };
+        const container: ComponentNode = {
+          id: "root",
+          type: "div",
+          props: {},
+          children: [node],
+        };
+        return { ...state, root: container, history: pushHistory(container), historyIndex: state.history.length };
       }
-      const parent = action.parentId === "root" ? state.root : findNode(state.root, action.parentId);
+      if (action.parentId === "root") {
+        const newRoot = { ...state.root, children: [...state.root.children, node] };
+        return { ...state, root: newRoot, history: pushHistory(newRoot), historyIndex: state.history.length };
+      }
+      const parent = findNode(state.root, action.parentId);
       if (!parent) return state;
       const newRoot = mapTree(state.root, (n) =>
         n.id === parent.id ? { ...n, children: [...n.children, node] } : n

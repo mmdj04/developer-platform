@@ -802,15 +802,6 @@ export const PALETTE: PaletteItem[] = [
     nestable: false,
   },
 
-  // ── UI / ScrollArea ──
-  {
-    type: "ScrollArea",
-    label: "Scroll Area",
-    category: "ui",
-    defaultProps: { className: "h-32" },
-    nestable: true,
-  },
-
   // ── Form / Existing ──
   {
     type: "Input",

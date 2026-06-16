@@ -241,15 +241,22 @@ function renderNode(node: ExportNode, depth: number): string {
   const nl = "\n" + "  ".repeat(depth + 1);
   const props = { ...node.props };
 
+  const useDefault = props._useDefault === "true";
+  delete props._useDefault;
+
   const styleAttr = extractStyle(props);
   const propEntries = Object.entries(props).filter(
     ([k]) => k !== "text" && k !== "placeholder" && !styleColorKeys.has(k)
   );
   const textContent = props.text || props.placeholder || "";
 
+  // When useDefault is true, skip className so the shadcn default applies
+  const useDefaultFilter = ([k]: [string, string]) => !(useDefault && k === "className");
+  const filteredEntries = propEntries.filter(useDefaultFilter);
+
   if (htmlTags.has(node.type)) {
     const children = renderChildren(node.children, depth + 1);
-    const attrs = renderAttrs(propEntries) + (styleAttr ? ` style=${styleAttr}` : "");
+    const attrs = renderAttrs(filteredEntries) + (styleAttr ? ` style=${styleAttr}` : "");
     if (children || textContent) {
       return `<${node.type}${attrs}>${nl}${textContent}${children ? nl + children : ""}\n${"  ".repeat(depth)}</${node.type}>`;
     }
@@ -257,8 +264,9 @@ function renderNode(node: ExportNode, depth: number): string {
   }
 
   if (selfClosing.has(node.type)) {
-    const extra = propEntries.filter(([k]) => k !== "className");
-    const cls = props.className ? ` className="${escapeAttr(props.className)}"` : "";
+    const extra = filteredEntries.filter(([k]) => k !== "className");
+    const showCls = !useDefault && props.className;
+    const cls = showCls ? ` className="${escapeAttr(props.className || "")}"` : "";
     const extras = extra.map(([k, v]) => ` ${k}={${JSON.stringify(v)}}`).join("");
     const stl = styleAttr ? ` style=${styleAttr}` : "";
     if (node.type === "Checkbox" || node.type === "Switch") {
@@ -268,8 +276,9 @@ function renderNode(node: ExportNode, depth: number): string {
   }
 
   const children = renderChildren(node.children, depth + 1);
-  const cls = props.className ? ` className="${escapeAttr(props.className)}"` : "";
-  const extra = propEntries.filter(([k]) => k !== "className");
+  const showCls = !useDefault && props.className;
+  const cls = showCls ? ` className="${escapeAttr(props.className || "")}"` : "";
+  const extra = filteredEntries.filter(([k]) => k !== "className");
   const extras = extra.map(([k, v]) => ` ${k}={${JSON.stringify(v)}}`).join("");
   const stl = styleAttr ? ` style=${styleAttr}` : "";
 

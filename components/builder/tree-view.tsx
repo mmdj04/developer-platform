@@ -136,13 +136,15 @@ export function TreeView() {
         <h3 className="text-sm font-semibold text-scale-12">Layers</h3>
       </div>
       <div className="flex-1 overflow-y-auto p-2">
-        {!state.root ? (
-          <p className="text-xs text-scale-9 text-center pt-8">
-            Canvas is empty
-          </p>
-        ) : (
-          <TreeNode node={state.root} depth={0} siblings={[state.root]} />
-        )}
+        {(() => {
+          const root = state.root;
+          if (!root || root.children.length === 0) {
+            return <p className="text-xs text-scale-9 text-center pt-8">Canvas is empty</p>;
+          }
+          return root.children.map((child) => (
+            <TreeNode key={child.id} node={child} depth={0} siblings={root.children} />
+          ));
+        })()}
       </div>
     </div>
   );

@@ -62,6 +62,7 @@ export function Inspector() {
   };
 
   const isImageType = selectedNode.type === "img" || selectedNode.type === "AvatarImage";
+  const isDefaultVisual = props._useDefault === "true";
 
   const propConfig: Record<string, { label: string; type: "text" | "textarea" | "color" }> = {
     text: { label: "Content", type: "textarea" },
@@ -78,7 +79,9 @@ export function Inspector() {
   const existingKeys = new Set(Object.keys(props));
   const availableProps = ADDABLE_PROPS.filter((p) => !existingKeys.has(p.key));
 
-  const editableKeys = Object.keys(props).filter((k) => propConfig[k]);
+  const editableKeys = Object.keys(props).filter(
+    (k) => propConfig[k] && !(isDefaultVisual && k === "className")
+  );
 
   return (
     <div className="flex flex-col h-full">
@@ -91,6 +94,30 @@ export function Inspector() {
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {/* Default Styling toggle */}
+        <div className="flex items-center justify-between px-1">
+          <label className="text-xs font-medium text-scale-11">Default Styling</label>
+          <button
+            onClick={() => {
+              if (isDefaultVisual) {
+                const { _useDefault: _, ...rest } = props;
+                updateProps(selectedNode.id, rest);
+              } else {
+                updateProps(selectedNode.id, { ...props, _useDefault: "true" });
+              }
+            }}
+            className={`relative w-9 h-5 rounded-full transition-colors ${
+              isDefaultVisual ? "bg-brand" : "bg-scale-6"
+            }`}
+          >
+            <span
+              className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform ${
+                isDefaultVisual ? "translate-x-4" : "translate-x-0"
+              }`}
+            />
+          </button>
+        </div>
+
         {isImageType && (
           <div>
             <label className="block text-xs font-medium text-scale-11 mb-1">Upload Image</label>

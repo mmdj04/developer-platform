@@ -137,6 +137,8 @@ const htmlTags = new Set([
 
 const noChildTags = new Set(["h1", "h2", "h3", "p", "span", "img"]);
 
+const useDefaultKey = "_useDefault";
+
 const componentMap: Record<string, React.ComponentType<any>> = {
   Button, Badge,
   Alert, Input, Label, Textarea,
@@ -164,7 +166,8 @@ function renderCoreNode(
   node: ComponentNode,
   inlineStyle: Record<string, string> | undefined,
   remainingProps: Record<string, string>,
-  children: React.ReactNode[]
+  children: React.ReactNode[],
+  useDefault: boolean = false
 ): React.ReactElement {
   if (htmlTags.has(node.type)) {
     return React.createElement(node.type, { className: remainingProps.className, style: inlineStyle }, ...children);
@@ -205,10 +208,8 @@ function renderCoreNode(
     if (inlineStyle && Object.keys(inlineStyle).length > 0) {
       extraProps.style = inlineStyle;
     }
-    return React.createElement(Comp, { className: remainingProps.className, ...extraProps },
-      remainingProps.text || remainingProps.placeholder || children.length > 0
-        ? [remainingProps.text || remainingProps.placeholder, ...children].filter(Boolean)
-        : null
+    return React.createElement(Comp, { ...(useDefault ? {} : { className: remainingProps.className }), ...extraProps },
+      children.length > 0 ? children : null
     );
   }
 
@@ -218,9 +219,12 @@ function renderCoreNode(
 function extractStyleProps(props: Record<string, string>) {
   const styleProps: Record<string, string> = {};
   const remainingProps: Record<string, string> = {};
+  let useDefault = false;
   for (const [k, v] of Object.entries(props)) {
     if (k === "backgroundColor" || k === "color" || k === "borderColor") {
       styleProps[k] = v;
+    } else if (k === useDefaultKey) {
+      useDefault = v === "true";
     } else {
       remainingProps[k] = v;
     }
@@ -229,7 +233,7 @@ function extractStyleProps(props: Record<string, string>) {
   if (styleProps.backgroundColor) inlineStyle.backgroundColor = styleProps.backgroundColor;
   if (styleProps.color) inlineStyle.color = styleProps.color;
   if (styleProps.borderColor) inlineStyle.borderColor = styleProps.borderColor;
-  return { styleProps, remainingProps, inlineStyle };
+  return { styleProps, remainingProps, inlineStyle, useDefault };
 }
 
 interface RenderNodeProps {
@@ -267,7 +271,7 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
     } catch {}
   };
 
-  const { inlineStyle, remainingProps } = extractStyleProps(node.props);
+  const { inlineStyle, remainingProps, useDefault } = extractStyleProps(node.props);
 
   const isNestable = htmlTags.has(node.type) && !noChildTags.has(node.type);
   const selectionBorder = isSelected ? "outline-2 outline-brand outline" : "outline-1 outline-dashed outline-scale-6";
@@ -314,7 +318,7 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
     commonProps.onDrop = handleDrop;
   }
 
-  const core = renderCoreNode(node, Object.keys(inlineStyle).length > 0 ? inlineStyle : undefined, remainingProps, children);
+  const core = renderCoreNode(node, Object.keys(inlineStyle).length > 0 ? inlineStyle : undefined, remainingProps, children, useDefault);
 
   if (htmlTags.has(node.type)) {
     return React.cloneElement(core, commonProps);
@@ -324,12 +328,12 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
 }
 
 export function PreviewNode({ node }: { node: ComponentNode }) {
-  const { inlineStyle, remainingProps } = extractStyleProps(node.props);
+  const { inlineStyle, remainingProps, useDefault } = extractStyleProps(node.props);
 
   const children: React.ReactNode[] = [];
 
   if ("text" in node.props) {
-    children.push(node.props.text);
+    children.push(React.createElement(React.Fragment, { key: "text" }, node.props.text));
   } else if ("placeholder" in node.props) {
     children.push(
       React.createElement("span", { key: "text", className: "text-scale-9" }, node.props.placeholder)
@@ -346,6 +350,7 @@ export function PreviewNode({ node }: { node: ComponentNode }) {
     node,
     Object.keys(inlineStyle).length > 0 ? inlineStyle : undefined,
     remainingProps,
-    children.filter(Boolean)
+    children.filter(Boolean),
+    useDefault
   );
 }
