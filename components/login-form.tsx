@@ -4,7 +4,6 @@ import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SupabaseLogo } from "@/components/supabase-logo";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -59,13 +58,10 @@ export function LoginForm() {
 
   return (
     <div className="flex w-full max-w-sm flex-col gap-6">
-      <div className="flex justify-center">
-        <span className="text-scale-11">
-          <SupabaseLogo />
+      <div className="flex flex-col gap-1 text-center">
+        <span className="text-sm font-bold tracking-tight text-scale-12">
+          Developer Platform
         </span>
-      </div>
-
-      <div className="flex flex-col gap-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
           Bem-vindo de volta
         </h1>

@@ -4,7 +4,6 @@ import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SupabaseLogo } from "@/components/supabase-logo";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -36,15 +35,13 @@ export function ForgotPasswordForm() {
   if (success) {
     return (
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <div className="flex justify-center">
-          <span className="text-scale-11">
-            <SupabaseLogo />
-          </span>
-        </div>
-        <div className="flex flex-col gap-2 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
-            Verifique seu Email
-          </h1>
+      <div className="flex flex-col gap-1 text-center">
+        <span className="text-sm font-bold tracking-tight text-scale-12">
+          Developer Platform
+        </span>
+        <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
+          Verifique seu Email
+        </h1>
           <p className="text-sm text-scale-11">
             Instruções de redefinição enviadas
           </p>
@@ -59,15 +56,12 @@ export function ForgotPasswordForm() {
 
   return (
     <div className="flex w-full max-w-sm flex-col gap-6">
-      <div className="flex justify-center">
-        <span className="text-scale-11">
-          <SupabaseLogo />
+      <div className="flex flex-col gap-1 text-center">
+        <span className="text-sm font-bold tracking-tight text-scale-12">
+          Developer Platform
         </span>
-      </div>
-
-      <div className="flex flex-col gap-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
-          Redefinir sua Senha
+          Esqueceu a Senha
         </h1>
         <p className="text-sm text-scale-11">
           Digite seu email e enviaremos um link para redefinir

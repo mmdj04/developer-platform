@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { SupabaseLogo } from "@/components/supabase-logo";
 import { DashboardTabs } from "@/components/dashboard-tabs";
 import { CommunityCarousel } from "@/components/community-carousel";
 import type { ReactNode } from "react";
@@ -228,9 +227,6 @@ export default function Home() {
   return (
     <div className="flex min-h-svh flex-col">
       <div className="flex flex-1 flex-col items-center justify-center gap-8 p-4 pt-24">
-        <span className="text-scale-11">
-          <SupabaseLogo />
-        </span>
         <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
           Developer Platform
         </h1>
