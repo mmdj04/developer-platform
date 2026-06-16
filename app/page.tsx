@@ -95,6 +95,24 @@ const productCards = [
   },
 ];
 
+const customers = [
+  { name: "Mozilla" },
+  { name: "GitHub" },
+  { name: "1Password" },
+  { name: "PwC" },
+  { name: "Pika" },
+  { name: "Humata" },
+  { name: "Udio" },
+  { name: "LangChain" },
+  { name: "Resend" },
+  { name: "Loops" },
+  { name: "Mobbin" },
+  { name: "Gopuff" },
+  { name: "Chatbase" },
+  { name: "Betashares" },
+  { name: "Submagic" },
+];
+
 const frameworks = [
   {
     name: "React",
@@ -237,6 +255,47 @@ export default function Home() {
                   {f.icon}
                 </div>
               </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div id="customers" className="overflow-hidden pb-16 md:pb-24">
+        <div className="sm:py-18 container relative mx-auto px-6 py-16 md:py-24 lg:px-16 lg:py-24 xl:px-20 pb-8! w-full flex gap-4 justify-between flex-col xl:flex-row xl:items-end">
+          <div className="xl:w-1/2">
+            <div className="space-y-4">
+              <span className="text-scale-10 block font-mono text-xs uppercase tracking-widest">Casos de Sucesso</span>
+              <h3 className="text-2xl md:text-4xl font-semibold tracking-tight text-scale-12 lg:max-w-md">
+                <span>Confiada pelas empresas</span><br />
+                <span className="text-scale-11">mais inovadoras do mundo.</span>
+              </h3>
+            </div>
+            <p className="text-scale-11 max-w-3xl text-lg sm:mt-4">
+              Veja como o Supabase ajuda empresas de todos os tamanhos a acelerar seu crescimento e otimizar seu trabalho.
+            </p>
+          </div>
+        </div>
+
+        <div className="group/tw-marquee w-full items-stretch h-[100px] min-w-[300px] nowrap gap-4 hidden md:flex overflow-hidden">
+          <div className="flex motion-safe:animate-[marquee_80000ms_linear_both_infinite] group-hover/tw-marquee:[animation-play-state:paused] will-change-transform gap-4">
+            {[...customers, ...customers].map((c, i) => (
+              <div key={`${c.name}-${i}`} className="flex-shrink-0 w-[200px] h-full flex items-center justify-center rounded-lg md:rounded-xl p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
+                <div className="w-full h-full rounded-[7px] md:rounded-[11px] bg-scale-3 flex items-center justify-center px-6">
+                  <span className="text-scale-11 text-sm font-medium whitespace-nowrap">{c.name}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="md:hidden w-full px-6 overflow-x-auto">
+          <div className="flex gap-3 pb-4">
+            {customers.map((c) => (
+              <div key={c.name} className="flex-shrink-0 w-[160px] h-16 flex items-center justify-center rounded-lg p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
+                <div className="w-full h-full rounded-[7px] bg-scale-3 flex items-center justify-center px-4">
+                  <span className="text-scale-11 text-sm font-medium whitespace-nowrap">{c.name}</span>
+                </div>
+              </div>
             ))}
           </div>
         </div>
