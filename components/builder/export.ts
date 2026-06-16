@@ -1,7 +1,7 @@
 import type { ComponentNode } from "./types";
 
 const htmlTags = new Set([
-  "div", "section", "h1", "h2", "h3", "p", "span", "grid", "flex",
+  "div", "section", "h1", "h2", "h3", "p", "span", "grid", "flex", "img",
 ]);
 
 const selfClosing = new Set([
@@ -227,42 +227,56 @@ interface ExportNode extends ComponentNode {
   props: Record<string, string>;
 }
 
+const styleColorKeys = new Set(["backgroundColor", "color", "borderColor"]);
+
+function extractStyle(props: Record<string, string>): string {
+  const parts: string[] = [];
+  if (props.backgroundColor) parts.push(`backgroundColor: "${props.backgroundColor}"`);
+  if (props.color) parts.push(`color: "${props.color}"`);
+  if (props.borderColor) parts.push(`borderColor: "${props.borderColor}"`);
+  return parts.length > 0 ? `{{${parts.join(", ")}}}` : "";
+}
+
 function renderNode(node: ExportNode, depth: number): string {
   const nl = "\n" + "  ".repeat(depth + 1);
   const props = { ...node.props };
 
+  const styleAttr = extractStyle(props);
   const propEntries = Object.entries(props).filter(
-    ([k]) => k !== "text" && k !== "placeholder"
+    ([k]) => k !== "text" && k !== "placeholder" && !styleColorKeys.has(k)
   );
   const textContent = props.text || props.placeholder || "";
 
   if (htmlTags.has(node.type)) {
     const children = renderChildren(node.children, depth + 1);
+    const attrs = renderAttrs(propEntries) + (styleAttr ? ` style=${styleAttr}` : "");
     if (children || textContent) {
-      return `<${node.type}${renderAttrs(propEntries)}>${nl}${textContent}${children ? nl + children : ""}\n${"  ".repeat(depth)}</${node.type}>`;
+      return `<${node.type}${attrs}>${nl}${textContent}${children ? nl + children : ""}\n${"  ".repeat(depth)}</${node.type}>`;
     }
-    return `<${node.type}${renderAttrs(propEntries)} />`;
+    return `<${node.type}${attrs} />`;
   }
 
   if (selfClosing.has(node.type)) {
     const extra = propEntries.filter(([k]) => k !== "className");
     const cls = props.className ? ` className="${escapeAttr(props.className)}"` : "";
     const extras = extra.map(([k, v]) => ` ${k}={${JSON.stringify(v)}}`).join("");
+    const stl = styleAttr ? ` style=${styleAttr}` : "";
     if (node.type === "Checkbox" || node.type === "Switch") {
-      return `<div className="flex items-center gap-2">\n${"  ".repeat(depth + 1)}<${node.type}${cls}${extras} />\n${"  ".repeat(depth + 1)}<Label>${textContent}</Label>\n${"  ".repeat(depth)}</div>`;
+      return `<div className="flex items-center gap-2">\n${"  ".repeat(depth + 1)}<${node.type}${cls}${extras}${stl} />\n${"  ".repeat(depth + 1)}<Label>${textContent}</Label>\n${"  ".repeat(depth)}</div>`;
     }
-    return `<${node.type}${cls}${extras}${textContent ? " placeholder=" + JSON.stringify(textContent) : ""} />`;
+    return `<${node.type}${cls}${extras}${stl}${textContent ? " placeholder=" + JSON.stringify(textContent) : ""} />`;
   }
 
   const children = renderChildren(node.children, depth + 1);
   const cls = props.className ? ` className="${escapeAttr(props.className)}"` : "";
   const extra = propEntries.filter(([k]) => k !== "className");
   const extras = extra.map(([k, v]) => ` ${k}={${JSON.stringify(v)}}`).join("");
+  const stl = styleAttr ? ` style=${styleAttr}` : "";
 
   if (children || textContent) {
-    return `<${node.type}${cls}${extras}>${nl}${textContent}${children ? nl + children : ""}\n${"  ".repeat(depth)}</${node.type}>`;
+    return `<${node.type}${cls}${extras}${stl}>${nl}${textContent}${children ? nl + children : ""}\n${"  ".repeat(depth)}</${node.type}>`;
   }
-  return `<${node.type}${cls}${extras} />`;
+  return `<${node.type}${cls}${extras}${stl} />`;
 }
 
 function renderChildren(children: ComponentNode[], depth: number): string {

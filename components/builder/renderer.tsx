@@ -135,7 +135,7 @@ const htmlTags = new Set([
   "div", "section", "h1", "h2", "h3", "p", "span", "grid", "flex",
 ]);
 
-const noChildTags = new Set(["h1", "h2", "h3", "p", "span"]);
+const noChildTags = new Set(["h1", "h2", "h3", "p", "span", "img"]);
 
 interface RenderNodeProps {
   node: ComponentNode;
@@ -172,10 +172,24 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
     } catch {}
   };
 
+  const styleProps: Record<string, string> = {};
+  const remainingProps: Record<string, string> = {};
+  for (const [k, v] of Object.entries(node.props)) {
+    if (k === "backgroundColor" || k === "color" || k === "borderColor") {
+      styleProps[k] = v;
+    } else {
+      remainingProps[k] = v;
+    }
+  }
+  const inlineStyle: Record<string, string> = {};
+  if (styleProps.backgroundColor) inlineStyle.backgroundColor = styleProps.backgroundColor;
+  if (styleProps.color) inlineStyle.color = styleProps.color;
+  if (styleProps.borderColor) inlineStyle.borderColor = styleProps.borderColor;
+
   const isNestable = htmlTags.has(node.type) && !noChildTags.has(node.type);
   const selectionBorder = isSelected ? "outline-2 outline-brand outline" : "outline-1 outline-dashed outline-scale-6";
 
-  const className = `${node.props.className || ""} ${selectionBorder} relative group cursor-pointer transition-all hover:outline-brand/50`.trim();
+  const className = `${remainingProps.className || ""} ${selectionBorder} relative group cursor-pointer transition-all hover:outline-brand/50`.trim();
 
   const children: React.ReactNode[] = [];
 
@@ -203,6 +217,7 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
 
   const commonProps: Record<string, any> = {
     className,
+    style: Object.keys(inlineStyle).length > 0 ? inlineStyle : undefined,
     onClick: (e: React.MouseEvent) => {
       e.stopPropagation();
       onSelect(node.id);
@@ -274,13 +289,16 @@ export function RenderNode({ node, isSelected, onSelect, depth }: RenderNodeProp
 
   if (Comp) {
     const extraProps: Record<string, any> = {};
-    for (const [k, v] of Object.entries(node.props)) {
+    for (const [k, v] of Object.entries(remainingProps)) {
       if (k !== "text" && k !== "className" && k !== "placeholder") extraProps[k] = v;
     }
+    if (Object.keys(inlineStyle).length > 0) {
+      extraProps.style = inlineStyle;
+    }
     return React.createElement("div", commonProps,
-      React.createElement(Comp, { className: node.props.className, ...extraProps },
-        node.props.text || node.props.placeholder || children.length > 0
-          ? [node.props.text || node.props.placeholder, ...children].filter(Boolean)
+      React.createElement(Comp, { className: remainingProps.className, ...extraProps },
+        remainingProps.text || remainingProps.placeholder || children.length > 0
+          ? [remainingProps.text || remainingProps.placeholder, ...children].filter(Boolean)
           : null
       )
     );

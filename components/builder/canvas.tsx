@@ -4,7 +4,11 @@ import { useBuilder } from "./store";
 import type { PaletteItem } from "./types";
 import { RenderNode } from "./renderer";
 
-export function Canvas() {
+interface CanvasProps {
+  bgColor?: string;
+}
+
+export function Canvas({ bgColor }: CanvasProps) {
   const { state, select, addComponent, moveComponent } = useBuilder();
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -38,7 +42,8 @@ export function Canvas() {
 
   return (
     <div
-      className="flex-1 overflow-y-auto bg-scale-2 pb-14 lg:pb-0"
+      className="flex-1 overflow-y-auto pb-14 lg:pb-0"
+      style={bgColor ? { backgroundColor: bgColor } : undefined}
       onClick={handleCanvasClick}
     >
       {!state.root ? (

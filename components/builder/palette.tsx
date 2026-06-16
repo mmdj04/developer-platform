@@ -1,6 +1,7 @@
 "use client";
 
 import { PALETTE, type PaletteItem } from "./types";
+import { useBuilder } from "./store";
 import { useState } from "react";
 
 const categoryLabels: Record<string, string> = {
@@ -17,7 +18,7 @@ const categoryIcons: Record<string, string> = {
   form: "□",
 };
 
-function PaletteItemCard({ item }: { item: PaletteItem }) {
+function PaletteItemCard({ item, onSelect }: { item: PaletteItem; onSelect?: (item: PaletteItem) => void }) {
   const handleDragStart = (e: React.DragEvent) => {
     e.dataTransfer.setData("text/plain", JSON.stringify(item));
     e.dataTransfer.effectAllowed = "copy";
@@ -27,6 +28,7 @@ function PaletteItemCard({ item }: { item: PaletteItem }) {
     <div
       draggable
       onDragStart={handleDragStart}
+      onClick={() => onSelect?.(item)}
       className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-scale-11 hover:text-scale-12 hover:bg-scale-4 cursor-grab active:cursor-grabbing transition-colors select-none"
     >
       <span className="text-xs w-5 h-5 flex items-center justify-center rounded bg-scale-5 font-mono">
@@ -37,7 +39,12 @@ function PaletteItemCard({ item }: { item: PaletteItem }) {
   );
 }
 
-export function Palette() {
+interface PaletteProps {
+  onComponentAdd?: (item: PaletteItem) => void;
+}
+
+export function Palette({ onComponentAdd }: PaletteProps) {
+  const { addComponent } = useBuilder();
   const [search, setSearch] = useState("");
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
 
@@ -48,6 +55,11 @@ export function Palette() {
       item.label.toLowerCase().includes(search.toLowerCase()) ||
       item.type.toLowerCase().includes(search.toLowerCase())
   );
+
+  const handleSelect = (item: PaletteItem) => {
+    addComponent("root", item);
+    onComponentAdd?.(item);
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -64,7 +76,7 @@ export function Palette() {
       <div className="flex-1 overflow-y-auto p-2 space-y-1">
         {search ? (
           filtered.map((item) => (
-            <PaletteItemCard key={item.type} item={item} />
+            <PaletteItemCard key={item.type} item={item} onSelect={handleSelect} />
           ))
         ) : (
           categories.map((cat) => {
@@ -79,7 +91,7 @@ export function Palette() {
                   {categoryLabels[cat]}
                 </button>
                 {!collapsed[cat] && items.map((item) => (
-                  <PaletteItemCard key={item.type} item={item} />
+                  <PaletteItemCard key={item.type} item={item} onSelect={handleSelect} />
                 ))}
               </div>
             );

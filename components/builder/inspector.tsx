@@ -40,13 +40,16 @@ export function Inspector() {
 
   const isImageType = selectedNode.type === "img" || selectedNode.type === "AvatarImage";
 
-  const propConfig: Record<string, { label: string; type: "text" | "textarea" | "class" }> = {
+  const propConfig: Record<string, { label: string; type: "text" | "textarea" | "class" | "color" }> = {
     text: { label: "Content", type: "textarea" },
     placeholder: { label: "Placeholder", type: "text" },
     className: { label: "Class Name", type: "class" },
     href: { label: "Link URL", type: "text" },
     src: { label: "Image URL", type: "text" },
     alt: { label: "Alt Text", type: "text" },
+    backgroundColor: { label: "Background", type: "color" },
+    color: { label: "Text Color", type: "color" },
+    borderColor: { label: "Border Color", type: "color" },
   };
 
   const editableKeys = Object.keys(props).filter((k) => propConfig[k]);
@@ -82,7 +85,23 @@ export function Inspector() {
               <label className="block text-xs font-medium text-scale-11 mb-1">
                 {config?.label || key}
               </label>
-              {config?.type === "textarea" ? (
+              {config?.type === "color" ? (
+                <div className="flex items-center gap-2">
+                  <input
+                    type="color"
+                    value={props[key] || "#000000"}
+                    onChange={(e) => handleChange(key, e.target.value)}
+                    className="w-10 h-8 rounded cursor-pointer border border-scale-5 bg-scale-3"
+                  />
+                  <input
+                    type="text"
+                    value={props[key] || ""}
+                    onChange={(e) => handleChange(key, e.target.value)}
+                    placeholder="#000000"
+                    className="flex-1 text-xs px-2 py-1.5 rounded-md bg-scale-3 border border-scale-5 text-scale-12 placeholder:text-scale-9 focus:outline-none focus:border-brand font-mono"
+                  />
+                </div>
+              ) : config?.type === "textarea" ? (
                 <textarea
                   value={props[key] || ""}
                   onChange={(e) => handleChange(key, e.target.value)}
@@ -103,6 +122,14 @@ export function Inspector() {
 
         {editableKeys.length === 0 && !isImageType && (
           <p className="text-xs text-scale-10">No editable properties</p>
+        )}
+
+        {editableKeys.length === 0 && !isImageType && (
+          <p className="text-xs text-scale-10 pt-1">
+            Tip: add <span className="font-mono text-scale-11">backgroundColor</span>,{" "}
+            <span className="font-mono text-scale-11">color</span>, or{" "}
+            <span className="font-mono text-scale-11">borderColor</span> props for styling
+          </p>
         )}
       </div>
 

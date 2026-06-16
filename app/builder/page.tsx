@@ -264,12 +264,17 @@ const previewComponentMap: Record<string, React.ComponentType<any>> = {
 };
 
 function PreviewNode({ node }: { node: any }) {
-  const { text, className, ...rest } = node.props;
+  const { text, className, backgroundColor, color, borderColor, ...rest } = node.props;
+  const style: Record<string, string> = {};
+  if (backgroundColor) style.backgroundColor = backgroundColor;
+  if (color) style.color = color;
+  if (borderColor) style.borderColor = borderColor;
+  const styleAttr = Object.keys(style).length > 0 ? style : undefined;
 
   if (node.type === "img") {
     return React.createElement("div", { className: "not-prose" },
       node.props.src
-        ? React.createElement("img", { src: node.props.src, alt: node.props.alt, className: "max-w-full h-auto" })
+        ? React.createElement("img", { src: node.props.src, alt: node.props.alt, className: "max-w-full h-auto", style: styleAttr })
         : React.createElement("span", { className: "text-scale-9 text-xs" }, "No image selected")
     );
   }
@@ -283,17 +288,17 @@ function PreviewNode({ node }: { node: any }) {
 
   if (htmlTags.has(node.type)) {
     if (noChildTags.has(node.type) && node.children.length === 0) {
-      return React.createElement(node.type, { className, ...rest }, text);
+      return React.createElement(node.type, { className, style: styleAttr, ...rest }, text);
     }
-    return React.createElement(node.type, { className, ...rest }, ...children);
+    return React.createElement(node.type, { className, style: styleAttr, ...rest }, ...children);
   }
 
   const Comp = previewComponentMap[node.type];
   if (Comp) {
-    return React.createElement(Comp, { className, ...rest }, text || children.length > 0 ? children : null);
+    return React.createElement(Comp, { className, style: styleAttr, ...rest }, text || children.length > 0 ? children : null);
   }
 
-  return React.createElement("div", { className, ...rest }, ...children);
+  return React.createElement("div", { className, style: styleAttr, ...rest }, ...children);
 }
 
 function MobilePanel({
@@ -328,7 +333,12 @@ function BuilderLayout() {
   const [preview, setPreview] = useState(false);
   const [showTree, setShowTree] = useState(true);
   const [mobilePanel, setMobilePanel] = useState<"none" | "palette" | "right">("none");
+  const [canvasBg, setCanvasBg] = useState("");
   const exportHook = useExport();
+
+  const handleComponentAdded = () => {
+    setMobilePanel("none");
+  };
 
   return (
     <div className="flex flex-col h-[calc(100dvh-4rem)]">
@@ -347,15 +357,34 @@ function BuilderLayout() {
             <Palette />
           </div>
 
-          <Canvas />
+          <Canvas bgColor={canvasBg} />
 
           {/* Desktop inspector/tree sidebar */}
           <div className="hidden md:block w-60 border-l border-scale-5 bg-scale-1 flex-shrink-0 overflow-y-auto">
             {showTree ? <TreeView /> : <Inspector />}
           </div>
 
-          {/* Desktop Layers/Props toggle */}
-          <div className="hidden md:flex absolute bottom-4 right-4 gap-1">
+          {/* Desktop Layers/Props toggle + canvas bg color */}
+          <div className="hidden md:flex absolute bottom-4 right-4 items-center gap-2">
+            <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-scale-3 border border-scale-5">
+              <label className="text-[10px] text-scale-9 uppercase tracking-wider">Canvas</label>
+              <input
+                type="color"
+                value={canvasBg || "#0a0a0a"}
+                onChange={(e) => setCanvasBg(e.target.value)}
+                className="w-6 h-6 rounded cursor-pointer border-0"
+                title="Canvas background color"
+              />
+              {canvasBg && (
+                <button
+                  onClick={() => setCanvasBg("")}
+                  className="text-scale-9 hover:text-scale-11 text-xs leading-none"
+                  title="Reset"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
             <button
               onClick={() => setShowTree(true)}
               className={`px-2 py-1 text-xs rounded-md transition-colors ${
@@ -384,7 +413,7 @@ function BuilderLayout() {
             onClose={() => setMobilePanel("none")}
             title="Components"
           >
-            <Palette />
+            <Palette onComponentAdd={handleComponentAdded} />
           </MobilePanel>
 
           <MobilePanel
@@ -406,7 +435,10 @@ function BuilderLayout() {
               Components
             </button>
             <button
-              onClick={() => setShowTree(true)}
+              onClick={() => {
+                setShowTree(true);
+                setMobilePanel(mobilePanel === "right" && showTree ? "none" : "right");
+              }}
               className={`flex-1 py-3 text-xs font-medium transition-colors ${
                 mobilePanel === "right" && showTree ? "bg-brand/10 text-brand" : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
               }`}
@@ -414,13 +446,38 @@ function BuilderLayout() {
               Layers
             </button>
             <button
-              onClick={() => setShowTree(false)}
+              onClick={() => {
+                setShowTree(false);
+                setMobilePanel(mobilePanel === "right" && !showTree ? "none" : "right");
+              }}
               className={`flex-1 py-3 text-xs font-medium transition-colors ${
                 mobilePanel === "right" && !showTree ? "bg-brand/10 text-brand" : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
               }`}
             >
               Props
             </button>
+          </div>
+          {/* Mobile canvas bg color */}
+          <div className="lg:hidden fixed bottom-14 left-0 right-0 flex justify-end px-3 pb-2 pointer-events-none">
+            <div className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-scale-3 border border-scale-5 pointer-events-auto">
+              <label className="text-[10px] text-scale-9 uppercase tracking-wider">Canvas</label>
+              <input
+                type="color"
+                value={canvasBg || "#0a0a0a"}
+                onChange={(e) => setCanvasBg(e.target.value)}
+                className="w-6 h-6 rounded cursor-pointer border-0"
+                title="Canvas background color"
+              />
+              {canvasBg && (
+                <button
+                  onClick={() => setCanvasBg("")}
+                  className="text-scale-9 hover:text-scale-11 text-xs leading-none"
+                  title="Reset"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
