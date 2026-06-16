@@ -270,16 +270,6 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="sm:py-18 container relative mx-auto px-6 py-16 md:py-24 lg:px-16 lg:py-24 xl:px-20 text-center flex flex-col items-center">
-        <h3 className="text-2xl md:text-4xl font-semibold tracking-tight text-scale-12">
-          <span>Seja produtivo e gerencie seu aplicativo</span><br className="hidden sm:block" />
-          <span className="text-scale-11">sem sair do dashboard.</span>
-        </h3>
-        <div className="mt-8 lg:mt-12 w-full">
-          <DashboardTabs />
-        </div>
-      </div>
-
       <div id="customers" className="overflow-hidden pb-16 md:pb-24">
         <div className="sm:py-18 container relative mx-auto px-6 py-16 md:py-24 lg:px-16 lg:py-24 xl:px-20 pb-8! w-full flex gap-4 justify-between flex-col xl:flex-row xl:items-end">
           <div className="xl:w-1/2">
@@ -342,6 +332,16 @@ export default function Home() {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      <div className="sm:py-18 container relative mx-auto px-6 py-16 md:py-24 lg:px-16 lg:py-24 xl:px-20 text-center flex flex-col items-center">
+        <h3 className="text-2xl md:text-4xl font-semibold tracking-tight text-scale-12">
+          <span>Seja produtivo e gerencie seu aplicativo</span><br className="hidden sm:block" />
+          <span className="text-scale-11">sem sair do dashboard.</span>
+        </h3>
+        <div className="mt-8 lg:mt-12 w-full">
+          <DashboardTabs />
         </div>
       </div>
 
