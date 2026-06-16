@@ -19,7 +19,11 @@ const tools = [
   { name: "Claude", icon: "○" },
   { name: "TRAE", icon: "□" },
   { name: "Windsurf", icon: "△" },
-  { name: "Clinen", icon: "☆" },
+  { name: "Cline", icon: "☆" },
+];
+
+const platforms = [
+  "macOS", "Windows", "Windows (WSL)", "Linux",
 ];
 
 const testimonials = [
@@ -402,83 +406,49 @@ export default function BeginnersPage() {
           </div>
         </section>
 
-        <section className="border-b border-scale-6 px-6 py-20">
-          <div className="mx-auto max-w-5xl">
-            <h2 className="text-center text-2xl font-semibold tracking-tight text-scale-12">
-              Supabase MCP server works seamlessly with your favorite AI code editor
-            </h2>
-            <p className="mx-auto mt-3 max-w-xl text-center text-base leading-relaxed text-scale-11">
-              Connect your AI tools
-            </p>
-            <div className="mt-10 flex flex-wrap justify-center gap-3">
-              {tools.map((tool) => (
-                <div
-                  key={tool.name}
-                  className="flex items-center gap-2 rounded-lg border border-scale-6 bg-scale-2 px-4 py-2.5 transition-colors hover:border-scale-7"
+        <section id="mcp" className="container relative mx-auto px-6 py-16 md:py-24 lg:px-16 lg:py-24 xl:px-20">
+          <div className="grid grid-cols-12 lg:gap-16">
+            <div className="col-span-12 pb-8 lg:col-span-5 xl:col-span-5">
+              <h2 className="text-2xl font-semibold tracking-tight">
+                <span className="text-scale-11">Supabase MCP server works seamlessly with </span>
+                <span className="text-scale-12">your favorite AI code editor</span>
+              </h2>
+              <div className="mt-4">
+                <Link
+                  href="https://supabase.com/docs/guides/getting-started/mcp"
+                  className="inline-flex items-center gap-2 rounded-md border border-scale-6 bg-scale-2 px-4 py-2 text-sm text-scale-12 hover:bg-scale-3 transition-colors"
                 >
-                  <span className="text-lg">{tool.icon}</span>
-                  <span className="text-sm text-scale-12">{tool.name}</span>
-                </div>
-              ))}
+                  Connect your AI tools
+                </Link>
+              </div>
+            </div>
+            <div className="col-span-12 lg:col-span-7 xl:col-span-7">
+              <div className="flex flex-wrap gap-3">
+                {tools.map((tool) => (
+                  <div
+                    key={tool.name}
+                    className="flex items-center gap-2 rounded-lg border border-scale-6 bg-scale-2 px-4 py-2.5 transition-colors hover:border-scale-7"
+                  >
+                    <span className="text-lg shrink-0">{tool.icon}</span>
+                    <span className="text-sm text-scale-12 whitespace-nowrap">{tool.name}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 flex flex-wrap items-center gap-2 text-sm text-scale-11">
+                <span>Available on:</span>
+                {platforms.map((p) => (
+                  <span
+                    key={p}
+                    className="rounded-md border border-scale-6 bg-scale-2 px-3 py-1 text-xs text-scale-11"
+                  >
+                    {p}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </section>
       </main>
-
-      <footer className="border-t border-scale-6 px-6 py-16">
-        <div className="mx-auto grid max-w-5xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="flex flex-col gap-3">
-            <h4 className="text-sm font-semibold text-scale-12">Product</h4>
-            <div className="flex flex-col gap-2 text-sm text-scale-11">
-              <Link href="/" className="hover:text-scale-12 transition-colors">Database</Link>
-              <Link href="/" className="hover:text-scale-12 transition-colors">Auth</Link>
-              <Link href="/" className="hover:text-scale-12 transition-colors">Functions</Link>
-              <Link href="/" className="hover:text-scale-12 transition-colors">Realtime</Link>
-              <Link href="/" className="hover:text-scale-12 transition-colors">Storage</Link>
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <h4 className="text-sm font-semibold text-scale-12">Solutions</h4>
-            <div className="flex flex-col gap-2 text-sm text-scale-11">
-              <Link href="/solutions/beginners" className="hover:text-scale-12 transition-colors">Beginners</Link>
-              <Link href="/" className="hover:text-scale-12 transition-colors">Developers</Link>
-              <Link href="/" className="hover:text-scale-12 transition-colors">AI Builders</Link>
-              <Link href="/" className="hover:text-scale-12 transition-colors">Startups</Link>
-              <Link href="/" className="hover:text-scale-12 transition-colors">Enterprise</Link>
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <h4 className="text-sm font-semibold text-scale-12">Resources</h4>
-            <div className="flex flex-col gap-2 text-sm text-scale-11">
-              <Link href="/" className="hover:text-scale-12 transition-colors">Documentation</Link>
-              <Link href="/" className="hover:text-scale-12 transition-colors">Blog</Link>
-              <Link href="/" className="hover:text-scale-12 transition-colors">Support</Link>
-              <Link href="/" className="hover:text-scale-12 transition-colors">Integrations</Link>
-              <Link href="/" className="hover:text-scale-12 transition-colors">Brand Assets</Link>
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <h4 className="text-sm font-semibold text-scale-12">Company</h4>
-            <div className="flex flex-col gap-2 text-sm text-scale-11">
-              <Link href="/" className="hover:text-scale-12 transition-colors">About</Link>
-              <Link href="/" className="hover:text-scale-12 transition-colors">Careers</Link>
-              <Link href="/terms" className="hover:text-scale-12 transition-colors">Terms of Service</Link>
-              <Link href="/privacy" className="hover:text-scale-12 transition-colors">Privacy Policy</Link>
-              <Link href="/" className="hover:text-scale-12 transition-colors">Security</Link>
-            </div>
-          </div>
-        </div>
-        <div className="mx-auto mt-12 flex max-w-5xl items-center justify-between border-t border-scale-6 pt-8">
-          <p className="text-xs text-scale-10">
-            &copy; 2026 Supabase Inc
-          </p>
-          <div className="flex items-center gap-4">
-            <span className="text-xs text-scale-10">Twitter</span>
-            <span className="text-xs text-scale-10">GitHub</span>
-            <span className="text-xs text-scale-10">Discord</span>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
