@@ -232,23 +232,11 @@ function ProductCard({
 export default function Home() {
   return (
     <div className="flex min-h-svh flex-col">
-      <div className="flex flex-1 flex-col items-center justify-center gap-6 p-4 pt-32">
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-scale-12 text-center leading-none max-w-4xl mx-auto">
+      <div className="flex flex-1 flex-col items-center justify-center px-6">
+        <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight text-scale-12 text-center leading-none w-full max-w-none">
           Developer Platform<br />
           <span className="text-brand">Open-Source</span>
         </h1>
-        <p className="text-scale-11 text-lg md:text-xl max-w-2xl text-center">
-          Supabase é a plataforma de desenvolvimento Postgres. Comece seu projeto com banco de dados Postgres, Autenticação, APIs instantâneas, Edge Functions, inscrições em tempo real, Storage e embeddings Vector.
-        </p>
-        <div className="flex gap-3">
-          <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand">
-            <Link href="https://supabase.com/dashboard">Iniciar projeto</Link>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="bg-scale-3 hover:bg-scale-5 border-scale-5 text-scale-12 hover:border-scale-8">
-            <Link href="/contact/sales">Solicitar demonstração</Link>
-          </Button>
-        </div>
-        <p className="text-scale-10 text-sm mt-4">Confiada por empresas em rápido crescimento no mundo todo</p>
       </div>
 
       <div className="sm:py-18 container relative mx-auto px-6 py-16 md:py-24 lg:px-16 lg:py-24 xl:px-20 grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-4 xl:gap-3 2xl:gap-6 md:grid-cols-12">
