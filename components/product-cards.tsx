@@ -122,7 +122,7 @@ const productCards = [
   },
   {
     title: "APIs de Dados",
-    href: "https://supabase.com/docs/guides/api",
+    href: "/api-docs",
     description: 'APIs RESTful prontas <strong>para uso imediato</strong>.',
     cols: "col-span-6 xl:col-span-3",
     checks: [],
