@@ -233,11 +233,6 @@ export default function Home() {
   return (
     <div className="flex min-h-svh flex-col">
       <div className="flex flex-1 flex-col items-center justify-center gap-6 p-4 pt-32">
-        <div className="flex gap-2">
-          <span className="text-xs font-mono uppercase tracking-widest text-scale-10 border border-scale-5 rounded-full px-3 py-1">SOC2 Type 2 Certified</span>
-          <span className="text-xs font-mono uppercase tracking-widest text-scale-10 border border-scale-5 rounded-full px-3 py-1">HIPAA Compliant</span>
-          <span className="text-xs font-mono uppercase tracking-widest text-scale-10 border border-scale-5 rounded-full px-3 py-1">ISO 27001 Certified</span>
-        </div>
         <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-scale-12 text-center leading-tight">
           <span className="block">Build in a weekend</span>
           <span className="text-brand block">Scale to millions</span>
