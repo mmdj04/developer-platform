@@ -1,13 +1,9 @@
+"use client";
+
 import Link from "next/link";
-import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Building2, Check, Github } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "Nova Organização | Developer Platform",
-  description: "Crie uma nova organização na Developer Platform.",
-};
 
 const plans = [
   {
