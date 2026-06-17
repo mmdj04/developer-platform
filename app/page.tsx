@@ -235,7 +235,7 @@ export default function Home() {
       <div className="flex flex-1 flex-col items-center justify-center px-6 min-h-[85vh]">
         <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight text-scale-12 text-center leading-none w-full max-w-none">
           Developer Platform<br />
-          <span className="text-brand">Open-Source</span>
+          <span className="text-scale-12">Open-Source</span>
         </h1>
       </div>
 
@@ -414,8 +414,8 @@ export default function Home() {
 
       <div className="border-t border-scale-5 py-8 sm:py-16 md:py-24 text-center px-6">
         <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-scale-12">
-          <span className="text-scale-11">Developer Platform</span>
-          <span className="block sm:inline text-brand">Open-Source</span>
+          <span className="text-scale-11">Construa em um fim de semana,</span>
+          <span className="block sm:inline"> escale para milhões</span>
         </h2>
         <div className="flex items-center justify-center gap-2 mt-8">
           <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand">
