@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacidade | Developer Platform",
-  description: "Política de privacidade da Developer Platform. Saiba como coletamos, usamos e protegemos seus dados.",
+  title: "Privacidade | SDKdoMatheus",
+  description: "Política de privacidade do SDKdoMatheus.",
 };
 
 export default function PrivacyPage() {

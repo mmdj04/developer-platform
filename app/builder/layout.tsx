@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Page Builder | Developer Platform",
+  title: "Page Builder | SDKdoMatheus",
   description: "Visual page builder with drag-and-drop components. Crie e edite páginas visualmente com componentes shadcn/ui.",
 };
 

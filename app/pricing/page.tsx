@@ -8,8 +8,8 @@ import { FaqPricing } from "@/components/faq-pricing";
 import { Check } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Preços | Developer Platform",
-  description: "Planos e preços da Developer Platform. Escolha o plano ideal para seu projeto, desde o plano gratuito até planos empresariais com suporte dedicado.",
+  title: "Preços | SDKdoMatheus",
+  description: "Planos e preços do SDKdoMatheus. Escolha o plano ideal para seu projeto, desde o plano gratuito até planos empresariais com suporte dedicado.",
 };
 
 interface PlanFeature {

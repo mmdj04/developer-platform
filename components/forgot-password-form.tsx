@@ -1,6 +1,5 @@
 "use client";
 
-import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,8 +25,8 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function ForgotPasswordForm() {
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -34,57 +34,23 @@ export function ForgotPasswordForm() {
   });
 
   const handleForgotPassword = async (values: FormValues) => {
-    const supabase = createClient();
     setIsLoading(true);
     setError(null);
 
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(values.email, {
-        redirectTo: `${window.location.origin}/auth/update-password`,
-      });
-      if (error) throw error;
-      setSuccess(true);
-    } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "Ocorreu um erro");
-    } finally {
-      setIsLoading(false);
-    }
+    router.push(`/auth/update-password?email=${encodeURIComponent(values.email)}`);
   };
-
-  if (success) {
-    return (
-      <div className="flex w-full max-w-sm flex-col gap-6">
-        <div className="flex flex-col gap-1 text-center">
-          <span className="text-sm font-bold tracking-tight text-scale-12">
-            Developer Platform
-          </span>
-          <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
-            Verifique seu Email
-          </h1>
-          <p className="text-sm text-scale-11">
-            Instruções de redefinição enviadas
-          </p>
-        </div>
-        <p className="text-center text-sm text-scale-11">
-          Se você se cadastrou usando email e senha, receberá um
-          email para redefinir sua senha.
-        </p>
-      </div>
-    );
-  }
 
   return (
     <div className="flex w-full max-w-sm flex-col gap-6">
       <div className="flex flex-col gap-1 text-center">
         <span className="text-sm font-bold tracking-tight text-scale-12">
-          Developer Platform
+          @SDKdoMatheus
         </span>
         <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
           Esqueceu a Senha
         </h1>
         <p className="text-sm text-scale-11">
-          Digite seu email e enviaremos um link para redefinir
-          sua senha
+          Digite seu email para redefinir sua senha
         </p>
       </div>
 
@@ -121,7 +87,7 @@ export function ForgotPasswordForm() {
             disabled={isLoading}
             className="h-10 w-full bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand"
           >
-            {isLoading ? "Enviando..." : "Enviar email de redefinição"}
+            {isLoading ? "Redirecionando..." : "Redefinir senha"}
           </Button>
         </form>
       </Form>

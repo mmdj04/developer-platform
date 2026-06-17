@@ -1,6 +1,5 @@
 "use client";
 
-import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -11,11 +10,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useAuth } from "@/hooks/use-auth";
 
 const formSchema = z.object({
   password: z.string().min(8, "A senha deve ter pelo menos 8 caracteres"),
@@ -26,7 +26,11 @@ type FormValues = z.infer<typeof formSchema>;
 export function UpdatePasswordForm() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+  const { login } = useAuth();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -34,32 +38,71 @@ export function UpdatePasswordForm() {
   });
 
   const handleUpdatePassword = async (values: FormValues) => {
-    const supabase = createClient();
+    if (!email) {
+      setError("Email não encontrado. Volte e tente novamente.");
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
 
     try {
-      const { error } = await supabase.auth.updateUser({ password: values.password });
-      if (error) throw error;
-      router.push("/");
-    } catch (error: unknown) {
-      setError(error instanceof Error ? error.message : "Ocorreu um erro");
-    } finally {
+      const users = JSON.parse(localStorage.getItem("sdk_auth_users") || "[]");
+      const index = users.findIndex((u: { email: string }) => u.email === email);
+
+      if (index === -1) {
+        setError("Usuário não encontrado.");
+        setIsLoading(false);
+        return;
+      }
+
+      users[index].password = values.password;
+      localStorage.setItem("sdk_auth_users", JSON.stringify(users));
+
+      login(email, values.password);
+      setSuccess(true);
+    } catch {
+      setError("Ocorreu um erro ao salvar a nova senha.");
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => router.push("/dashboard/new"), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [success, router]);
+
+  if (success) {
+    return (
+      <div className="flex w-full max-w-sm flex-col gap-6">
+        <div className="flex flex-col gap-1 text-center">
+          <span className="text-sm font-bold tracking-tight text-scale-12">
+            @SDKdoMatheus
+          </span>
+          <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
+            Senha redefinida!
+          </h1>
+          <p className="text-sm text-scale-11">
+            Redirecionando para o dashboard...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex w-full max-w-sm flex-col gap-6">
       <div className="flex flex-col gap-1 text-center">
         <span className="text-sm font-bold tracking-tight text-scale-12">
-          Developer Platform
+          @SDKdoMatheus
         </span>
         <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
           Redefinir sua Senha
         </h1>
         <p className="text-sm text-scale-11">
-          Insira sua nova senha abaixo.
+          {email ? `Nova senha para ${email}` : "Insira sua nova senha abaixo."}
         </p>
       </div>
 

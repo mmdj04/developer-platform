@@ -36,14 +36,14 @@ export function SiteHeader() {
         Kit de Desenvolvimento @SDKdoMatheus
       </Link>
 
-      <nav className="hidden md:flex items-center gap-1">
+      <nav className="flex items-center gap-1 overflow-x-auto">
         {mainLinks.map((link) => {
           const isActive = pathname === link.href;
           return (
             <Link
               key={link.href}
               href={link.href}
-              className={`text-sm px-3 py-2 rounded-lg transition-colors ${
+              className={`text-sm px-3 py-2 rounded-lg transition-colors whitespace-nowrap ${
                 isActive
                   ? "bg-scale-4 text-scale-12 font-medium"
                   : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
@@ -55,7 +55,7 @@ export function SiteHeader() {
         })}
       </nav>
 
-      <div className="hidden md:block">
+      <div className="shrink-0">
         <AuthButton />
       </div>
     </header>

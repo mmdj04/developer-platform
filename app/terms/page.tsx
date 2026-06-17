@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Termos de Serviço | Developer Platform",
-  description: "Termos e condições de uso da Developer Platform. Leia sobre nossos termos de serviço, direitos e obrigações.",
+  title: "Termos de Serviço | SDKdoMatheus",
+  description: "Termos e condições de uso do SDKdoMatheus.",
 };
 
 export default function TermsPage() {

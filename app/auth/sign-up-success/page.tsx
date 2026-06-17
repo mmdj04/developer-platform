@@ -4,7 +4,7 @@ export default function Page() {
       <div className="flex w-full max-w-sm flex-col gap-6">
         <div className="flex flex-col gap-1 text-center">
           <span className="text-sm font-bold tracking-tight text-scale-12">
-            Developer Platform
+            @SDKdoMatheus
           </span>
         </div>
         <div className="flex flex-col gap-2 text-center">

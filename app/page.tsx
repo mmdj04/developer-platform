@@ -5,8 +5,8 @@ import { DashboardTabs } from "@/components/dashboard-tabs";
 import { CommunityCarousel } from "@/components/community-carousel";
 import { ProductCards } from "@/components/product-cards";
 export const metadata: Metadata = {
-  title: "Developer Platform",
-  description: "Supabase is the Postgres development platform. Start your project with a Postgres database, Authentication, instant APIs, Edge Functions, Realtime subscriptions, Storage, and Vector embeddings.",
+  title: "SDKdoMatheus",
+  description: "Kit de Desenvolvimento @SDKdoMatheus",
 };
 
 const story = (name: string, description: string) => ({ type: "featured" as const, name, description });

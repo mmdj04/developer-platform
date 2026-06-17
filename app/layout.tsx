@@ -9,8 +9,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Developer Platform",
-  description: "Uma plataforma full-stack Next.js com Supabase",
+  title: "SDKdoMatheus",
+  description: "Kit de Desenvolvimento @SDKdoMatheus",
 };
 
 export default function RootLayout({
