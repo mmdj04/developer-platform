@@ -40,7 +40,8 @@ export function SiteHeader() {
         href="/"
         className="font-bold text-base text-scale-12 tracking-tight hover:text-scale-11 transition-colors"
       >
-        Developer Platform
+        Kit de Desenvolvimento<br className="hidden sm:inline md:hidden" />{" "}
+        <span className="hidden md:inline">@</span>SDKdoMatheus
       </Link>
 
       <Sheet open={open} onOpenChange={setOpen}>
@@ -69,7 +70,7 @@ export function SiteHeader() {
         <SheetContent side="left" className="w-80 bg-scale-1 border-r border-scale-5 p-0">
           <div className="flex flex-col h-dvh max-h-dvh overflow-hidden">
             <div className="px-5 py-4 border-b border-scale-5">
-              <span className="text-sm font-bold text-scale-12 tracking-tight">Developer Platform</span>
+              <span className="text-sm font-bold text-scale-12 tracking-tight">Kit de Desenvolvimento @SDKdoMatheus</span>
             </div>
 
             <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">

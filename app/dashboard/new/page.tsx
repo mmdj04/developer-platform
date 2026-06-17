@@ -73,18 +73,13 @@ export default function NewOrganizationPage() {
     <div className="flex min-h-svh flex-col">
       <div className="container mx-auto px-6 py-16 md:py-24 lg:px-16 xl:px-20 w-full max-w-4xl">
         <div className="mb-10">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="flex items-center justify-center size-10 rounded-lg bg-scale-3 border border-scale-5">
-              <Building2 className="size-5 text-scale-11" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-semibold text-scale-12">
-                Criar nova organização
-              </h1>
-              <p className="text-scale-11 text-sm mt-1">
-                Crie uma organização para gerenciar seus projetos e colaboradores.
-              </p>
-            </div>
+          <div>
+            <h1 className="text-2xl font-semibold text-scale-12">
+              Criar nova organização
+            </h1>
+            <p className="text-scale-11 text-sm mt-1">
+              Crie uma organização para gerenciar seus projetos e colaboradores.
+            </p>
           </div>
         </div>
 
