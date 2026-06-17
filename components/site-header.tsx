@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Plus } from "lucide-react";
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/components/ui/sheet";
 import { useState } from "react";
-import { Plus } from "lucide-react";
+
 
 const authRoutes = [
   "/auth/login",
@@ -106,6 +107,7 @@ export function SiteHeader() {
                   Nova Organização
                 </Link>
               </SheetClose>
+
 
               <div className="pt-4 pb-2">
                 <span className="text-[11px] font-mono uppercase tracking-widest text-scale-9 px-3">
