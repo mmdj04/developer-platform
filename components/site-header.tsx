@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Sheet, SheetTrigger, SheetContent, SheetClose } from "@/components/ui/sheet";
 import { useState } from "react";
+import { Plus } from "lucide-react";
 
 const authRoutes = [
   "/auth/login",
@@ -89,6 +90,21 @@ export function SiteHeader() {
                   </SheetClose>
                 );
               })}
+
+              <div className="pt-4 pb-2">
+                <span className="text-[11px] font-mono uppercase tracking-widest text-scale-9 px-3">
+                  Dashboard
+                </span>
+              </div>
+              <SheetClose asChild>
+                <Link
+                  href="/dashboard/new"
+                  className="flex items-center gap-2 text-sm px-3 py-2.5 rounded-lg text-scale-11 hover:text-scale-12 hover:bg-scale-4 transition-colors"
+                >
+                  <Plus className="size-4" />
+                  Nova Organização
+                </Link>
+              </SheetClose>
 
               <div className="pt-4 pb-2">
                 <span className="text-[11px] font-mono uppercase tracking-widest text-scale-9 px-3">
