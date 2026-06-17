@@ -3,24 +3,43 @@
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+const formSchema = z.object({
+  password: z.string().min(8, "A senha deve ter pelo menos 8 caracteres"),
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 export function UpdatePasswordForm() {
-  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleUpdatePassword = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { password: "" },
+  });
+
+  const handleUpdatePassword = async (values: FormValues) => {
     const supabase = createClient();
     setIsLoading(true);
     setError(null);
 
     try {
-      const { error } = await supabase.auth.updateUser({ password });
+      const { error } = await supabase.auth.updateUser({ password: values.password });
       if (error) throw error;
       router.push("/");
     } catch (error: unknown) {
@@ -44,37 +63,43 @@ export function UpdatePasswordForm() {
         </p>
       </div>
 
-      <form onSubmit={handleUpdatePassword} className="flex flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="password" className="text-sm font-medium text-scale-12">
-            Nova senha
-          </Label>
-          <Input
-            id="password"
-            type="password"
-            placeholder="Digite uma senha forte"
-            required
-            autoComplete="new-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="h-10 border-scale-6 bg-scale-2 text-scale-12 placeholder:text-scale-10 focus-visible:ring-brand"
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleUpdatePassword)} className="flex flex-col gap-4">
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-scale-12">Nova senha</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder="Digite uma senha forte"
+                    autoComplete="new-password"
+                    className="h-10 border-scale-6 bg-scale-2 text-scale-12 placeholder:text-scale-10 focus-visible:ring-brand"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
 
-        {error && (
-          <div className="rounded-md bg-destructive/15 px-3 py-2 text-sm text-destructive">
-            {error}
-          </div>
-        )}
+          {error && (
+            <div className="rounded-md bg-destructive/15 px-3 py-2 text-sm text-destructive">
+              {error}
+            </div>
+          )}
 
-        <Button
-          type="submit"
-          disabled={isLoading}
-          className="h-10 w-full bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand"
-        >
-          {isLoading ? "Salvando..." : "Salvar nova senha"}
-        </Button>
-      </form>
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="h-10 w-full bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand"
+          >
+            {isLoading ? "Salvando..." : "Salvar nova senha"}
+          </Button>
+        </form>
+      </Form>
     </div>
   );
 }

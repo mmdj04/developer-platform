@@ -3,10 +3,33 @@
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+const formSchema = z.object({
+  email: z.string().email("Email inválido").min(1, "Email é obrigatório"),
+  password: z
+    .string()
+    .min(8, "A senha deve ter pelo menos 8 caracteres")
+    .regex(/[A-Z]/, "A senha deve conter uma letra maiúscula")
+    .regex(/[a-z]/, "A senha deve conter uma letra minúscula")
+    .regex(/[0-9]/, "A senha deve conter um número")
+    .regex(/[!?<>@#$%^&*()_+\-=[\]{};':"\\|,.<>\/~`]/, "A senha deve conter um caractere especial"),
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 function PasswordRequirement({
   met,
@@ -40,12 +63,17 @@ function PasswordRequirement({
 }
 
 export function SignUpForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isGithubLoading, setIsGithubLoading] = useState(false);
   const router = useRouter();
+
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { email: "", password: "" },
+  });
+
+  const password = form.watch("password");
 
   const requirements = useMemo(
     () => [
@@ -61,16 +89,15 @@ export function SignUpForm() {
     [password],
   );
 
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSignUp = async (values: FormValues) => {
     const supabase = createClient();
     setIsLoading(true);
     setError(null);
 
     try {
       const { error } = await supabase.auth.signUp({
-        email,
-        password,
+        email: values.email,
+        password: values.password,
         options: {
           emailRedirectTo: `${window.location.origin}/`,
         },
@@ -142,64 +169,74 @@ export function SignUpForm() {
         </div>
       </div>
 
-      <form onSubmit={handleSignUp} className="flex flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="email" className="text-sm font-medium text-scale-12">
-            Email
-          </Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="voce@exemplo.com"
-            required
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="h-10 border-scale-6 bg-scale-2 text-scale-12 placeholder:text-scale-10 focus-visible:ring-brand"
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSignUp)} className="flex flex-col gap-4">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-scale-12">Email</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder="voce@exemplo.com"
+                    autoComplete="email"
+                    className="h-10 border-scale-6 bg-scale-2 text-scale-12 placeholder:text-scale-10 focus-visible:ring-brand"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
 
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="password" className="text-sm font-medium text-scale-12">
-            Senha
-          </Label>
-          <Input
-            id="password"
-            type="password"
-            placeholder="Digite uma senha forte"
-            required
-            autoComplete="new-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="h-10 border-scale-6 bg-scale-2 text-scale-12 placeholder:text-scale-10 focus-visible:ring-brand"
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-scale-12">Senha</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder="Digite uma senha forte"
+                    autoComplete="new-password"
+                    className="h-10 border-scale-6 bg-scale-2 text-scale-12 placeholder:text-scale-10 focus-visible:ring-brand"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+                {password.length > 0 && (
+                  <div className="flex flex-col gap-1.5 pt-1">
+                    {requirements.map((req, index) => (
+                      <PasswordRequirement
+                        key={index}
+                        met={req.met}
+                        label={req.label}
+                      />
+                    ))}
+                  </div>
+                )}
+              </FormItem>
+            )}
           />
-          {password.length > 0 && (
-            <div className="flex flex-col gap-1.5 pt-1">
-              {requirements.map((req, index) => (
-                <PasswordRequirement
-                  key={index}
-                  met={req.met}
-                  label={req.label}
-                />
-              ))}
+
+          {error && (
+            <div className="rounded-md bg-destructive/15 px-3 py-2 text-sm text-destructive">
+              {error}
             </div>
           )}
-        </div>
 
-        {error && (
-          <div className="rounded-md bg-destructive/15 px-3 py-2 text-sm text-destructive">
-            {error}
-          </div>
-        )}
-
-        <Button
-          type="submit"
-          disabled={isLoading}
-          className="h-10 w-full bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand"
-        >
-          {isLoading ? "Criando conta..." : "Cadastrar"}
-        </Button>
-      </form>
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="h-10 w-full bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand"
+          >
+            {isLoading ? "Criando conta..." : "Cadastrar"}
+          </Button>
+        </form>
+      </Form>
 
       <div className="flex flex-col gap-4 text-center text-sm text-scale-11">
         <p>

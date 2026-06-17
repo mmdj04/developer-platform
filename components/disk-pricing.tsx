@@ -32,13 +32,13 @@ export function DiskPricing() {
               </td>
               <td className="p-3 text-scale-11">16 TB</td>
               <td className="p-3 text-scale-11 whitespace-pre-line">
-                {"8 GB incluídos\ndepois $0.125 por GB"}
+                {"8 GB incluídos\ndepois R$ 1,02 por GB"}
               </td>
               <td className="p-3 text-scale-11 whitespace-pre-line">
-                {"3.000 IOPS incluídos\ndepois $0.024 por IOPS"}
+                {"3.000 IOPS incluídos\ndepois R$ 0,20 por IOPS"}
               </td>
               <td className="p-3 text-scale-11 whitespace-pre-line">
-                {"125 MB/s incluídos\ndepois $0.095 por MB/s"}
+                {"125 MB/s incluídos\ndepois R$ 0,77 por MB/s"}
               </td>
               <td className="p-3 text-scale-11">99.9%</td>
             </tr>
@@ -49,8 +49,8 @@ export function DiskPricing() {
                 <span className="text-scale-10 text-sm">Para aplicações de missão crítica</span>
               </td>
               <td className="p-3 text-scale-11">60 TB</td>
-              <td className="p-3 text-scale-11 whitespace-pre-line">$0.195 por GB</td>
-              <td className="p-3 text-scale-11 whitespace-pre-line">$0.119 por IOPS</td>
+              <td className="p-3 text-scale-11 whitespace-pre-line">R$ 1,58 por GB</td>
+              <td className="p-3 text-scale-11 whitespace-pre-line">R$ 0,97 por IOPS</td>
               <td className="p-3 text-scale-11 whitespace-pre-line">
                 Escala automaticamente com IOPS
               </td>

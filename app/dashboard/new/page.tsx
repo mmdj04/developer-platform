@@ -49,7 +49,7 @@ const plans = [
     id: "free" as const,
     name: "Free",
     description: "Perfeito para projetos pessoais e sites simples.",
-    price: "$0",
+    price: "R$ 0",
     priceSub: "/mês",
     features: [
       "Requisições de API ilimitadas",
@@ -63,7 +63,7 @@ const plans = [
     id: "pro" as const,
     name: "Pro",
     description: "Para aplicações em produção com poder de escalar.",
-    price: "A partir de $25",
+    price: "A partir de R$ 203",
     priceSub: "/mês",
     popular: true,
     features: [
@@ -78,7 +78,7 @@ const plans = [
     id: "team" as const,
     name: "Team",
     description: "Recursos avançados para equipes como SSO e auditoria.",
-    price: "A partir de $599",
+    price: "A partir de R$ 4.867",
     priceSub: "/mês",
     features: [
       "SOC2 e ISO 27001",

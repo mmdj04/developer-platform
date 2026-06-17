@@ -33,7 +33,7 @@ const plans: Plan[] = [
   {
     name: "Free",
     description: "Perfeito para projetos pessoais e sites simples.",
-    price: "$0",
+    price: "R$ 0",
     priceSub: "/mês",
     cta: "Começar Grátis",
     href: "https://supabase.com/dashboard/new?plan=free",
@@ -52,7 +52,7 @@ const plans: Plan[] = [
     name: "Pro",
     badge: "Mais Popular",
     description: "Para aplicações em produção com poder de escalar.",
-    price: "A partir de $25",
+    price: "A partir de R$ 203",
     priceSub: "/mês",
     cta: "Começar Agora",
     href: "https://supabase.com/dashboard/new?plan=pro",
@@ -71,7 +71,7 @@ const plans: Plan[] = [
   {
     name: "Team",
     description: "Adicione recursos como SSO, controle sobre backups e certificações do setor.",
-    price: "A partir de $599",
+    price: "A partir de R$ 4.867",
     priceSub: "/mês",
     cta: "Começar Agora",
     href: "https://supabase.com/dashboard/new?plan=team",
