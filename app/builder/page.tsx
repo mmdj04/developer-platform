@@ -61,19 +61,19 @@ function ExportModal({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between px-5 py-3 border-b border-scale-5">
-          <h3 className="text-sm font-semibold text-scale-12">Export TSX</h3>
+          <h3 className="text-sm font-semibold text-scale-12">Exportar TSX</h3>
           <div className="flex gap-2">
             <button
               onClick={handleCopy}
               className="text-xs px-3 py-1.5 rounded-md bg-scale-3 hover:bg-scale-5 border border-scale-5 text-scale-11 hover:text-scale-12 transition-colors"
             >
-              Copy
+              Copiar
             </button>
             <button
               onClick={handleDownload}
               className="text-xs px-3 py-1.5 rounded-md bg-brand text-black font-medium hover:bg-brand-hover transition-colors"
             >
-              Download
+              Baixar
             </button>
             <button
               onClick={onClose}
@@ -84,7 +84,7 @@ function ExportModal({
           </div>
         </div>
         <pre className="flex-1 overflow-y-auto p-5 text-xs font-mono text-scale-12 leading-relaxed whitespace-pre bg-scale-3 rounded-b-xl">
-          {code || "(empty)"}
+          {code || "(vazio)"}
         </pre>
       </div>
     </div>
@@ -97,7 +97,7 @@ function PreviewMode() {
   if (!state.root) {
     return (
       <div className="flex-1 flex items-center justify-center text-scale-9 text-sm">
-        Canvas is empty
+        Canvas vazio
       </div>
     );
   }
@@ -183,13 +183,13 @@ function BuilderLayout() {
                 value={canvasBg || "#0a0a0a"}
                 onChange={(e) => setCanvasBg(e.target.value)}
                 className="w-6 h-6 rounded cursor-pointer border-0"
-                title="Canvas background color"
+                title="Cor de fundo do canvas"
               />
               {canvasBg && (
                 <button
                   onClick={() => setCanvasBg("")}
                   className="text-scale-9 hover:text-scale-11 text-xs leading-none"
-                  title="Reset"
+                  title="Resetar"
                 >
                   ✕
                 </button>
@@ -203,7 +203,7 @@ function BuilderLayout() {
                   : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
               }`}
             >
-              Layers
+              Camadas
             </button>
             <button
               onClick={() => setShowTree(false)}
@@ -213,7 +213,7 @@ function BuilderLayout() {
                   : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
               }`}
             >
-              Props
+              Propriedades
             </button>
           </div>
 
@@ -221,7 +221,7 @@ function BuilderLayout() {
           <MobilePanel
             open={mobilePanel === "palette"}
             onClose={() => setMobilePanel("none")}
-            title="Components"
+            title="Componentes"
           >
             <Palette onComponentAdd={handleComponentAdded} />
           </MobilePanel>
@@ -229,7 +229,7 @@ function BuilderLayout() {
           <MobilePanel
             open={mobilePanel === "right"}
             onClose={() => setMobilePanel("none")}
-            title={showTree ? "Layers" : "Props"}
+            title={showTree ? "Camadas" : "Propriedades"}
           >
             {showTree ? <TreeView /> : <Inspector />}
           </MobilePanel>
@@ -242,7 +242,7 @@ function BuilderLayout() {
                 mobilePanel === "palette" ? "bg-brand/10 text-brand" : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
               }`}
             >
-              Components
+              Componentes
             </button>
             <button
               onClick={() => {
@@ -253,7 +253,7 @@ function BuilderLayout() {
                 mobilePanel === "right" && showTree ? "bg-brand/10 text-brand" : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
               }`}
             >
-              Layers
+              Camadas
             </button>
             <button
               onClick={() => {
@@ -264,7 +264,7 @@ function BuilderLayout() {
                 mobilePanel === "right" && !showTree ? "bg-brand/10 text-brand" : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
               }`}
             >
-              Props
+              Propriedades
             </button>
           </div>
           {/* Mobile canvas bg color */}
@@ -276,13 +276,13 @@ function BuilderLayout() {
                 value={canvasBg || "#0a0a0a"}
                 onChange={(e) => setCanvasBg(e.target.value)}
                 className="w-6 h-6 rounded cursor-pointer border-0"
-                title="Canvas background color"
+                title="Cor de fundo do canvas"
               />
               {canvasBg && (
                 <button
                   onClick={() => setCanvasBg("")}
                   className="text-scale-9 hover:text-scale-11 text-xs leading-none"
-                  title="Reset"
+                  title="Resetar"
                 >
                   ✕
                 </button>

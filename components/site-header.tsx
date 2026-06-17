@@ -14,14 +14,14 @@ const authRoutes = [
 ];
 
 const mainLinks = [
-  { href: "/", label: "Home", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
-  { href: "/pricing", label: "Pricing", icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" },
-  { href: "/builder", label: "Builder", icon: "M13 10V3L4 14h7v7l9-11h-7z" },
+  { href: "/", label: "Início" },
+  { href: "/pricing", label: "Preços" },
+  { href: "/builder", label: "Construtor" },
 ];
 
 const resourceLinks = [
-  { href: "/terms", label: "Terms of Service" },
-  { href: "/privacy", label: "Privacy Policy" },
+  { href: "/terms", label: "Termos de Serviço" },
+  { href: "/privacy", label: "Política de Privacidade" },
 ];
 
 const socialLinks = [
@@ -38,10 +38,10 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-scale-6 px-6 bg-scale-1">
+    <header className="flex h-16 items-center justify-between px-6 bg-scale-1">
       <Link
         href="/"
-        className="font-bold text-base text-scale-12 tracking-tight hover:text-brand transition-colors"
+        className="font-bold text-base text-scale-12 tracking-tight hover:text-scale-11 transition-colors"
       >
         Developer Platform
       </Link>
@@ -82,26 +82,12 @@ export function SiteHeader() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`flex items-center gap-3 text-sm px-3 py-2.5 rounded-lg transition-colors ${
+                    className={`block text-sm px-3 py-2.5 rounded-lg transition-colors ${
                       isActive
                         ? "bg-scale-4 text-scale-12 font-medium"
                         : "text-scale-11 hover:text-scale-12 hover:bg-scale-4"
                     }`}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="shrink-0"
-                    >
-                      <path d={link.icon} />
-                    </svg>
                     {link.label}
                   </Link>
                 );
@@ -138,22 +124,8 @@ export function SiteHeader() {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm px-3 py-2 rounded-lg text-scale-11 hover:text-scale-12 hover:bg-scale-4 transition-colors"
+                    className="block text-sm px-3 py-2 rounded-lg text-scale-11 hover:text-scale-12 hover:bg-scale-4 transition-colors"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="shrink-0"
-                    >
-                      <path d={link.icon} />
-                    </svg>
                     {link.label}
                   </a>
                 ))}

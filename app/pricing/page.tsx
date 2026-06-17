@@ -107,11 +107,6 @@ export default function Pricing() {
     <div className="flex min-h-svh flex-col">
       <div className="sm:py-18 container relative mx-auto px-6 py-16 md:py-24 lg:px-16 lg:py-24 xl:px-20 w-full">
         <div className="flex flex-col items-center text-center mb-12 md:mb-16">
-          <span className="inline-flex items-center justify-center mb-6">
-            <span className="text-sm font-bold tracking-tight text-scale-12 bg-scale-3 border border-scale-5 rounded-full px-4 py-1.5">
-              Developer Platform
-            </span>
-          </span>
           <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-scale-12">
             Preços previsíveis,<br className="block lg:hidden" />{" "}
             <span className="text-scale-11">projetados para escalar.</span>

@@ -237,6 +237,9 @@ export default function Home() {
           Developer<br />Platform<br />
           <span className="text-scale-12">Open-Source</span>
         </h1>
+        <p className="text-scale-11 text-sm md:text-base text-center max-w-md mt-6">
+          Desenvolvido por <span className="text-scale-12 font-medium">Matheus Moraes</span>
+        </p>
       </div>
 
       <div className="sm:py-18 container relative mx-auto px-6 py-16 md:py-24 lg:px-16 lg:py-24 xl:px-20 grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-4 xl:gap-3 2xl:gap-6 md:grid-cols-12">
