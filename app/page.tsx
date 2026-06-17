@@ -7,7 +7,7 @@ import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: "Developer Platform",
-  description: "Plataforma full-stack com banco de dados PostgreSQL, autenticação, APIs e edge functions. Tudo que você precisa para construir produtos digitais.",
+  description: "Supabase is the Postgres development platform. Start your project with a Postgres database, Authentication, instant APIs, Edge Functions, Realtime subscriptions, Storage, and Vector embeddings.",
 };
 
 const productCards = [
@@ -232,18 +232,28 @@ function ProductCard({
 export default function Home() {
   return (
     <div className="flex min-h-svh flex-col">
-      <div className="flex flex-1 flex-col items-center justify-center gap-8 p-4 pt-24">
-        <h1 className="text-2xl font-semibold tracking-tight text-scale-12">
-          Developer Platform
+      <div className="flex flex-1 flex-col items-center justify-center gap-6 p-4 pt-32">
+        <div className="flex gap-2">
+          <span className="text-xs font-mono uppercase tracking-widest text-scale-10 border border-scale-5 rounded-full px-3 py-1">SOC2 Type 2 Certified</span>
+          <span className="text-xs font-mono uppercase tracking-widest text-scale-10 border border-scale-5 rounded-full px-3 py-1">HIPAA Compliant</span>
+          <span className="text-xs font-mono uppercase tracking-widest text-scale-10 border border-scale-5 rounded-full px-3 py-1">ISO 27001 Certified</span>
+        </div>
+        <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-scale-12 text-center leading-tight">
+          <span className="block">Build in a weekend</span>
+          <span className="text-brand block">Scale to millions</span>
         </h1>
+        <p className="text-scale-11 text-lg md:text-xl max-w-2xl text-center">
+          Supabase is the Postgres development platform. Start your project with a Postgres database, Authentication, instant APIs, Edge Functions, Realtime subscriptions, Storage, and Vector embeddings.
+        </p>
         <div className="flex gap-3">
           <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand">
-            <Link href="/auth/login">Entrar</Link>
+            <Link href="https://supabase.com/dashboard">Start your project</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="bg-scale-3 hover:bg-scale-5 border-scale-5 text-scale-12 hover:border-scale-8">
-            <Link href="/auth/sign-up">Cadastrar</Link>
+            <Link href="/contact/sales">Request a demo</Link>
           </Button>
         </div>
+        <p className="text-scale-10 text-sm mt-4">Trusted by fast-growing companies worldwide</p>
       </div>
 
       <div className="sm:py-18 container relative mx-auto px-6 py-16 md:py-24 lg:px-16 lg:py-24 xl:px-20 grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-4 xl:gap-3 2xl:gap-6 md:grid-cols-12">
@@ -421,15 +431,15 @@ export default function Home() {
 
       <div className="border-t border-scale-5 py-8 sm:py-16 md:py-24 text-center px-6">
         <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-scale-12">
-          <span className="text-scale-11">Construa em um fim de semana,</span>
-          <span className="block sm:inline"> escala para milhões</span>
+          <span className="text-scale-11">Build in a weekend,</span>
+          <span className="block sm:inline"> scale to millions</span>
         </h2>
         <div className="flex items-center justify-center gap-2 mt-8">
           <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand">
-            <Link href="https://supabase.com/dashboard">Iniciar projeto</Link>
+            <Link href="https://supabase.com/dashboard">Start your project</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="bg-scale-3 hover:bg-scale-5 border-scale-5 text-scale-12 hover:border-scale-8">
-            <Link href="/contact/sales">Solicitar demonstração</Link>
+            <Link href="/contact/sales">Request a demo</Link>
           </Button>
         </div>
       </div>
