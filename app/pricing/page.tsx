@@ -52,7 +52,7 @@ const plans: Plan[] = [
     name: "Pro",
     badge: "Mais Popular",
     description: "Para aplicações em produção com poder de escalar.",
-    price: "A partir de R$ 203",
+    price: "A partir de R$ 175",
     priceSub: "/mês",
     cta: "Começar Agora",
     href: "https://supabase.com/dashboard/new?plan=pro",
@@ -71,7 +71,7 @@ const plans: Plan[] = [
   {
     name: "Team",
     description: "Adicione recursos como SSO, controle sobre backups e certificações do setor.",
-    price: "A partir de R$ 4.867",
+    price: "A partir de R$ 4.186",
     priceSub: "/mês",
     cta: "Começar Agora",
     href: "https://supabase.com/dashboard/new?plan=team",

@@ -2,21 +2,22 @@
 
 import { useState, useRef, useEffect } from "react";
 import { Info, SlidersHorizontal, X, ChevronDown } from "lucide-react";
+import { ComputePriceChart } from "@/components/compute-price-chart";
 
 const computeSizes = [
-  { label: "Micro", price: 81, cpu: "2-core ARM", ram: "1 GB RAM", dedicated: false, direct: 60, pooler: 200 },
-  { label: "Small", price: 122, cpu: "2-core ARM", ram: "2 GB RAM", dedicated: false, direct: 90, pooler: 400 },
-  { label: "Medium", price: 488, cpu: "2-core ARM", ram: "4 GB RAM", dedicated: false, direct: 120, pooler: 600 },
-  { label: "Large", price: 894, cpu: "2-core ARM", ram: "8 GB RAM", dedicated: true, direct: 160, pooler: 800 },
-  { label: "XL", price: 1706, cpu: "4-core ARM", ram: "16 GB RAM", dedicated: true, direct: 240, pooler: 1000 },
-  { label: "2XL", price: 3331, cpu: "8-core ARM", ram: "32 GB RAM", dedicated: true, direct: 380, pooler: 1500 },
-  { label: "4XL", price: 7800, cpu: "16-core ARM", ram: "64 GB RAM", dedicated: true, direct: 480, pooler: 3000 },
-  { label: "8XL", price: 15194, cpu: "32-core ARM", ram: "128 GB RAM", dedicated: true, direct: 490, pooler: 6000 },
-  { label: "12XL", price: 22750, cpu: "48-core ARM", ram: "192 GB RAM", dedicated: true, direct: 500, pooler: 9000 },
-  { label: "16XL", price: 30306, cpu: "64-core ARM", ram: "256 GB RAM", dedicated: true, direct: 500, pooler: 12000 },
+  { label: "Micro", price: 70, cpu: "2-core ARM", ram: "1 GB RAM", dedicated: false, direct: 60, pooler: 200 },
+  { label: "Small", price: 105, cpu: "2-core ARM", ram: "2 GB RAM", dedicated: false, direct: 90, pooler: 400 },
+  { label: "Medium", price: 419, cpu: "2-core ARM", ram: "4 GB RAM", dedicated: false, direct: 120, pooler: 600 },
+  { label: "Large", price: 769, cpu: "2-core ARM", ram: "8 GB RAM", dedicated: true, direct: 160, pooler: 800 },
+  { label: "XL", price: 1467, cpu: "4-core ARM", ram: "16 GB RAM", dedicated: true, direct: 240, pooler: 1000 },
+  { label: "2XL", price: 2865, cpu: "8-core ARM", ram: "32 GB RAM", dedicated: true, direct: 380, pooler: 1500 },
+  { label: "4XL", price: 6708, cpu: "16-core ARM", ram: "64 GB RAM", dedicated: true, direct: 480, pooler: 3000 },
+  { label: "8XL", price: 13067, cpu: "32-core ARM", ram: "128 GB RAM", dedicated: true, direct: 490, pooler: 6000 },
+  { label: "12XL", price: 19565, cpu: "48-core ARM", ram: "192 GB RAM", dedicated: true, direct: 500, pooler: 9000 },
+  { label: "16XL", price: 26058, cpu: "64-core ARM", ram: "256 GB RAM", dedicated: true, direct: 500, pooler: 12000 },
 ];
 
-const planPricing = { Pro: 203, Team: 4867 } as const;
+const planPricing = { Pro: 175, Team: 4186 } as const;
 
 export function ComputePricing() {
   const [plan, setPlan] = useState<"Pro" | "Team">("Pro");
@@ -39,7 +40,7 @@ export function ComputePricing() {
   const planCost = planPricing[plan]!;
   const activeCompute = computeSizes[computeIndex]!;
   const computeCost = activeCompute.price;
-  const credits = 81;
+  const credits = 70;
   const total = planCost + Math.max(0, computeCost - credits);
 
   return (
@@ -115,8 +116,8 @@ export function ComputePricing() {
               </div>
               <p className="text-scale-11 text-xs mt-2">
                 {p === "Pro"
-                  ? "Primeiro projeto incluído. Projetos adicionais a partir de R$ 81/mês."
-                  : "Primeiro projeto incluído. Projetos adicionais a partir de R$ 81/mês."}
+                  ? "Primeiro projeto incluído. Projetos adicionais a partir de R$ 70/mês."
+                  : "Primeiro projeto incluído. Projetos adicionais a partir de R$ 70/mês."}
               </p>
             </button>
           ))}
@@ -158,8 +159,17 @@ export function ComputePricing() {
           />
 
           <div className="flex justify-between text-xs text-scale-10 mt-1.5">
-            <span>Micro (R$ 81)</span>
-            <span>16XL (R$ 30.306)</span>
+            <span>Micro (R$ 70)</span>
+            <span>16XL (R$ 26.058)</span>
+          </div>
+
+          <div className="mt-6 border-t border-scale-5 pt-6">
+            <h4 className="text-scale-12 text-sm font-medium mb-3">
+              Comparativo de preços
+            </h4>
+            <div className="bg-scale-2 rounded-xl border border-scale-6 p-4">
+              <ComputePriceChart data={computeSizes} />
+            </div>
           </div>
 
           <div className="border-t border-scale-5 mt-6 pt-4 space-y-2">
@@ -194,7 +204,7 @@ export function ComputePricing() {
           </div>
 
           <p className="text-scale-10 text-xs mt-3">
-            Planos pagos incluem <strong className="text-scale-12">R$ 81/mês em créditos de compute</strong>,
+            Planos pagos incluem <strong className="text-scale-12">R$ 70/mês em créditos de compute</strong>,
             suficientes para cobrir uma instância Micro.
           </p>
         </div>
@@ -231,7 +241,7 @@ export function ComputePricing() {
           >
             <div>
               <span className="inline-block text-[11px] font-mono uppercase tracking-wider text-brand bg-brand/10 rounded-md px-2 py-0.5 mb-1.5">
-                A partir de R$ 81/mês
+                A partir de R$ 70/mês
               </span>
               <div className="text-scale-12 text-base font-semibold">
                 Escalone o compute até 64 cores e 256 GB de RAM
@@ -351,7 +361,7 @@ export function ComputePricing() {
             <p className="text-scale-11 text-sm leading-relaxed mb-4">
               Instâncias de compute são cobradas por hora e você pode escalar
               para cima ou para baixo a qualquer momento. Planos pagos vêm com
-              R$ 81/mês em créditos de compute para cobrir uma instância Micro ou
+              R$ 70/mês em créditos de compute para cobrir uma instância Micro ou
               abater o custo de qualquer outra instância.
             </p>
             <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">

@@ -9,7 +9,7 @@ const addons = [
     featured: true,
   },
   {
-    label: "Taxa fixa de R$ 81/mês",
+    label: "Taxa fixa de R$ 70/mês",
     title: "Custom Domain",
     description:
       "Use seu próprio domínio para seu projeto Supabase e ofereça uma experiência personalizada aos seus usuários.",
@@ -17,7 +17,7 @@ const addons = [
     cta: null,
   },
   {
-    label: "A partir de R$ 813/mês",
+    label: "A partir de R$ 699/mês",
     title: "Point in Time Recovery",
     description:
       "Volte para qualquer ponto específico no tempo, com precisão de segundos.",

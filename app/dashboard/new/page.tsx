@@ -63,7 +63,7 @@ const plans = [
     id: "pro" as const,
     name: "Pro",
     description: "Para aplicações em produção com poder de escalar.",
-    price: "A partir de R$ 203",
+    price: "A partir de R$ 175",
     priceSub: "/mês",
     popular: true,
     features: [
@@ -78,7 +78,7 @@ const plans = [
     id: "team" as const,
     name: "Team",
     description: "Recursos avançados para equipes como SSO e auditoria.",
-    price: "A partir de R$ 4.867",
+    price: "A partir de R$ 4.186",
     priceSub: "/mês",
     features: [
       "SOC2 e ISO 27001",
