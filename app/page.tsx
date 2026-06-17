@@ -233,9 +233,9 @@ export default function Home() {
   return (
     <div className="flex min-h-svh flex-col">
       <div className="flex flex-1 flex-col items-center justify-center gap-6 p-4 pt-32">
-        <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-scale-12 text-center leading-tight">
-          <span className="block">Construa em um fim de semana</span>
-          <span className="text-brand block">Escale para milhões</span>
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-scale-12 text-center leading-none max-w-4xl mx-auto">
+          Developer Platform<br />
+          <span className="text-brand">Open-Source</span>
         </h1>
         <p className="text-scale-11 text-lg md:text-xl max-w-2xl text-center">
           Supabase é a plataforma de desenvolvimento Postgres. Comece seu projeto com banco de dados Postgres, Autenticação, APIs instantâneas, Edge Functions, inscrições em tempo real, Storage e embeddings Vector.
@@ -426,8 +426,8 @@ export default function Home() {
 
       <div className="border-t border-scale-5 py-8 sm:py-16 md:py-24 text-center px-6">
         <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-scale-12">
-          <span className="text-scale-11">Construa em um fim de semana,</span>
-          <span className="block sm:inline"> escale para milhões</span>
+          <span className="text-scale-11">Developer Platform</span>
+          <span className="block sm:inline text-brand">Open-Source</span>
         </h2>
         <div className="flex items-center justify-center gap-2 mt-8">
           <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand">
