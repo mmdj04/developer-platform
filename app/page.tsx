@@ -234,21 +234,21 @@ export default function Home() {
     <div className="flex min-h-svh flex-col">
       <div className="flex flex-1 flex-col items-center justify-center gap-6 p-4 pt-32">
         <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-scale-12 text-center leading-tight">
-          <span className="block">Build in a weekend</span>
-          <span className="text-brand block">Scale to millions</span>
+          <span className="block">Construa em um fim de semana</span>
+          <span className="text-brand block">Escale para milhões</span>
         </h1>
         <p className="text-scale-11 text-lg md:text-xl max-w-2xl text-center">
-          Supabase is the Postgres development platform. Start your project with a Postgres database, Authentication, instant APIs, Edge Functions, Realtime subscriptions, Storage, and Vector embeddings.
+          Supabase é a plataforma de desenvolvimento Postgres. Comece seu projeto com banco de dados Postgres, Autenticação, APIs instantâneas, Edge Functions, inscrições em tempo real, Storage e embeddings Vector.
         </p>
         <div className="flex gap-3">
           <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand">
-            <Link href="https://supabase.com/dashboard">Start your project</Link>
+            <Link href="https://supabase.com/dashboard">Iniciar projeto</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="bg-scale-3 hover:bg-scale-5 border-scale-5 text-scale-12 hover:border-scale-8">
-            <Link href="/contact/sales">Request a demo</Link>
+            <Link href="/contact/sales">Solicitar demonstração</Link>
           </Button>
         </div>
-        <p className="text-scale-10 text-sm mt-4">Trusted by fast-growing companies worldwide</p>
+        <p className="text-scale-10 text-sm mt-4">Confiada por empresas em rápido crescimento no mundo todo</p>
       </div>
 
       <div className="sm:py-18 container relative mx-auto px-6 py-16 md:py-24 lg:px-16 lg:py-24 xl:px-20 grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-4 xl:gap-3 2xl:gap-6 md:grid-cols-12">
@@ -426,15 +426,15 @@ export default function Home() {
 
       <div className="border-t border-scale-5 py-8 sm:py-16 md:py-24 text-center px-6">
         <h2 className="text-2xl md:text-4xl font-semibold tracking-tight text-scale-12">
-          <span className="text-scale-11">Build in a weekend,</span>
-          <span className="block sm:inline"> scale to millions</span>
+          <span className="text-scale-11">Construa em um fim de semana,</span>
+          <span className="block sm:inline"> escale para milhões</span>
         </h2>
         <div className="flex items-center justify-center gap-2 mt-8">
           <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand">
-            <Link href="https://supabase.com/dashboard">Start your project</Link>
+            <Link href="https://supabase.com/dashboard">Iniciar projeto</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="bg-scale-3 hover:bg-scale-5 border-scale-5 text-scale-12 hover:border-scale-8">
-            <Link href="/contact/sales">Request a demo</Link>
+            <Link href="/contact/sales">Solicitar demonstração</Link>
           </Button>
         </div>
       </div>
