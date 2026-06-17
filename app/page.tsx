@@ -22,9 +22,9 @@ const logo = (name: string, icon: React.ReactNode) => ({ type: "logo" as const, 
 const customerColumns: CustomerColumn[] = [
   { width: "w-[250px]", items: [logo("Vercel", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="m12 1.608 12 20.784H0Z"/></svg>), logo("Stripe", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z"/></svg>)] },
   { width: "w-[250px]", items: [logo("Linear", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M2.886 4.18A11.982 11.982 0 0 1 11.99 0C18.624 0 24 5.376 24 12.009c0 3.64-1.62 6.903-4.18 9.105L2.887 4.18ZM1.817 5.626l16.556 16.556c-.524.33-1.075.62-1.65.866L.951 7.277c.247-.575.537-1.126.866-1.65ZM.322 9.163l14.515 14.515c-.71.172-1.443.282-2.195.322L0 11.358a12 12 0 0 1 .322-2.195Zm-.17 4.862 9.823 9.824a12.02 12.02 0 0 1-9.824-9.824Z"/></svg>), logo("Notion", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.186v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.139c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z"/></svg>)] },
-  { width: "w-[450px]", items: [story("Maergo", "How Our Platform Helped Achieve Scalability, Speed, and Cost Saving")] },
-  { width: "w-[250px]", items: [logo("Prisma", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M21.8068 18.2848L13.5528.7565c-.207-.4382-.639-.7273-1.1286-.7541-.5023-.0293-.9523.213-1.2062.6253L2.266 15.1271c-.2773.4518-.2718 1.0091.0158 1.4555l4.3759 6.7786c.2608.4046.7127.6388 1.1823.6388.1332 0 .267-.0188.3987-.0577l12.7019-3.7568c.3891-.1151.7072-.3904.8737-.7553s.1633-.7828-.0075-1.1454zm-1.8481.7519L9.1814 22.2242c-.3292.0975-.6448-.1873-.5756-.5194l3.8501-18.4386c.072-.3448.5486-.3996.699-.0803l7.1288 15.138c.1344.2856-.019.6224-.325.7128z"/></svg>), logo("Netlify", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M6.49 19.04h-.23L5.13 17.9v-.23l1.73-1.71h1.2l.15.15v1.2L6.5 19.04ZM5.13 6.31V6.1l1.13-1.13h.23L8.2 6.68v1.2l-.15.15h-1.2L5.13 6.31Zm9.96 9.09h-1.65l-.14-.13v-3.83c0-.68-.27-1.2-1.1-1.23-.42 0-.9 0-1.43.02l-.07.08v4.96l-.14.14H8.9l-.13-.14V8.73l.13-.14h3.7a2.6 2.6 0 0 1 2.61 2.6v4.08l-.13.14Zm-8.37-2.44H.14L0 12.82v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14Zm17.14 0h-6.58l-.14-.14v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14ZM11.05 6.55V1.64l.14-.14h1.65l.14.14v4.9l-.14.14h-1.65l-.14-.13Zm0 15.81v-4.9l.14-.14h1.65l.14.13v4.91l-.14.14h-1.65l-.14-.14Z"/></svg>)] },
-  { width: "w-[450px]", items: [story("Chatbase", "Chatbase scales their platform with modern tooling")] },
+  { width: "w-[450px]", items: [story("Supabase", "Backend as a Service com Postgres, Auth, Storage e Realtime")] },
+  { width: "w-[250px]", items: [logo("Prisma", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M21.8068 18.2848L13.5528.7565c-.207-.4382-.639-.7273-1.1286-.7541-.5023-.0293-.9523.213-1.2062.6253L2.266 15.1271c-.2773.4518-.2718 1.0091.0158 1.4555l4.3759 6.7786c.2608.4046.7127.6388 1.1823.6388.1332 0 .267-.0188.3987-.0577l12.7019-3.7568c.3891-.1151.7072-.3904.8737-.7553s.1633-.7828-.0075-1.1454zm-1.8481.7519L9.1814 22.2242c-.3292.0975-.6448-.1873-.5756-.5194l3.8501-18.4386c.072-.3448.5486-.3996.699-.0803l7.1288 15.138c.1344.2856-.019.6224-.325.7128z"/></svg>), logo("Netlify", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M6.49 19.04h-.23L5.13 17.9v-.23l1.73-1.71h1.2l.15.15v1.2L6.5 19.04ZM5.13 6.31V6.1l1.13-1.13h.23L8.2 6.68v1.2l-.15.15h-1.2L5.13 6.31Zm9.96 9.09h-1.65l-.14-.13v-3.83c0-.68-.27-1.2-1.1-1.23-.42 0-.9 0-1.43.02l-.07.08v4.96l-.14.14H8.9l-.13-.14V8.73l.13-.14h3.7a2.6 2.6 0 0 1 2.61 2.6v4.08l-.13.14Zm-8.37-2.44H.14L0 12.82v-1.64l.14-.14h6.58l.14.14v1.64l-.14.14Zm17.14 0h-6.58l-.14-.14v-1.64l-.14-.14h6.58l.14.14v1.64l-.14.14ZM11.05 6.55V1.64l.14-.14h1.65l.14.14v4.9l-.14.14h-1.65l-.14-.13Zm0 15.81v-4.9l.14-.14h1.65l.14.13v4.91l-.14.14h-1.65l-.14-.14Z"/></svg>)] },
+  { width: "w-[450px]", items: [story("OpenAI", "APIs de IA generativa para integrar nos seus projetos")] },
   { width: "w-[250px]", items: [logo("Clerk", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="m21.47 20.829-2.881-2.881a.572.572 0 0 0-.7-.084 6.854 6.854 0 0 1-7.081 0 .576.576 0 0 0-.7.084l-2.881 2.881a.576.576 0 0 0-.103.69.57.57 0 0 0 .166.186 12 12 0 0 0 14.113 0 .58.58 0 0 0 .239-.423.576.576 0 0 0-.172-.453Zm.002-17.668-2.88 2.88a.569.569 0 0 1-.701.084A6.857 6.857 0 0 0 8.724 8.08a6.862 6.862 0 0 0-1.222 3.692 6.86 6.86 0 0 0 .978 3.764.573.573 0 0 1-.083.699l-2.881 2.88a.567.567 0 0 1-.864-.063A11.993 11.993 0 0 1 6.771 2.7a11.99 11.99 0 0 1 14.637-.405.566.566 0 0 1 .232.418.57.57 0 0 1-.168.448Zm-7.118 12.261a3.427 3.427 0 1 0 0-6.854 3.427 3.427 0 0 0 0 6.854Z"/></svg>), logo("PlanetScale", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M0 12C0 5.373 5.373 0 12 0c4.873 0 9.067 2.904 10.947 7.077l-15.87 15.87a11.981 11.981 0 0 1-1.935-1.099L14.99 12H12l-8.485 8.485A11.962 11.962 0 0 1 0 12Zm12.004 12L24 12.004C23.998 18.628 18.628 23.998 12.004 24Z"/></svg>)] },
   { width: "w-[250px]", items: [logo("Sentry", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M13.91 2.505c-.873-1.448-2.972-1.448-3.844 0L6.904 7.92a15.478 15.478 0 0 1 8.53 12.811h-2.221A13.301 13.301 0 0 0 5.784 9.814l-2.926 5.06a7.65 7.65 0 0 1 4.435 5.848H2.194a.365.365 0 0 1-.298-.534l1.413-2.402a5.16 5.16 0 0 0-1.614-.913L.296 19.275a2.182 2.182 0 0 0 .812 2.999 2.24 2.24 0 0 0 1.086.288h6.983a9.322 9.322 0 0 0-3.845-8.318l1.11-1.922a11.47 11.47 0 0 1 4.95 10.24h5.915a17.242 17.242 0 0 0-7.885-15.28l2.244-3.845a.37.37 0 0 1 .504-.13c.255.14 9.75 16.708 9.928 16.9a.365.365 0 0 1-.327.543h-2.287c.029.612.029 1.223 0 1.831h2.297a2.206 2.206 0 0 0 1.922-3.31z"/></svg>), logo("Framer", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z"/></svg>)] },
   { width: "w-[250px]", items: [logo("Replit", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M2 1.5A1.5 1.5 0 0 1 3.5 0h7A1.5 1.5 0 0 1 12 1.5V8H3.5A1.5 1.5 0 0 1 2 6.5ZM12 8h8.5A1.5 1.5 0 0 1 22 9.5v5a1.5 1.5 0 0 1-1.5 1.5H12ZM2 17.5A1.5 1.5 0 0 1 3.5 16H12v6.5a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 2 22.5Z"/></svg>), logo("Railway", <svg fill="currentColor" role="img" viewBox="0 0 24 24" className="size-8"><path d="M.113 10.27A13.026 13.026 0 000 11.48h18.23c-.064-.125-.15-.237-.235-.347-3.117-4.027-4.793-3.677-7.19-3.78-.8-.034-1.34-.048-4.524-.048-1.704 0-3.555.005-5.358.01-.234.63-.459 1.24-.567 1.737h9.342v1.216H.113v.002zm18.26 2.426H.009c.02.326.05.645.094.961h16.955c.754 0 1.179-.429 1.315-.96zm-17.318 4.28s2.81 6.902 10.93 7.024c4.855 0 9.027-2.883 10.92-7.024H1.056zM11.988 0C7.5 0 3.593 2.466 1.531 6.108l4.75-.005v-.002c3.71 0 3.849.016 4.573.047l.448.016c1.563.052 3.485.22 4.996 1.364.82.621 2.007 1.99 2.712 2.965.654.902.842 1.94.396 2.934-.408.914-1.289 1.458-2.353 1.458H.391s.099.42.249.886h22.748A12.026 12.026 0 0024 12.005C24 5.377 18.621 0 11.988 0z"/></svg>)] },
@@ -123,6 +123,81 @@ export default function Home() {
                 </div>
               </a>
             ))}
+          </div>
+        </div>
+      </div>
+
+      <div id="stack" className="pb-16 md:pb-24">
+        <div className="sm:py-18 container relative mx-auto px-6 py-16 md:py-24 lg:px-16 lg:py-24 xl:px-20 pb-8! w-full flex gap-4 justify-between flex-col xl:flex-row xl:items-end">
+          <div className="xl:w-1/2">
+            <div className="space-y-4">
+              <span className="text-scale-10 block font-mono text-xs uppercase tracking-widest">Stack Atual</span>
+              <h3 className="text-2xl md:text-4xl font-semibold tracking-tight text-scale-12 lg:max-w-md">
+                <span>Tecnologias que domino</span><br />
+                <span className="text-scale-11">e uso no dia a dia.</span>
+              </h3>
+            </div>
+            <p className="text-scale-11 max-w-3xl text-lg sm:mt-4">
+              Empresas e ferramentas que fazem parte do meu ecossistema de desenvolvimento.
+            </p>
+          </div>
+        </div>
+
+        <div className="relative w-screen" style={{ marginLeft: "calc(-50vw + 50%)", marginRight: "calc(-50vw + 50%)" }}>
+          <div className="hidden md:block relative">
+            <div className="group/tw-marquee w-full items-stretch h-[300px] min-w-[300px] nowrap gap-4 flex overflow-hidden">
+              <div className="flex motion-safe:animate-[marquee_80000ms_linear_both_infinite] group-hover/tw-marquee:[animation-play-state:paused] will-change-transform gap-4 px-6 lg:px-16 xl:px-20">
+                {customerColumns.map((col, i) => (
+                  <div key={i} className={`flex flex-col h-full gap-4 ${col.width}`}>
+                    {col.items.map((item) => (
+                      item.type === "featured" ? (
+                        <div className="w-full h-full rounded-lg md:rounded-xl p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4 hover:shadow-md transition-all">
+                          <div className="relative z-10 w-full h-full rounded-[7px] md:rounded-[11px] bg-scale-3 overflow-hidden text-scale-11 p-4 md:p-6 flex flex-col justify-between">
+                            <p className="text-sm">{item.description}</p>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="w-full h-full rounded-lg md:rounded-xl p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
+                          <div className="w-full h-full rounded-[7px] md:rounded-[11px] bg-scale-3 flex items-center justify-center gap-3 px-4">
+                            <span className="text-scale-11 shrink-0">{item.icon}</span>
+                            <span className="text-scale-12 text-base font-semibold truncate">{item.name}</span>
+                          </div>
+                        </div>
+                      )
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-48 bg-linear-to-r from-scale-1 to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-48 bg-linear-to-l from-scale-1 to-transparent" />
+          </div>
+
+          <div className="md:hidden relative">
+            <div className="flex gap-3 pb-4 overflow-x-auto scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden px-6 lg:px-16 xl:px-20">
+              {customerColumns.map((col, i) => (
+                <div key={i} className={`flex-shrink-0 flex flex-col gap-3 ${col.width}`}>
+                  {col.items.map((item) => (
+                    item.type === "featured" ? (
+                      <div className="w-full h-full min-h-[140px] rounded-lg p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
+                        <div className="relative z-10 w-full h-full rounded-[7px] bg-scale-3 overflow-hidden text-scale-11 p-4 flex flex-col justify-between">
+                          <p className="text-sm">{item.description}</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="w-full h-full min-h-[65px] rounded-lg p-px bg-scale-3 bg-linear-to-b from-scale-6 to-scale-5 dark:to-scale-4">
+                        <div className="w-full h-full rounded-[7px] bg-scale-3 flex items-center justify-center gap-3 px-4">
+                          <span className="text-scale-11 shrink-0">{item.icon}</span>
+                          <span className="text-scale-12 text-base font-semibold whitespace-nowrap truncate">{item.name}</span>
+                        </div>
+                      </div>
+                    )
+                  ))}
+                </div>
+              ))}
+            </div>
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-32 bg-linear-to-r from-scale-1 to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-32 bg-linear-to-l from-scale-1 to-transparent" />
           </div>
         </div>
       </div>
