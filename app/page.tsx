@@ -234,7 +234,7 @@ export default function Home() {
     <div className="flex min-h-svh flex-col">
       <div className="flex flex-1 flex-col items-center justify-center px-6 min-h-[85vh]">
         <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight text-scale-12 text-center leading-none w-full max-w-none">
-          Developer Platform<br />
+          Developer<br />Platform<br />
           <span className="text-scale-12">Open-Source</span>
         </h1>
       </div>
