@@ -273,10 +273,10 @@ export default function Home() {
         </h2>
         <div className="flex items-center justify-center gap-2 mt-8">
           <Button asChild size="lg" className="bg-brand text-black hover:bg-brand-hover border border-brand/30 hover:border-brand">
-            <Link href="https://supabase.com/dashboard">Iniciar projeto</Link>
+            <Link href="/auth/login">Iniciar projeto</Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="bg-scale-3 hover:bg-scale-5 border-scale-5 text-scale-12 hover:border-scale-8">
-            <Link href="/contact/sales">Solicitar demonstração</Link>
+            <Link href="/auth/sign-up">Solicitar demonstração</Link>
           </Button>
         </div>
       </div>

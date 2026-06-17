@@ -36,7 +36,7 @@ const plans: Plan[] = [
     price: "R$ 0",
     priceSub: "/mês",
     cta: "Começar Grátis",
-    href: "https://supabase.com/dashboard/new?plan=free",
+    href: "/auth/sign-up",
     features: [
       { text: "Requisições de API ilimitadas" },
       { text: "50.000 usuários ativos mensais" },
@@ -55,7 +55,7 @@ const plans: Plan[] = [
     price: "A partir de R$ 175",
     priceSub: "/mês",
     cta: "Começar Agora",
-    href: "https://supabase.com/dashboard/new?plan=pro",
+    href: "/auth/sign-up",
     popular: true,
     features: [
       { text: "100.000 usuários ativos mensais" },
@@ -74,7 +74,7 @@ const plans: Plan[] = [
     price: "A partir de R$ 4.186",
     priceSub: "/mês",
     cta: "Começar Agora",
-    href: "https://supabase.com/dashboard/new?plan=team",
+    href: "/auth/sign-up",
     features: [
       { text: "SOC2 e ISO 27001" },
       { text: "Acesso por escopo de projeto e somente leitura" },
@@ -90,7 +90,7 @@ const plans: Plan[] = [
     description: "Para aplicações de grande escala rodando cargas de trabalho de internet.",
     price: "Sob Consulta",
     cta: "Fale Conosco",
-    href: "https://forms.supabase.com/enterprise",
+    href: "/auth/sign-up",
     features: [
       { text: "Gerente de Suporte dedicado" },
       { text: "SLAs de uptime" },

@@ -1,33 +1,29 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { createClient } from "@/lib/supabase/server";
+import { useAuth } from "@/hooks/use-auth";
 import { LogoutButton } from "./logout-button";
 
-export async function AuthButton() {
-  let user: boolean = false;
-  let email: string | undefined;
+export function AuthButton() {
+  const { user, isAuthenticated } = useAuth();
 
-  try {
-    const supabase = await createClient();
-    const { data } = await supabase.auth.getClaims();
-    user = !!data?.claims;
-    email = (data?.claims as { email?: string } | undefined)?.email;
-  } catch {
-    // Supabase not configured yet — show login/signup links
+  if (isAuthenticated) {
+    return (
+      <div className="flex items-center gap-4">
+        <span className="text-sm text-scale-12">{user?.name || user?.email}</span>
+        <LogoutButton />
+      </div>
+    );
   }
 
-  return user ? (
-    <div className="flex items-center gap-4">
-      Hey, {email}!
-      <LogoutButton />
-    </div>
-  ) : (
+  return (
     <div className="flex gap-2">
-      <Button asChild size="sm" variant={"outline"}>
-        <Link href="/auth/login">Sign in</Link>
+      <Button asChild size="sm" variant="outline">
+        <Link href="/auth/login">Entrar</Link>
       </Button>
-      <Button asChild size="sm" variant={"default"}>
-        <Link href="/auth/sign-up">Sign up</Link>
+      <Button asChild size="sm" variant="default">
+        <Link href="/auth/sign-up">Cadastrar</Link>
       </Button>
     </div>
   );
