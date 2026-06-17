@@ -43,7 +43,7 @@ export function ComputePriceChart({ data }: { data: Datum[] }) {
       .padding(0.25);
 
     const color = d3
-      .scaleSequential(d3.interpolateRgbBasis(["#3ecf8e", "#1c1c1c"]))
+      .scaleSequential(d3.interpolateRgbBasis(["#3ecf8e", "#2ea875"]))
       .domain([0, data.length - 1]);
 
     g.selectAll("g.bar")

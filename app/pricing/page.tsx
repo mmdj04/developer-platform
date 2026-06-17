@@ -164,10 +164,10 @@ export default function Pricing() {
                     {plan.features.map((feature) => (
                       <li key={feature.text} className="flex items-start gap-2">
                         <Check
-                          className={`size-4 mt-0.5 shrink-0 ${feature.highlight ? "text-brand" : "text-scale-10"}`}
+                          className={`size-4 mt-0.5 shrink-0 ${feature.highlight ? "text-brand" : "text-brand/70"}`}
                         />
                         <span
-                          className={`text-sm ${feature.highlight ? "text-scale-12" : "text-scale-11"}`}
+                          className={`text-sm ${feature.highlight ? "text-scale-12" : "text-scale-12"}`}
                         >
                           {feature.text}
                         </span>
